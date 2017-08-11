@@ -70,8 +70,8 @@ floatz.core.debug.less
 
 // Core media query variables
 @flz-media[[-lte]-xxl|[-lte|-gte]-xl|[-lte|-gte]-l|[-lte|-gte]-m|[-lte|-gte]-s|[-lte|-gte]-xs|[-gte]-xxs]
-@flz-media-portrait;
-@flz-media-landscape;
-@flz-media-2x";
-@flz-media-3x";
+@flz-media-portrait
+@flz-media-landscape
+@flz-media-2x
+@flz-media-3x
 ```
