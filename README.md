@@ -66,7 +66,6 @@ floatz.core.debug.less
 .flz-100[[-lte]-xxl|[-lte|-gte]-xl|[-lte|-gte]-l|[-lte|-gte]-m|[-lte|-gte]-s|[-lte|-gte]-xs|[-gte]-xxs]
 .flz-spacer[[-lte]-xxl|[-lte|-gte]-xl|[-lte|-gte]-l|[-lte|-gte]-m|[-lte|-gte]-s|[-lte|-gte]-xs|[-gte]-xxs]
 .flz_nospacer[[-lte]-xxl|[-lte|-gte]-xl|[-lte|-gte]-l|[-lte|-gte]-m|[-lte|-gte]-s|[-lte|-gte]-xs|[-gte]-xxs]
-.flz-nospacer[[-lte]-xxl|[-lte|-gte]-xl|[-lte|-gte]-l|[-lte|-gte]-m|[-lte|-gte]-s|[-lte|-gte]-xs|[-gte]-xxs]
 
 // Core media query variables
 @flz-media[[-lte]-xxl|[-lte|-gte]-xl|[-lte|-gte]-l|[-lte|-gte]-m|[-lte|-gte]-s|[-lte|-gte]-xs|[-gte]-xxs]
