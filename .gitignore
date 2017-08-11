@@ -1,3 +1,4 @@
 .gradle
 *.min.css
+*.min.js
 /build/
