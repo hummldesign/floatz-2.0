@@ -16,7 +16,7 @@ floatz.core.layout.responsive.debug.less
 floatz.core.less
 floatz.core.debug.less
 
-// Core variables
+// Core configuration variables
 @flz-var-base-font-size
 @flz-var-gutter-text-x
 @flz-var-gutter-text-y
