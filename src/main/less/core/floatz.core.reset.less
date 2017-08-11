@@ -1,0 +1,54 @@
+@import 'floatz.core.mixins.less';
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, /* hgroup, */ main /* HTML 5.1 */, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	border: 0;
+	font: inherit;
+	font-size: 100%;
+	margin: 0;
+	padding: 0;
+	vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, footer, header, /* hgroup, */
+main /* HTML 5.1 */, menu, nav, section {
+	display: block;
+}
+
+
+* { // Address input elements as well
+	font-size: 100%;
+	font-family: serif;
+}
+
+body {
+	.flz-mx-enwrap(); // Enwrap content
+	font-family: serif;
+	line-height: 1;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+//	content: '';
+	content: none;
+}
+
+input {
+	overflow: hidden; // Prevent borders outside of line height
+}
+
+textarea {
+	vertical-align: top; // Force textarea into same line as other form elements
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+ol, ul {
+	list-style: none;
+}

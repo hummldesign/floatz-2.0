@@ -1,0 +1,70 @@
+@import '../core/floatz.core.mixins.less';
+
+.flz-nav-list {
+	// display: inline-block;
+
+	li {
+		display: inline-block;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+
+		&.flz-nav-selected {
+			font-weight: bold;
+		}
+	}
+}
+
+.flz-nav-vmenu {
+	float: left;
+	padding: 0;
+	width: 100%;
+
+	ul {
+		padding: 0;
+	}
+
+	li {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+
+		a {
+			border-bottom: 1px solid #000;
+			box-sizing: border-box;
+			color: inherit;
+			display: block;
+			padding: @flz-var-gutter-text-x / 2 @flz-var-gutter-text-y / 2;
+			width: 100%;
+
+		}
+
+		li {
+			a {
+				padding-left: @flz-var-gutter-text-y;
+			}
+
+			li {
+				a {
+					padding-left: @flz-var-gutter-text-y * 1.5;
+				}
+
+				li {
+					a {
+						padding-left: @flz-var-gutter-text-y * 2;
+					}
+
+					li {
+						a {
+							padding-left: @flz-var-gutter-text-y * 2.5;
+						}
+					}
+				}
+			}
+		}
+
+		&.flz-nav-selected > a {
+			font-weight: bold;
+		}
+	}
+}

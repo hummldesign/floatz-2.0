@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>floatz 2.0 | dom.js | Test Suite</title>
+	<link rel="shortcut icon" type="image/png" href="../../../lib/jasmine-2.7.0/jasmine_favicon.png">
+	<link rel="stylesheet" href="../../../lib/jasmine-2.7.0/jasmine.css">
+	<script src="../../../lib/jasmine-2.7.0/jasmine.js"></script>
+	<script src="../../../lib/jasmine-2.7.0/jasmine-html.js"></script>
+	<script src="../../../lib/jasmine-2.7.0/boot.js"></script>
+	<script src="../../../build/floatz.test.js "></script>
+	<!-- Only for testing query results -->
+	<style>
+		.shown {
+			display: block;
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		.invisible {
+			visibility: hidden;
+		}
+
+		.visible {
+			visibility: visible;
+		}
+	</style>
+</head>
+<body>
+	<!-- Test data -->
+	<div class="shown"></div>
+	<div class="visible"></div>
+	<div class="hidden"></div>
+	<div class="invisible"></div>
+	<div id="root">
+		<div class="child"></div>
+		<div class="child"></div>
+	</div>
+	<div class="child"></div>
+	<!-- Jasmine test report -->
+</body>
+</html>

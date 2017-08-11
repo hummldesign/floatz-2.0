@@ -1,0 +1,29 @@
+@import 'floatz.core.mixins.less';
+
+// Variables
+@flz-var-base-font-size: 1rem;
+@flz-var-gutter-text-x: @flz-var-base-font-size; // Horizontal
+@flz-var-gutter-text-y: @flz-var-base-font-size; // Vertical
+@flz-var-gutter-layout-x: @flz-var-base-font-size; // Horizontal
+@flz-var-gutter-layout-y: @flz-var-base-font-size; // Vertical
+
+// Baseline styles
+.flz-mx-baseline-text();
+.flz-mx-baseline-layout();
+
+body {
+	.flz-mx-baseline(auto, @flz-var-gutter-layout-y, @flz-var-gutter-layout-x); // Enable scrolling
+}
+
+// Boxes
+.flz-box,
+.flz-scrollbox {
+	.flz-mx-box();
+}
+.flz-scrollbox {
+	overflow: auto;
+}
+
+// Layouters and spacers
+.flz-mx-layout(/**/);
+

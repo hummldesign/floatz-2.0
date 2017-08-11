@@ -1,0 +1,21 @@
+@import '../../main/less/core/floatz.core.less';
+@import '../../main/less/navigation/floatz.navigation.less';
+
+.nav-test-centered {
+	text-align: center;
+}
+.nav-test-right {
+	text-align: right;
+}
+
+.nav-test-special {
+	li {
+		&:after {
+			content: " /";
+		}
+
+		&:last-child:after {
+			content: "";
+		}
+	}
+}

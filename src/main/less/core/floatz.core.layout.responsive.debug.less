@@ -1,0 +1,138 @@
+@import 'floatz.core.layout.responsive.less';
+
+.flz-mx-debug-responsive(@size) {
+	bottom: 0.75em;
+	content: @size;
+	font-size: 3em;
+	line-height: @flz-var-base-font-size;
+	position: fixed;
+	right: 1em;
+	z-index: 9;
+}
+
+// Show screen sizes on resize
+@media @flz-media-xxl {
+	body:before {
+		.flz-mx-debug-responsive("XXL");
+	}
+}
+
+@media @flz-media-xxl and @flz-media-2x {
+	body:before {
+		.flz-mx-debug-responsive("XXL@2x");
+	}
+}
+
+@media @flz-media-xxl and @flz-media-3x {
+	body:before {
+		.flz-mx-debug-responsive("XXL@3x");
+	}
+}
+
+@media @flz-media-xl {
+	body:before {
+		.flz-mx-debug-responsive("XL");
+	}
+}
+
+@media @flz-media-xl and @flz-media-2x {
+	body:before {
+		.flz-mx-debug-responsive("XL@2x");
+	}
+}
+
+@media @flz-media-xl and @flz-media-3x {
+	body:before {
+		.flz-mx-debug-responsive("XL@3x");
+	}
+}
+
+@media @flz-media-l {
+	body:before {
+		.flz-mx-debug-responsive("L");
+	}
+}
+
+@media @flz-media-l and @flz-media-2x {
+	body:before {
+		.flz-mx-debug-responsive("L@2x");
+	}
+}
+
+@media @flz-media-l and @flz-media-3x {
+	body:before {
+		.flz-mx-debug-responsive("L@3x");
+	}
+}
+
+@media @flz-media-m {
+	body:before {
+		.flz-mx-debug-responsive("M");
+	}
+}
+
+@media @flz-media-m and @flz-media-2x {
+	body:before {
+		.flz-mx-debug-responsive("M@2x");
+	}
+}
+
+@media @flz-media-m and @flz-media-3x {
+	body:before {
+		.flz-mx-debug-responsive("M@3x");
+	}
+}
+
+@media @flz-media-s {
+	body:before {
+		.flz-mx-debug-responsive("S");
+	}
+}
+
+@media @flz-media-s and @flz-media-2x {
+	body:before {
+		.flz-mx-debug-responsive("S@2x");
+	}
+}
+
+@media @flz-media-s and @flz-media-3x {
+	body:before {
+		.flz-mx-debug-responsive("S@3x");
+	}
+}
+
+@media @flz-media-xs {
+	body:before {
+		.flz-mx-debug-responsive("XS");
+	}
+}
+
+@media @flz-media-xs and @flz-media-2x {
+	body:before {
+		.flz-mx-debug-responsive("XS@2x");
+	}
+}
+
+@media @flz-media-xs and @flz-media-3x {
+	body:before {
+		.flz-mx-debug-responsive("XS@3x");
+	}
+}
+
+@media @flz-media-xxs {
+	body:before {
+		.flz-mx-debug-responsive("XXS");
+	}
+}
+
+@media @flz-media-xxs and @flz-media-2x {
+	body:before {
+		.flz-mx-debug-responsive("XXS@2x");
+	}
+}
+
+@media @flz-media-xxs and @flz-media-3x {
+	body:before {
+		.flz-mx-debug-responsive("XXS@3x");
+	}
+}

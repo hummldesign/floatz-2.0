@@ -1,0 +1,28 @@
+repositories {
+  mavenCentral()
+}
+configurations {
+  closureCompiler
+}
+dependencies {
+  closureCompiler 'com.google.javascript:closure-compiler:+'
+}
+
+task compileTest(type: JavaExec){
+  println ">> ${projectDir}"
+  classpath configurations.closureCompiler
+  main = 'com.google.javascript.jscomp.CommandLineRunner'
+  def closureArgs = []
+  closureArgs << "--language_in=ES6"
+  closureArgs << "--language_out=ES5"
+  // closureArgs << "--formatting=pretty_print"
+  closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
+  // closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
+  closureArgs << "--js_output_file=build/floatz.test.js"
+  closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
+
+  // Must be in correct order otherwise modules are not found
+  closureArgs << "src/main/javascript/dom/dom.js"
+  closureArgs << "src/test/javascript/dom/dom.test.js"
+  args closureArgs
+}

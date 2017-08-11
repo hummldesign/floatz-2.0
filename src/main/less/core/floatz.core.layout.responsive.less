@@ -1,0 +1,111 @@
+@import 'floatz.core.mixins.less';
+
+// Screen sizes for media queries
+@flz-media-xxs: ~"(min-width: 0) and (max-width: 320px)";
+@flz-media-xs: ~"(min-width: 321px) and (max-width: 480px)";
+@flz-media-s: ~"(min-width: 481px) and (max-width: 767px)";
+@flz-media-m: ~"(min-width: 768px) and (max-width: 979px)";
+@flz-media-l: ~"(min-width: 980px) and (max-width: 1199px)";
+@flz-media-xl: ~"(min-width: 1200px) and (max-width: 1599px)";
+@flz-media-xxl: ~"(min-width: 1600px)";
+
+@flz-media-lte-xs: ~"(max-width: 480px)";
+@flz-media-lte-s: ~"(max-width: 767px)";
+@flz-media-lte-m: ~"(max-width: 979px)";
+@flz-media-lte-l: ~"(max-width: 1199px)";
+@flz-media-lte-xl: ~"(max-width: 1599px)";
+@flz-media-lte-xxl: ~"(min-width: 0)";
+@flz-media-gte-xxs: ~"(min-width: 0)";
+@flz-media-gte-xs: ~"(min-width: 321px)";
+@flz-media-gte-s: ~"(min-width: 481px)";
+@flz-media-gte-m: ~"(min-width: 768px)";
+@flz-media-gte-l: ~"(min-width: 980px)";
+@flz-media-gte-xl: ~"(min-width: 1200px)";
+@flz-media-portrait: ~"(orientation: portrait)";
+@flz-media-landscape: ~"(orientation: landscape)";
+@flz-media-2x: ~"(-webkit-min-device-pixel-ratio: 2)";
+@flz-media-3x: ~"(-webkit-min-device-pixel-ratio: 3)";
+
+img, audio, video, canvas, object {
+	max-width: 100%;
+}
+
+html {
+	-webkit-text-size-adjust: 100%; // Prevent auto font-resizing
+}
+
+@media @flz-media-xxl {
+	.flz-mx-layout(-xxl);
+}
+
+@media @flz-media-xl {
+	.flz-mx-layout(-xl);
+}
+
+@media @flz-media-l {
+	.flz-mx-layout(-l);
+}
+
+@media @flz-media-m {
+	.flz-mx-layout(-m);
+}
+
+@media @flz-media-s {
+	.flz-mx-layout(-s);
+}
+
+@media @flz-media-xs {
+	.flz-mx-layout(-xs);
+}
+
+@media @flz-media-xxs {
+	.flz-mx-layout(-xxs);
+}
+
+@media @flz-media-lte-xxl {
+	.flz-mx-layout(-lte-xxl);
+}
+
+@media @flz-media-lte-xl {
+	.flz-mx-layout(-lte-xl);
+}
+
+@media @flz-media-lte-l {
+	.flz-mx-layout(-lte-l);
+}
+
+@media @flz-media-lte-m {
+	.flz-mx-layout(-lte-m);
+}
+
+@media @flz-media-lte-s {
+	.flz-mx-layout(-lte-s);
+}
+
+@media @flz-media-lte-xs {
+	.flz-mx-layout(-lte-xs);
+}
+
+@media @flz-media-gte-xl {
+	.flz-mx-layout(-gte-xl);
+}
+
+@media @flz-media-gte-l {
+	.flz-mx-layout(-gte-l);
+}
+
+@media @flz-media-gte-m {
+	.flz-mx-layout(-gte-m);
+}
+
+@media @flz-media-gte-s {
+	.flz-mx-layout(-gte-s);
+}
+
+@media @flz-media-gte-xs {
+	.flz-mx-layout(-gte-xs);
+}
+
+@media @flz-media-gte-xxs {
+	.flz-mx-layout(-gte-xxs);
+}
