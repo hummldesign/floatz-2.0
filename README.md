@@ -18,15 +18,15 @@ floatz.core.debug.less
 
 // Core configuration variables
 @flz-var-base-font-size
-@flz-var-gutter-text-x
-@flz-var-gutter-text-y
 @flz-var-gutter-layout-x
 @flz-var-gutter-layout-y
+@flz-var-gutter-text-x
+@flz-var-gutter-text-y
 
 // Core layout mixins
-.flz-mx-box
 .flz-mx-baseline-layout
 .flz-mx-baseline-text
+.flz-mx-box
 .flz-mx-debug-responsive
 .flz-mx-enwrap
 .flz-mx-layout
