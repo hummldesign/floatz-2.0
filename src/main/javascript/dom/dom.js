@@ -111,7 +111,7 @@ export class DOMElement {
 	 */
 	constructor(node) {
 		this.origNode = node;
-		this.tagName = node.tagName;
+		this.tagName = node.tagName.toUpperCase();
 	}
 
 	/**

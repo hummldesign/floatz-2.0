@@ -8,7 +8,7 @@
 	<script src="../../../lib/jasmine-2.7.0/jasmine.js"></script>
 	<script src="../../../lib/jasmine-2.7.0/jasmine-html.js"></script>
 	<script src="../../../lib/jasmine-2.7.0/boot.js"></script>
-	<script src="../../../build/floatz.test.js "></script>
+	<script src="../../../build/floatz.dom.test.min.js "></script>
 	<!-- Only for testing query results -->
 	<style>
 		.shown {
@@ -26,6 +26,9 @@
 		.visible {
 			visibility: visible;
 		}
+		.divWithHeight {
+			height: 25px;
+		}
 	</style>
 </head>
 <body>
@@ -39,6 +42,7 @@
 		<div class="child"></div>
 	</div>
 	<div class="child"></div>
+	<div class="divWithHeight"></div>
 	<!-- Jasmine test report -->
 </body>
 </html>

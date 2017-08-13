@@ -14,7 +14,7 @@ let handleLoad2 = () => {
 };
 
 describe("> Test Suite for dom.js", () => {
-	describe("> Test cases for query()", () => {
+	describe("> Test cases for DOM.query()", () => {
 		describe("Query by id", () => {
 			it("should return 1 DOMElement", () => {
 				expect(DOM.queryById("root") instanceof DOMElement).toBe(true);
@@ -72,8 +72,7 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-
-	describe("> Test cases for isWindow()", () => {
+	describe("> Test cases for DOM.isWindow()", () => {
 		describe("window element ", ()=> {
 			it("should be a window", () => {
 				expect(DOM.isWindow(window)).toBe(true);
@@ -90,8 +89,7 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-
-	describe("> Test cases for hidden() and visible()", () => {
+	describe("> Test cases for DOM.hidden() and DOM.visible()", () => {
 		describe("Element with display:none", () => {
 			it("should be hidden", () => {
 				expect(DOM.queryUnique(".hidden").hidden()).toBe(true);
@@ -125,8 +123,7 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-
-	describe("> Test cases for addEvent(), removeEvent(), triggerEvent()", () => {
+	describe("> Test cases for DOM.addEvent(), DOM.removeEvent(), DOM.triggerEvent()", () => {
 		describe("Adding 2 resize events", () => {
 			beforeEach(() => {
 				DOM.addEvent(window, "resize", handleLoad);
@@ -153,6 +150,55 @@ describe("> Test Suite for dom.js", () => {
 			});
 			it("should not increase the counter", () => {
 				expect(eventCounter.resize).toBe(3);
+			});
+		});
+	});
+	describe("> Test cases for DOMElement.tagName", () => {
+		describe("Getting the tagName of DOMElements", () => {
+			it("should return the according tag name in upper case", () => {
+				expect(DOM.queryUnique("body").tagName).toBe("BODY");
+				expect(DOM.queryById("root").tagName).toBe("DIV");
+			});
+		});
+	});
+	describe("> Test cases for DOMElement.origNode", () => {
+		describe("Getting the origNode from a DOMElement", () => {
+			it("should equal to the original node", () => {
+				expect(DOM.queryById("root").origNode).toBe(document.getElementById("root"));
+				expect(DOM.queryById("root").origNode).not.toBe(document.querySelector("body"));
+			});
+		});
+	});
+	describe("> Test cases for DOMElement.height()", () => {
+		describe("Retrieving the height from a 25px high element", () => {
+			it("should return 25", () => {
+				expect(DOM.queryUnique(".divWithHeight").height()).toBe(25);
+			});
+		});
+		describe("Changing the height from 25px to 32px", () => {
+			it("should return 32", () => {
+				expect(DOM.queryUnique(".divWithHeight").height(32).height()).toBe(32);
+			});
+		});
+	});
+	describe("> Test cases for DOMElement.attr() and DOMElement.removeAttr()", () => {
+		beforeEach(()=> {
+			DOM.queryUnique(".divWithHeight").attr("test", "123");
+		});
+		describe("Adding the attribute test=123", () => {
+			it("should return test=123", () => {
+				expect(DOM.queryUnique(".divWithHeight").attr("test")).toBe("123");
+			});
+		});
+		describe("Changing the attribute test from 123 to 456", () => {
+			it("should return test=456", () => {
+				expect(DOM.queryUnique(".divWithHeight").attr("test", "456").attr("test")).toBe("456");
+			});
+		});
+		describe("Removing the attribute test", () => {
+			it("should return null", () => {
+				expect(DOM.queryUnique(".divWithHeight").removeAttr("test") instanceof DOMElement).toBe(true);
+				expect(DOM.queryUnique(".divWithHeight").removeAttr("test").attr("test")).toBeNull();
 			});
 		});
 	});
