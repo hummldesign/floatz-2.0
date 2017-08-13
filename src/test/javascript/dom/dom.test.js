@@ -177,6 +177,7 @@ describe("> Test Suite for dom.js", () => {
 		});
 		describe("Changing the height from 25px to 32px", () => {
 			it("should return 32", () => {
+				expect(DOM.queryUnique(".divWithHeight").height(32) instanceof DOMElement).toBe(true); // TODO Move to separate test case
 				expect(DOM.queryUnique(".divWithHeight").height(32).height()).toBe(32);
 			});
 		});
@@ -197,7 +198,7 @@ describe("> Test Suite for dom.js", () => {
 		});
 		describe("Removing the attribute test", () => {
 			it("should return null", () => {
-				expect(DOM.queryUnique(".divWithHeight").removeAttr("test") instanceof DOMElement).toBe(true);
+				expect(DOM.queryUnique(".divWithHeight").removeAttr("test") instanceof DOMElement).toBe(true); // TODO Move to separate test case
 				expect(DOM.queryUnique(".divWithHeight").removeAttr("test").attr("test")).toBeNull();
 			});
 		});
