@@ -13,6 +13,29 @@ let handleLoad2 = () => {
 	eventCounter.resize += 1;
 };
 
+/*
+TestSuite()
+	.setup()
+	.tearDown()
+	.given()
+	.when()
+	.then()
+*/
+
+describe("> Test Suite ...", () => {
+	describe("Given a DOM element with an id 'root'", () => {
+		describe("When the element is queried by this id", () => {
+			it("Then only element should be returned", () => {
+				expect(DOM.queryById("root") instanceof DOMElement).toBe(true);
+			});
+			it("And its id should be root", () => {
+				expect(DOM.queryById("root").origNode.id).toBe("root");
+			});
+		});
+	});
+});
+
+/*
 describe("> Test Suite for dom.js", () => {
 	describe("> Test cases for DOM.query()", () => {
 		describe("Query by id", () => {
@@ -169,6 +192,30 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
+	describe("> Test cases for DOMElement.hasClass()", () => {
+		describe("Element with only class one", () => {
+			it("should return class one", () => {
+				expect(DOM.queryUnique(".one").hasClass("one")).toBe(true);
+			});
+			it("should not return class two", () => {
+				expect(DOM.queryUnique(".one").hasClass("two")).toBe(false);
+			});
+		});
+		describe("Element with only class one, two, three", () => {
+			it("should return class one", () => {
+				expect(DOM.queryUnique(".one.two.three").hasClass("one")).toBe(true);
+			});
+			it("should return class two", () => {
+				expect(DOM.queryUnique(".one.two.three").hasClass("two")).toBe(true);
+			});
+			it("should return class three", () => {
+				expect(DOM.queryUnique(".one.two.three").hasClass("three")).toBe(true);
+			});
+			it("should not return class four", () => {
+				expect(DOM.queryUnique(".one.two.three").hasClass("four")).toBe(false);
+			});
+		});
+	});
 	describe("> Test cases for DOMElement.height()", () => {
 		describe("Retrieving the height from a 25px high element", () => {
 			it("should return 25", () => {
@@ -203,4 +250,4 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-});
+});*/

@@ -203,6 +203,16 @@ export class DOMElement {
 	}
 
 	/**
+	 * Remove attribute.
+	 * @param attrName Attribute name
+	 * @returns {DOMElement} DOMElement for chaining
+	 */
+	removeAttr(attrName) {
+		this.origNode.removeAttribute(attrName);
+		return this;
+	}
+
+	/**
 	 * Get / set css style.
 	 * @param style Style name
 	 * @param value Style value (optional)
@@ -223,16 +233,6 @@ export class DOMElement {
 
 	hide() {
 		// TODO
-	}
-
-	/**
-	 * Remove attribute.
-	 * @param attrName Attribute name
-	 * @returns {DOMElement} DOMElement for chaining
-	 */
-	removeAttr(attrName) {
-		this.origNode.removeAttribute(attrName);
-		return this;
 	}
 
 	/**
