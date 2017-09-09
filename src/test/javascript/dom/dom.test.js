@@ -17,7 +17,7 @@ describe("> Test Suite for dom.js", () => {
 	describe("Given an element with an id", () => {
 		describe("When the element is queried by its id", () => {
 			it("Then an object of type DOMElement should be returned", () => {
-				expect(DOM.queryById("root") instanceof DOMElement).toBe(true);
+				expect(DOM.queryById("root") instanceof DOMElement).toBeTruthy()
 			});
 			it("And its id should be as expected", () => {
 				expect(DOM.queryById("root").origNode.id).toBe("root");
@@ -33,9 +33,9 @@ describe("> Test Suite for dom.js", () => {
 		describe("When they are queried by their common CSS class", () => {
 			it("Then 3 objects of type DOMElement should be returned", () => {
 				expect(DOM.query(".child").length).toBe(3);
-				expect(DOM.query(".child")[0] instanceof DOMElement).toBe(true);
-				expect(DOM.query(".child")[1] instanceof DOMElement).toBe(true);
-				expect(DOM.query(".child")[2] instanceof DOMElement).toBe(true);
+				expect(DOM.query(".child")[0] instanceof DOMElement).toBeTruthy()
+				expect(DOM.query(".child")[1] instanceof DOMElement).toBeTruthy()
+				expect(DOM.query(".child")[2] instanceof DOMElement).toBeTruthy()
 			});
 		});
 	});
@@ -43,8 +43,8 @@ describe("> Test Suite for dom.js", () => {
 		describe("When they are queried in the context of the parent id", () => {
 			it("Then 2 objects of type DOMElement should be returned", () => {
 				expect(DOM.query("#root > .child").length).toBe(2);
-				expect(DOM.query("#root > .child")[0] instanceof DOMElement).toBe(true);
-				expect(DOM.query("#root > .child")[1] instanceof DOMElement).toBe(true);
+				expect(DOM.query("#root > .child")[0] instanceof DOMElement).toBeTruthy()
+				expect(DOM.query("#root > .child")[1] instanceof DOMElement).toBeTruthy()
 			});
 		});
 		describe("When they are queried in the context the parent DOMElement", () => {
@@ -73,7 +73,7 @@ describe("> Test Suite for dom.js", () => {
 	describe("Given an element with an id", () => {
 		describe("When the element is queried uniquely", () => {
 			it("Then an object of type DOMElement should be returned", () => {
-				expect(DOM.queryUnique("#root") instanceof DOMElement).toBe(true);
+				expect(DOM.queryUnique("#root") instanceof DOMElement).toBeTruthy()
 			});
 			it("And its id should be as expected", () => {
 				expect(DOM.queryUnique("#root").origNode.id).toBe("root");
@@ -83,7 +83,7 @@ describe("> Test Suite for dom.js", () => {
 	describe("Given multiple elements with the same CSS class", () => {
 		describe("When an element is queried uniquely", () => {
 			it("Then only one object of type DOMElement should be returned", () => {
-				expect(DOM.queryUnique(".child") instanceof DOMElement).toBe(true);
+				expect(DOM.queryUnique(".child") instanceof DOMElement).toBeTruthy()
 			});
 			it("And its class name should be as expected", () => {
 				expect(DOM.queryUnique(".child").origNode.className).toBe("child");
@@ -100,69 +100,69 @@ describe("> Test Suite for dom.js", () => {
 	describe("Given a window object", () => {
 		describe("When it is checked if its a window", () => {
 			it("Then true is returned", () => {
-				expect(DOM.isWindow(window)).toBe(true);
+				expect(DOM.isWindow(window)).toBeTruthy()
 			});
 		});
 	});
 	describe("Given a non-window DOMElement", () => {
 		describe("When it is checked if its a window", () => {
 			it("Then false is returned", () => {
-				expect(DOM.isWindow(DOM.queryById("root"))).toBe(false);
+				expect(DOM.isWindow(DOM.queryById("root"))).toBeFalsy()
 			});
 		});
 	});
 	describe("Given a non-window native element", () => {
 		describe("When it is checked if its a window", () => {
 			it("Then false is returned", () => {
-				expect(DOM.isWindow(document.getElementById("root"))).toBe(false);
+				expect(DOM.isWindow(document.getElementById("root"))).toBeFalsy()
 			});
 		});
 	});
 	describe("Given a element with display: none", () => {
 		describe("When it is checked if its hidden", () => {
 			it("Then true is returned", () => {
-				expect(DOM.queryUnique(".hidden").hidden()).toBe(true);
+				expect(DOM.queryUnique(".hidden").hidden()).toBeTruthy()
 			});
 		});
 		describe("When it is checked if its visible", () => {
 			it("Then false is returned", () => {
-				expect(DOM.queryUnique(".hidden").visible()).toBe(false);
+				expect(DOM.queryUnique(".hidden").visible()).toBeFalsy()
 			});
 		});
 	});
 	describe("Given a element with visibility: hidden", () => {
 		describe("When it is checked if its hidden", () => {
 			it("Then true is returned", () => {
-				expect(DOM.queryUnique(".invisible").hidden()).toBe(true);
+				expect(DOM.queryUnique(".invisible").hidden()).toBeTruthy()
 			});
 		});
 		describe("When it is checked if its visible", () => {
 			it("Then false is returned", () => {
-				expect(DOM.queryUnique(".invisible").visible()).toBe(false);
+				expect(DOM.queryUnique(".invisible").visible()).toBeFalsy()
 			});
 		});
 	});
 	describe("Given a element with display other than none", () => {
 		describe("When it is checked if its hidden", () => {
 			it("Then false is returned", () => {
-				expect(DOM.queryUnique(".shown").hidden()).toBe(false);
+				expect(DOM.queryUnique(".shown").hidden()).toBeFalsy()
 			});
 		});
 		describe("When it is checked if its visible", () => {
 			it("Then true is returned", () => {
-				expect(DOM.queryUnique(".shown").visible()).toBe(true);
+				expect(DOM.queryUnique(".shown").visible()).toBeTruthy()
 			});
 		});
 	});
 	describe("Given a element with visibility:visible", () => {
 		describe("When it is checked if its hidden", () => {
 			it("Then false is returned", () => {
-				expect(DOM.queryUnique(".visible").hidden()).toBe(false);
+				expect(DOM.queryUnique(".visible").hidden()).toBeFalsy()
 			});
 		});
 		describe("When it is checked if its visible", () => {
 			it("Then true is returned", () => {
-				expect(DOM.queryUnique(".visible").visible()).toBe(true);
+				expect(DOM.queryUnique(".visible").visible()).toBeTruthy()
 			});
 		});
 	});
@@ -202,15 +202,15 @@ describe("> Test Suite for dom.js", () => {
 
 	describe("Given a BODY element", () => {
 		describe("When its queried", () => {
-			it("Then the returned DOMElement tag name should be BODY", () => {
-				expect(DOM.queryUnique("body").tagName).toBe("BODY");
+			it("Then the returned DOMElement tag name should be body", () => {
+				expect(DOM.queryUnique("body").tagName).toBe("body");
 			});
 		});
 	});
 	describe("Given a DIV element with a CSS id", () => {
 		describe("When the element is queried by its id", () => {
-			it("Then the returned DOMElement tag name should be DIV", () => {
-				expect(DOM.queryById("root").tagName).toBe("DIV");
+			it("Then the returned DOMElement tag name should be div", () => {
+				expect(DOM.queryById("root").tagName).toBe("div");
 			});
 		});
 	});
@@ -224,18 +224,18 @@ describe("> Test Suite for dom.js", () => {
 	describe("Given a DOM element with only one CSS class", () => {
 		describe("When the element is queried", () => {
 			it("Then the DOMElement should have the expected CSS class", () => {
-				expect(DOM.queryUnique(".one").hasClass("one")).toBe(true);
-				expect(DOM.queryUnique(".one").hasClass("two")).toBe(false);
+				expect(DOM.queryUnique(".one").hasClass("one")).toBeTruthy()
+				expect(DOM.queryUnique(".one").hasClass("two")).toBeFalsy()
 			});
 		});
 	});
 	describe("Given a DOM element with multiple CSS classes", () => {
 		describe("When the element is queried", () => {
 			it("Then the DOMElement should have all the expected CSS classes", () => {
-				expect(DOM.queryUnique(".one.two.three").hasClass("one")).toBe(true);
-				expect(DOM.queryUnique(".one.two.three").hasClass("two")).toBe(true);
-				expect(DOM.queryUnique(".one.two.three").hasClass("three")).toBe(true);
-				expect(DOM.queryUnique(".one.two.three").hasClass("four")).toBe(false);
+				expect(DOM.queryUnique(".one.two.three").hasClass("one")).toBeTruthy()
+				expect(DOM.queryUnique(".one.two.three").hasClass("two")).toBeTruthy()
+				expect(DOM.queryUnique(".one.two.three").hasClass("three")).toBeTruthy()
+				expect(DOM.queryUnique(".one.two.three").hasClass("four")).toBeFalsy()
 			});
 		});
 	});
@@ -268,6 +268,178 @@ describe("> Test Suite for dom.js", () => {
 		describe("When the attribute is removed", () => {
 			it("Then the DOMElement should have an no attribute test", () => {
 				expect(DOM.queryUnique(".divWithHeight").removeAttr("test").attr("test")).toBeNull();
+			});
+		});
+	});
+	describe("Given a DOM element", () => {
+		describe("When the class test is added", () => {
+			it("Then the DOMElement should have the class test", () => {
+				expect(DOM.queryById("root").addClass("test").hasClass("test")).toBeTruthy()
+			});
+		});
+		describe("When the class test2 is added", () => {
+			it("Then the DOMElement should have the classes test and test2", () => {
+				expect(DOM.queryById("root").addClass("test").hasClass("test")).toBeTruthy()
+				expect(DOM.queryById("root").addClass("test2").hasClass("test2")).toBeTruthy()
+			});
+		});
+		describe("When the class test2 is removed", () => {
+			it("Then the DOMElement should have the class test but not test2", () => {
+				expect(DOM.queryById("root").removeClass("test2").hasClass("test2")).toBeFalsy()
+				expect(DOM.queryById("root").hasClass("test")).toBeTruthy()
+			});
+		});
+		describe("When the class test is removed", () => {
+			it("Then the DOMElement should have neither class test nor test2", () => {
+				expect(DOM.queryById("root").removeClass("test").hasClass("test")).toBeFalsy();
+				expect(DOM.queryById("root").hasClass("test2")).toBeFalsy()
+			});
+			it("And the DOMElement should have no empty class attribute", () => {
+				expect(DOM.queryById("root").attr("class")).toBeNull();
+			});
+		});
+	});
+	describe("Given a DOM element without a style attribute", () => {
+		describe("When the style display: block is added", () => {
+			it("The the attribute style should be display: block;", () => {
+				expect(DOM.queryUnique(".one").css("display", "block").attr("style")).toBe("display: block;");
+			});
+		});
+		describe("When the style float: left is added", () => {
+			it("The the attribute style should be display: block;", () => {
+				expect(DOM.queryUnique(".one").css("float", "left").attr("style")).toBe("display: block; float: left;");
+			});
+		})
+		describe("When the style display is removed", () => {
+			it("Then the attribute style should be float: left;", () => {
+				expect(DOM.queryUnique(".one").css("display", null).attr("style")).toBe("float: left;");
+			});
+		});
+		describe("When the style float is removed", () => {
+			it("Then the attribute style should be null", () => {
+				expect(DOM.queryUnique(".one").css("float", null).attr("style")).toBeNull();
+			});
+		});
+	});
+	describe("Given a DOM element with display: inline and without any inline styles", () => {
+		describe("When the element is hidden", () => {
+			it("Then the element should be invisible", () => {
+				expect(DOM.queryUnique(".inline").hide().hidden()).toBeTruthy()
+			});
+			it("And should have the custom attribute flz-prev-display: inline", () => {
+				expect(DOM.queryUnique(".inline").attr("flz-prev-display")).toBe("inline");
+			});
+			it("And should have the inline style display: none", () => {
+				expect(DOM.queryUnique(".inline").attr("style")).toBe("display: none;");
+			});
+		});
+		describe("When the element is shown", () => {
+			it("Then the element should be visible", () => {
+				expect(DOM.queryUnique(".inline").show().visible()).toBeTruthy();
+			});
+			it("And should be an inline element", () => {
+				expect(DOM.queryUnique(".inline").css("display")).toBe("inline");
+			});
+			it("And should have no custom attribute flz-prev-display", () => {
+				expect(DOM.queryUnique(".inline").attr("flz-prev-display")).toBeNull();
+			});
+			it("And should have no inline style", () => {
+				expect(DOM.queryUnique(".inline").attr("style")).toBeNull();
+			});
+		});
+	});
+	describe("Given a DOM element with display: none and without any inline styles", () => {
+		describe("When the element is shown", () => {
+			it("Then the element should be visible", () => {
+				expect(DOM.queryUnique(".hidden").show().visible()).toBeTruthy()
+			});
+			it("And should have the custom attribute flz-prev-display: none", () => {
+				expect(DOM.queryUnique(".hidden").attr("flz-prev-display")).toBe("none");
+			});
+			it("And should have the inline style display: block", () => {
+				expect(DOM.queryUnique(".hidden").attr("style")).toBe("display: block;");
+			});
+		});
+		describe("When the element is hidden", () => {
+			it("Then the element should be invisible", () => {
+				expect(DOM.queryUnique(".hidden").hide().visible()).toBeFalsy();
+			});
+			it("And should have no custom attribute flz-prev-display", () => {
+				expect(DOM.queryUnique(".hidden").attr("flz-prev-display")).toBeNull();
+			});
+			it("And should have no inline style", () => {
+				expect(DOM.queryUnique(".hidden").attr("style")).toBeNull();
+			});
+		});
+	});
+	describe("Given a DOM element with display: block as inline style", () => {
+		describe("When the element is hidden", () => {
+			it("Then the element should be invisible", () => {
+				expect(DOM.queryUnique(".inlineShown").hide().hidden()).toBeTruthy()
+			});
+			it("And should have the custom attribute flz-prev-inline-display: inline", () => {
+				expect(DOM.queryUnique(".inlineShown").attr("flz-prev-inline-display")).toBe("block");
+			});
+			it("And should have the inline style display: none", () => {
+				expect(DOM.queryUnique(".inlineShown").attr("style")).toBe("display: none;");
+			});
+		});
+		describe("When the element is shown", () => {
+			it("Then the element should be visible", () => {
+				expect(DOM.queryUnique(".inlineShown").show().visible()).toBeTruthy();
+			});
+			it("And should be an inline element", () => {
+				expect(DOM.queryUnique(".inlineShown").css("display")).toBe("block");
+			});
+			it("And should have no custom attribute flz-prev-inline-display", () => {
+				expect(DOM.queryUnique(".inlineShown").attr("flz-prev-inline-display")).toBeNull();
+			});
+			it("And should have inline style display: block", () => {
+				expect(DOM.queryUnique(".inlineShown").attr("style")).toBe("display: block;");
+			});
+		});
+	});
+	describe("Given a DOM element with display: none as inline style", () => {
+		describe("When the element is shown", () => {
+			it("Then the element should be visible", () => {
+				expect(DOM.queryUnique(".inlineHidden").show().visible()).toBeTruthy()
+			});
+			it("And should have the custom attribute flz-prev-inline-display: none", () => {
+				expect(DOM.queryUnique(".inlineHidden").attr("flz-prev-inline-display")).toBe("none");
+			});
+			it("And should have the inline style display: block", () => {
+				expect(DOM.queryUnique(".inlineHidden").attr("style")).toBe("display: block;");
+			});
+		});
+		describe("When the element is hidden", () => {
+			it("Then the element should be invisible", () => {
+				expect(DOM.queryUnique(".inlineHidden").hide().visible()).toBeFalsy();
+			});
+			it("And should have no custom attribute flz-prev-inline-display", () => {
+				expect(DOM.queryUnique(".inlineHidden").attr("flz-prev-inline-display")).toBeNull();
+			});
+			it("And should have inline style display: none", () => {
+				expect(DOM.queryUnique(".inlineHidden").attr("style")).toBe("display: none;");
+			});
+		});
+	});
+	describe("Given a DOM element with display: none as inline style", () => {
+		describe("When the element is hidden", () => {
+			it("Then the element should stay invisible", () => {
+				expect(DOM.queryUnique(".inlineHidden").hide().hidden()).toBeTruthy()
+			});
+			it("And should have no custom attribute flz-prev-inline-display", () => {
+				expect(DOM.queryUnique(".inlineHidden").attr("flz-prev-inline-display")).toBeNull();
+			});
+		});
+	});
+	describe("Given a DOM element with display: block as inline style", () => {
+		describe("When the element is shown", () => {
+			it("Then the element should stay visible", () => {
+				expect(DOM.queryUnique(".inlineShown").show().visible()).toBeTruthy()
+			});
+			it("And should have no custom attribute flz-prev-inline-display", () => {
+				expect(DOM.queryUnique(".inlineShown").attr("flz-prev-inline-display")).toBeNull();
 			});
 		});
 	});

@@ -26,6 +26,11 @@
 		.visible {
 			visibility: visible;
 		}
+
+		.inline {
+			display: inline;
+		}
+
 		.divWithHeight {
 			height: 25px;
 		}
@@ -34,9 +39,12 @@
 <body>
 	<!-- Test data -->
 	<div class="shown"></div>
+	<div class="inlineShown" style="display: block"></div>
 	<div class="visible"></div>
 	<div class="hidden"></div>
+	<div class="inlineHidden" style="display: none"></div>
 	<div class="invisible"></div>
+	<div class="inline"></div>
 	<div id="root">
 		<div class="child"></div>
 		<div class="child"></div>
