@@ -318,7 +318,7 @@ export class DOMElement {
  *
  * Info: Potential spaces are ignored.
  *
- * @param domElement DOMElement
+ * @param domElement {DOMElement}
  * @param style Style
  * @returns {boolean} State of inline style
  */
@@ -335,38 +335,41 @@ function _hasInlineStyle(domElement, style) {
  * @param domElement {DOMElement}
  * @param handle Condition if element visibility should be changed
  * @param value Display value (BLOCK or NONE)
- * @returns {DOMElement}
+ * @returns {DOMElement} DOM Element
  * @private
  */
 function _showOrHide(domElement, handle, value) {
 	if (handle) {
-		let prevDisplay, prevInlineDisplay;
-
-		prevInlineDisplay = domElement.attr(PREV_INLINE_DISPLAY);
+		let prevInlineDisplay = domElement.attr(PREV_INLINE_DISPLAY);
 		if (prevInlineDisplay === null) {
-			prevDisplay = domElement.attr(PREV_DISPLAY);
-			if (prevDisplay === null) {
-				if (_hasInlineStyle(domElement, DISPLAY)) {
-					// Remember old inline display value
-					domElement.attr(PREV_INLINE_DISPLAY, domElement.css("display"));
-				} else {
-					// Remember old display value
-					domElement.attr(PREV_DISPLAY, domElement.css(DISPLAY));
-				}
-
-				// Show or hide element
+			if (domElement.attr(PREV_DISPLAY) === null) {
+				_rememberDisplayValue(domElement);
 				domElement.css(DISPLAY, value);
 			}
 			else {
-				// Restore old display value (just remove inline style)
 				_restoreDisplayValue(domElement, PREV_DISPLAY, null);
 			}
 		} else {
-			// Restore old inline display value
 			_restoreDisplayValue(domElement, PREV_INLINE_DISPLAY, prevInlineDisplay);
 		}
 	}
 	return domElement;
+}
+
+/**
+ * Remember display value.
+ *
+ * @param domElement {DOMElement}
+ * @private
+ */
+function _rememberDisplayValue(domElement) {
+	if (_hasInlineStyle(domElement, DISPLAY)) {
+		// Remember old inline display value
+		domElement.attr(PREV_INLINE_DISPLAY, domElement.css(DISPLAY));
+	} else {
+		// Remember old display value
+		domElement.attr(PREV_DISPLAY, domElement.css(DISPLAY));
+	}
 }
 
 /**
