@@ -67,7 +67,9 @@ export class Scroller {
 
 /**
  * Scroll animation.
- * Inspired by http://callmecavs.com/jump.js/
+ *
+ * Inspired by:
+ * http://callmecavs.com/jump.js/
  */
 export class ScrollAnimation {
 

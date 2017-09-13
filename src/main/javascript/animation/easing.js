@@ -1,7 +1,7 @@
 /**
  * Collection of easings for use with requestAnimationFrame.
  *
- * See:
+ * Inspired by:
  * http://easings.net/en#
  * http://robertpenner.com/easing/
  * https://github.com/jaxgeller/ez.js
