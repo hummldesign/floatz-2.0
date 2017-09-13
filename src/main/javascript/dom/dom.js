@@ -1,4 +1,4 @@
-import StringUtils from "../util/stringutils.js";
+import StringUtils from "../util/strings.js";
 
 /**
  * Constants
@@ -13,12 +13,12 @@ const PX = "px";
 const STYLE = "style";
 
 /**
- * DOM utilities
+ * DOM utilities.
  */
 export default class DOM {
 
 	/**
-	 * Check if element is the window.
+	 * Check if _element is the window.
 	 * @param element Element
 	 * @returns {boolean} true if window, false if not
 	 */
@@ -32,7 +32,7 @@ export default class DOM {
 	 * Syntax: DOM.query(<selectors>[,<context>]);
 	 *
 	 * @param selectors String with selectors
-	 * @param context Context native element or DOMElement (optional, default is window)
+	 * @param context Context native _element or DOMElement (optional, default is window)
 	 * @returns {!Array} Array of DOMElement items
 	 */
 	static query(selectors, context = window) {
@@ -55,7 +55,7 @@ export default class DOM {
 	}
 
 	/**
-	 * Query element by id.
+	 * Query _element by id.
 	 * @param id Element id
 	 * @returns {DOMElement} DOMElement or null if not found
 	 */
@@ -65,7 +65,7 @@ export default class DOM {
 	}
 
 	/**
-	 * Query only unique element.
+	 * Query only unique _element.
 	 * @param selector Selector
 	 * @returns {DOMElement} DOMElement or null if not found
 	 */
@@ -115,7 +115,7 @@ export default class DOM {
 }
 
 /**
- * DOM Element utilities
+ * DOM Element returned from queries in DOM utilities.
  */
 export class DOMElement {
 
@@ -130,7 +130,7 @@ export class DOMElement {
 
 	/**
 	 * Get / set height
-	 * @param value Value to set
+	 * @param {number=} value Value to set (optional)
 	 * @returns {*} Height or DOMElement for chaining when used as setter
 	 */
 	height(value) {
@@ -191,7 +191,7 @@ export class DOMElement {
 	}
 
 	/**
-	 * Check if element is hidden.
+	 * Check if _element is hidden.
 	 * @returns {boolean} true if hidden, false if visible
 	 */
 	hidden() {
@@ -200,7 +200,7 @@ export class DOMElement {
 	}
 
 	/**
-	 * Check if element is visible
+	 * Check if _element is visible
 	 * @returns {boolean} true if visible, false if hidden
 	 */
 	visible() {
@@ -210,7 +210,7 @@ export class DOMElement {
 	/**
 	 * Get / set attribute value.
 	 * @param name Attribute name
-	 * @param value Attribute value
+	 * @param {string=} value Attribute value (optional)
 	 * @returns {*} Attribute value or DOMElement for chaining when used as setter
 	 */
 	attr(name, value) {
@@ -236,9 +236,10 @@ export class DOMElement {
 	 * Get / set css style.
 	 *
 	 * If the last style is removed the attribute style is removed as well.
+	 * Style can be removed if value is null.
 	 *
 	 * @param style Style name
-	 * @param value Style value (optional)
+	 * @param {?string=} value Style value (optional)
 	 * @returns {*} Style value or DOMElement for chaining when used as setter
 	 */
 	css(style, value) {
@@ -254,7 +255,7 @@ export class DOMElement {
 	}
 
 	/**
-	 * Show element.
+	 * Show _element.
 	 *
 	 * Is able to save/restore the initial display value even if its an inline style.
 	 *
@@ -266,7 +267,7 @@ export class DOMElement {
 	}
 
 	/**
-	 * Hide element.
+	 * Hide _element.
 	 *
 	 * Is able to save/restore the initial display value even if its an inline style.
 	 */
@@ -321,6 +322,7 @@ export class DOMElement {
  * @param domElement {DOMElement}
  * @param style Style
  * @returns {boolean} State of inline style
+ * @private
  */
 function _hasInlineStyle(domElement, style) {
 	if (domElement.attr(STYLE) !== null) {
@@ -330,10 +332,10 @@ function _hasInlineStyle(domElement, style) {
 }
 
 /**
- * Show / hide element.
+ * Show / hide _element.
  *
  * @param domElement {DOMElement}
- * @param handle Condition if element visibility should be changed
+ * @param handle Condition if _element visibility should be changed
  * @param value Display value (BLOCK or NONE)
  * @returns {DOMElement} DOM Element
  * @private

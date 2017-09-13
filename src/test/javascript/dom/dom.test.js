@@ -14,8 +14,8 @@ let handleLoad2 = () => {
 };
 
 describe("> Test Suite for dom.js", () => {
-	describe("Given an element with an id", () => {
-		describe("When the element is queried by its id", () => {
+	describe("Given an _element with an id", () => {
+		describe("When the _element is queried by its id", () => {
 			it("Then an object of type DOMElement should be returned", () => {
 				expect(DOM.queryById("root") instanceof DOMElement).toBeTruthy()
 			});
@@ -23,7 +23,7 @@ describe("> Test Suite for dom.js", () => {
 				expect(DOM.queryById("root").origNode.id).toBe("root");
 			});
 		});
-		describe("When the element is queried by an invalid id", () => {
+		describe("When the _element is queried by an invalid id", () => {
 			it("Then null should be returned", () => {
 				expect(DOM.queryById("invalidId")).toBeNull();
 			});
@@ -39,7 +39,7 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given 2 elements with the same CSS class in the context of an element with an id", () => {
+	describe("Given 2 elements with the same CSS class in the context of an _element with an id", () => {
 		describe("When they are queried in the context of the parent id", () => {
 			it("Then 2 objects of type DOMElement should be returned", () => {
 				expect(DOM.query("#root > .child").length).toBe(2);
@@ -52,12 +52,12 @@ describe("> Test Suite for dom.js", () => {
 				expect(DOM.query(".child", DOM.queryById("root")).length).toBe(2);
 			});
 		});
-		describe("When they are queried in the context of the native parent element", () => {
+		describe("When they are queried in the context of the native parent _element", () => {
 			it("The 2 elements should be returned", () => {
 				expect(DOM.query(".child", document.getElementById("root")).length).toBe(2);
 			});
 		});
-		describe("When they are queried in the context a string instead of an element", () => {
+		describe("When they are queried in the context a string instead of an _element", () => {
 			it("Then an empty array should be returned", () => {
 				expect(DOM.query(".child", "#root").length).toBe(0);
 			});
@@ -70,8 +70,8 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given an element with an id", () => {
-		describe("When the element is queried uniquely", () => {
+	describe("Given an _element with an id", () => {
+		describe("When the _element is queried uniquely", () => {
 			it("Then an object of type DOMElement should be returned", () => {
 				expect(DOM.queryUnique("#root") instanceof DOMElement).toBeTruthy()
 			});
@@ -81,7 +81,7 @@ describe("> Test Suite for dom.js", () => {
 		});
 	});
 	describe("Given multiple elements with the same CSS class", () => {
-		describe("When an element is queried uniquely", () => {
+		describe("When an _element is queried uniquely", () => {
 			it("Then only one object of type DOMElement should be returned", () => {
 				expect(DOM.queryUnique(".child") instanceof DOMElement).toBeTruthy()
 			});
@@ -91,7 +91,7 @@ describe("> Test Suite for dom.js", () => {
 		});
 	});
 	describe("Given different elements", () => {
-		describe("When an element is queried uniquely using an invalid CSS class", () => {
+		describe("When an _element is queried uniquely using an invalid CSS class", () => {
 			it("Then null is returned", () => {
 				expect(DOM.queryUnique(".invalidChild")).toBeNull();
 			});
@@ -111,14 +111,14 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given a non-window native element", () => {
+	describe("Given a non-window native _element", () => {
 		describe("When it is checked if its a window", () => {
 			it("Then false is returned", () => {
 				expect(DOM.isWindow(document.getElementById("root"))).toBeFalsy()
 			});
 		});
 	});
-	describe("Given a element with display: none", () => {
+	describe("Given a _element with display: none", () => {
 		describe("When it is checked if its hidden", () => {
 			it("Then true is returned", () => {
 				expect(DOM.queryUnique(".hidden").hidden()).toBeTruthy()
@@ -130,7 +130,7 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given a element with visibility: hidden", () => {
+	describe("Given a _element with visibility: hidden", () => {
 		describe("When it is checked if its hidden", () => {
 			it("Then true is returned", () => {
 				expect(DOM.queryUnique(".invisible").hidden()).toBeTruthy()
@@ -142,7 +142,7 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given a element with display other than none", () => {
+	describe("Given a _element with display other than none", () => {
 		describe("When it is checked if its hidden", () => {
 			it("Then false is returned", () => {
 				expect(DOM.queryUnique(".shown").hidden()).toBeFalsy()
@@ -154,7 +154,7 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given a element with visibility:visible", () => {
+	describe("Given a _element with visibility:visible", () => {
 		describe("When it is checked if its hidden", () => {
 			it("Then false is returned", () => {
 				expect(DOM.queryUnique(".visible").hidden()).toBeFalsy()
@@ -200,37 +200,37 @@ describe("> Test Suite for dom.js", () => {
 		})
 	});
 
-	describe("Given a BODY element", () => {
+	describe("Given a BODY _element", () => {
 		describe("When its queried", () => {
 			it("Then the returned DOMElement tag name should be body", () => {
 				expect(DOM.queryUnique("body").tagName).toBe("body");
 			});
 		});
 	});
-	describe("Given a DIV element with a CSS id", () => {
-		describe("When the element is queried by its id", () => {
+	describe("Given a DIV _element with a CSS id", () => {
+		describe("When the _element is queried by its id", () => {
 			it("Then the returned DOMElement tag name should be div", () => {
 				expect(DOM.queryById("root").tagName).toBe("div");
 			});
 		});
 	});
-	describe("Given a DIV element with a CSS id", () => {
-		describe("When the element is queried by its id", () => {
-			it("Then the returned DOMElement orig node should equal to the native element", () => {
+	describe("Given a DIV _element with a CSS id", () => {
+		describe("When the _element is queried by its id", () => {
+			it("Then the returned DOMElement orig node should equal to the native _element", () => {
 				expect(DOM.queryById("root").origNode).toBe(document.getElementById("root"));
 			});
 		});
 	});
-	describe("Given a DOM element with only one CSS class", () => {
-		describe("When the element is queried", () => {
+	describe("Given a DOM _element with only one CSS class", () => {
+		describe("When the _element is queried", () => {
 			it("Then the DOMElement should have the expected CSS class", () => {
 				expect(DOM.queryUnique(".one").hasClass("one")).toBeTruthy()
 				expect(DOM.queryUnique(".one").hasClass("two")).toBeFalsy()
 			});
 		});
 	});
-	describe("Given a DOM element with multiple CSS classes", () => {
-		describe("When the element is queried", () => {
+	describe("Given a DOM _element with multiple CSS classes", () => {
+		describe("When the _element is queried", () => {
 			it("Then the DOMElement should have all the expected CSS classes", () => {
 				expect(DOM.queryUnique(".one.two.three").hasClass("one")).toBeTruthy()
 				expect(DOM.queryUnique(".one.two.three").hasClass("two")).toBeTruthy()
@@ -239,8 +239,8 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given an element with a height of 25px", () => {
-		describe("When the element is queried", () => {
+	describe("Given an _element with a height of 25px", () => {
+		describe("When the _element is queried", () => {
 			it("Then the DOMElement should have a height of 25px", () => {
 				expect(DOM.queryUnique(".divWithHeight").height()).toBe(25);
 			});
@@ -251,7 +251,7 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given a DOM element", () => {
+	describe("Given a DOM _element", () => {
 		describe("When the attribute test=123 is added", () => {
 			beforeEach(()=> {
 				DOM.queryUnique(".divWithHeight").attr("test", "123");
@@ -271,7 +271,7 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given a DOM element", () => {
+	describe("Given a DOM _element", () => {
 		describe("When the class test is added", () => {
 			it("Then the DOMElement should have the class test", () => {
 				expect(DOM.queryById("root").addClass("test").hasClass("test")).toBeTruthy()
@@ -299,7 +299,7 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given a DOM element without a style attribute", () => {
+	describe("Given a DOM _element without a style attribute", () => {
 		describe("When the style display: block is added", () => {
 			it("The the attribute style should be display: block;", () => {
 				expect(DOM.queryUnique(".one").css("display", "block").attr("style")).toBe("display: block;");
@@ -321,9 +321,9 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given a DOM element with display: inline and without any inline styles", () => {
-		describe("When the element is hidden", () => {
-			it("Then the element should be invisible", () => {
+	describe("Given a DOM _element with display: inline and without any inline styles", () => {
+		describe("When the _element is hidden", () => {
+			it("Then the _element should be invisible", () => {
 				expect(DOM.queryUnique(".inline").hide().hidden()).toBeTruthy()
 			});
 			it("And should have the custom attribute flz-prev-display: inline", () => {
@@ -333,11 +333,11 @@ describe("> Test Suite for dom.js", () => {
 				expect(DOM.queryUnique(".inline").attr("style")).toBe("display: none;");
 			});
 		});
-		describe("When the element is shown", () => {
-			it("Then the element should be visible", () => {
+		describe("When the _element is shown", () => {
+			it("Then the _element should be visible", () => {
 				expect(DOM.queryUnique(".inline").show().visible()).toBeTruthy();
 			});
-			it("And should be an inline element", () => {
+			it("And should be an inline _element", () => {
 				expect(DOM.queryUnique(".inline").css("display")).toBe("inline");
 			});
 			it("And should have no custom attribute flz-prev-display", () => {
@@ -348,9 +348,9 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given a DOM element with display: none and without any inline styles", () => {
-		describe("When the element is shown", () => {
-			it("Then the element should be visible", () => {
+	describe("Given a DOM _element with display: none and without any inline styles", () => {
+		describe("When the _element is shown", () => {
+			it("Then the _element should be visible", () => {
 				expect(DOM.queryUnique(".hidden").show().visible()).toBeTruthy()
 			});
 			it("And should have the custom attribute flz-prev-display: none", () => {
@@ -360,8 +360,8 @@ describe("> Test Suite for dom.js", () => {
 				expect(DOM.queryUnique(".hidden").attr("style")).toBe("display: block;");
 			});
 		});
-		describe("When the element is hidden", () => {
-			it("Then the element should be invisible", () => {
+		describe("When the _element is hidden", () => {
+			it("Then the _element should be invisible", () => {
 				expect(DOM.queryUnique(".hidden").hide().visible()).toBeFalsy();
 			});
 			it("And should have no custom attribute flz-prev-display", () => {
@@ -372,9 +372,9 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given a DOM element with display: block as inline style", () => {
-		describe("When the element is hidden", () => {
-			it("Then the element should be invisible", () => {
+	describe("Given a DOM _element with display: block as inline style", () => {
+		describe("When the _element is hidden", () => {
+			it("Then the _element should be invisible", () => {
 				expect(DOM.queryUnique(".inlineShown").hide().hidden()).toBeTruthy()
 			});
 			it("And should have the custom attribute flz-prev-inline-display: inline", () => {
@@ -384,11 +384,11 @@ describe("> Test Suite for dom.js", () => {
 				expect(DOM.queryUnique(".inlineShown").attr("style")).toBe("display: none;");
 			});
 		});
-		describe("When the element is shown", () => {
-			it("Then the element should be visible", () => {
+		describe("When the _element is shown", () => {
+			it("Then the _element should be visible", () => {
 				expect(DOM.queryUnique(".inlineShown").show().visible()).toBeTruthy();
 			});
-			it("And should be an inline element", () => {
+			it("And should be an inline _element", () => {
 				expect(DOM.queryUnique(".inlineShown").css("display")).toBe("block");
 			});
 			it("And should have no custom attribute flz-prev-inline-display", () => {
@@ -399,9 +399,9 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given a DOM element with display: none as inline style", () => {
-		describe("When the element is shown", () => {
-			it("Then the element should be visible", () => {
+	describe("Given a DOM _element with display: none as inline style", () => {
+		describe("When the _element is shown", () => {
+			it("Then the _element should be visible", () => {
 				expect(DOM.queryUnique(".inlineHidden").show().visible()).toBeTruthy()
 			});
 			it("And should have the custom attribute flz-prev-inline-display: none", () => {
@@ -411,8 +411,8 @@ describe("> Test Suite for dom.js", () => {
 				expect(DOM.queryUnique(".inlineHidden").attr("style")).toBe("display: block;");
 			});
 		});
-		describe("When the element is hidden", () => {
-			it("Then the element should be invisible", () => {
+		describe("When the _element is hidden", () => {
+			it("Then the _element should be invisible", () => {
 				expect(DOM.queryUnique(".inlineHidden").hide().visible()).toBeFalsy();
 			});
 			it("And should have no custom attribute flz-prev-inline-display", () => {
@@ -423,9 +423,9 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given a DOM element with display: none as inline style", () => {
-		describe("When the element is hidden", () => {
-			it("Then the element should stay invisible", () => {
+	describe("Given a DOM _element with display: none as inline style", () => {
+		describe("When the _element is hidden", () => {
+			it("Then the _element should stay invisible", () => {
 				expect(DOM.queryUnique(".inlineHidden").hide().hidden()).toBeTruthy()
 			});
 			it("And should have no custom attribute flz-prev-inline-display", () => {
@@ -433,9 +433,9 @@ describe("> Test Suite for dom.js", () => {
 			});
 		});
 	});
-	describe("Given a DOM element with display: block as inline style", () => {
-		describe("When the element is shown", () => {
-			it("Then the element should stay visible", () => {
+	describe("Given a DOM _element with display: block as inline style", () => {
+		describe("When the _element is shown", () => {
+			it("Then the _element should stay visible", () => {
 				expect(DOM.queryUnique(".inlineShown").show().visible()).toBeTruthy()
 			});
 			it("And should have no custom attribute flz-prev-inline-display", () => {

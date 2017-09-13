@@ -9,24 +9,47 @@ dependencies {
 }
 
 task compileTest {
-	dependsOn 'compileJsDomTest'
+	dependsOn 'compileDomJsTest'
+	dependsOn 'compileScrollerJsTest'
 }
 
-task compileJsDomTest(type: JavaExec){
+task compileDomJsTest(type: JavaExec){
+  classpath configurations.closureCompiler
+  main = 'com.google.javascript.jscomp.CommandLineRunner'
+  def closureArgs = []
+  closureArgs << "--language_in=ES6"
+  closureArgs << "--language_out=ES5"
+  // closureArgs << "--formatting=pretty_print"
+  // closureArgs << "--create_source_map=build/floatz.dom.test.min.js.map"
+  // closureArgs << "--debug"
+  // closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
+  closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
+  closureArgs << "--js_output_file=build/floatz.dom.test.min.js"
+  closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
+
+  // Must be in correct order otherwise modules are not found
+  closureArgs << "lib/polyfills/**.js"
+  closureArgs << "src/main/javascript/**.js"
+  closureArgs << "src/test/javascript/dom/dom.test.js"
+  args closureArgs
+}
+
+task compileScrollerJsTest(type: JavaExec){
   classpath configurations.closureCompiler
   main = 'com.google.javascript.jscomp.CommandLineRunner'
   def closureArgs = []
   closureArgs << "--language_in=ES6"
   closureArgs << "--language_out=ES5"
   closureArgs << "--formatting=pretty_print"
-  // closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
+  closureArgs << "--debug"
   closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
-  // closureArgs << "--compilation_level=WHITESPACE_ONLY"
-  closureArgs << "--js_output_file=build/floatz.dom.test.min.js"
+  // closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
+  closureArgs << "--js_output_file=build/floatz.scroller.test.min.js"
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
   // Must be in correct order otherwise modules are not found
+  closureArgs << "lib/polyfills/**.js"
   closureArgs << "src/main/javascript/**.js"
-  closureArgs << "src/test/javascript/dom/dom.test.js"
+  closureArgs << "src/test/javascript/scroll/scroller.test.js"
   args closureArgs
 }

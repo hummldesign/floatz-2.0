@@ -1,4 +1,4 @@
-export default class StringUtils {
+export default class Strings {
 
 	/**
 	 * Remove all spaces.
