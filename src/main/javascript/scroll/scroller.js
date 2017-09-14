@@ -26,13 +26,20 @@ export const Direction = Object.freeze({
  */
 export class Scroller {
 
+	// TODO: Support DOMElement as container!
+	// TODO: Support scrollTo for DOMElement?
+
 	/**
 	 * Constructor.
 	 *
-	 * @param container Scroll container (default is window)
+	 * @param {?(DOMElement|Object|string)} container Scroll container (default is window)
 	 */
 	constructor(container = window) {
-		this._container = container;
+		if (DOM.isWindow(container)) {
+			this._container = container;
+		} else {
+			this._container = DOM.queryUnique(container).origNode;
+		}
 	}
 
 	/**
@@ -75,22 +82,24 @@ export class ScrollAnimation {
 	/**
 	 * Constructor.
 	 *
-	 * @param container Scroll container
+	 * @param {Object} container Scroll container
 	 * @param {(number|string|Object)} target Target element or position
 	 * @param {Object} options Scroll options
 	 */
 	constructor(container, target, options) {
-		this._container = null;       // Scroll _container
-		this._options = null;         // Scroll configuration
+		this._container = null;      // Scroll container
+		this._scrollable = null;     // Scroll container that supports scrollTop, scrollLeft
+		this._options = null;        // Scroll configuration
 		this._element = null;        // Scroll target DOMElement
-		this._start = null;          // Scroll _start position in px
-		this._stop = null;           // Scroll _stop position in px
-		this._distance = null;       // Scroll _distance in px
-		this._timeStart = null;      // Scroll _start time in ms
+		this._start = null;          // Scroll start position in px
+		this._stop = null;           // Scroll stop position in px
+		this._distance = null;       // Scroll distance in px
+		this._timeStart = null;      // Scroll start time in ms
 		this._timeElapsed = null;    // Scroll time already elapsed ms
 		this._next = null;           // Next scroll position in px
 
 		this._container = container;
+		this._scrollable = DOM.isWindow(container) ? document.body : container;
 		this._options = options;
 
 		// Convert target to DOMElement
@@ -118,9 +127,9 @@ export class ScrollAnimation {
 	startPos() {
 		// Get scroll _start position depending on scroll direction
 		if (this._options.direction === Direction.VERTICAL) {
-			return this._container.scrollY || this._container.pageYOffset;
+			return this._scrollable.scrollTop;
 		} else {
-			return this._container.scrollX || this._container.pageXOffset;
+			return this._scrollable.scrollLeft;
 		}
 	}
 
@@ -212,9 +221,9 @@ export class ScrollAnimation {
 	 */
 	scroll(position) {
 		if (this._options.direction === Direction.VERTICAL) {
-			this._container.scrollTo(0, position);
+			this._scrollable.scrollTop = position;
 		} else {
-			this._container.scrollTo(position, 0);
+			this._scrollable.scrollLeft = position;
 		}
 	}
 

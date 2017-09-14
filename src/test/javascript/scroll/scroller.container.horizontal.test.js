@@ -6,11 +6,15 @@ import {Direction} from "../../../main/javascript/scroll/scroller.js";
 // Startup
 DOM.addEvent(document, "DOMContentLoaded", () => {
 	window.setTimeout(() => {
-		new Scroller().onScroll(() => {
-			console.info("scrolled");
-		}).scrollTo("#third", {
-			direction: Direction.HORIZONTAL,
-			easing: Easing.easeOutCirc
+		new Scroller("#row-1").onScroll(() => {
+			console.info("scrolled in #container-1");
+		}).scrollTo("#second", {
+			direction: Direction.HORIZONTAL
+		});
+		new Scroller("#row-2").onScroll(() => {
+			console.info("scrolled in #container-2");
+		}).scrollTo("#seventh", {
+			direction: Direction.HORIZONTAL
 		});
 	}, 1000);
 });
