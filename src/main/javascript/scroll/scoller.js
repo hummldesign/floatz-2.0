@@ -1,7 +1,6 @@
 import DOM from "../dom/dom.js";
 import Easing from "../animation/easing.js"
 import {DOMElement} from "../dom/dom.js";
-// import jump from "../../../../lib/jump-1.0.2/jump-1.0.2.js";
 
 /**
  * Notes:
@@ -30,7 +29,7 @@ export class Scroller {
 	/**
 	 * Constructor.
 	 *
-	 * @param container Scroll _container (default is window)
+	 * @param container Scroll container (default is window)
 	 */
 	constructor(container = window) {
 		this._container = container;
@@ -51,8 +50,8 @@ export class Scroller {
 
 	/**
 	 * Scroll to
-	 * @param {(number|Object|string)} target Target _element or position
-	 * @param {Object=} options Scroll _options
+	 * @param {(number|Object|string)} target Target element or position
+	 * @param {Object=} options Scroll options
 	 * @returns {Scroller} Scroller for chaining
 	 */
 	scrollTo(target, options = {}) {
@@ -76,9 +75,9 @@ export class ScrollAnimation {
 	/**
 	 * Constructor.
 	 *
-	 * @param container Scroll _container
-	 * @param {(number|string|Object)} target Target _element or position
-	 * @param {Object} options Scroll _options
+	 * @param container Scroll container
+	 * @param {(number|string|Object)} target Target element or position
+	 * @param {Object} options Scroll options
 	 */
 	constructor(container, target, options) {
 		this._container = null;       // Scroll _container
@@ -107,12 +106,12 @@ export class ScrollAnimation {
 		this._distance = this._stop - this._start + this._options.offset;
 
 		// Start scroll animation
-		// Note: the arrow function sets context for usage of this in animate)
+		// Note: the arrow function sets context for usage of this in animate
 		window.requestAnimationFrame((t) => this.animate(t));
 	}
 
 	/**
-	 * Get _start position.
+	 * Get start position.
 	 *
 	 * @returns {(number|null)} Start position
 	 */
@@ -126,7 +125,7 @@ export class ScrollAnimation {
 	}
 
 	/**
-	 * Get _stop position
+	 * Get stop position
 	 *
 	 * @param {(DOMElement|Object|string|number)} target Scroll target
 	 * @returns {number} Stop position in px
@@ -148,7 +147,7 @@ export class ScrollAnimation {
 	/**
 	 * Convert target to DOMElement.
 	 *
-	 * @param {(DOMElement|Object|string|number)} target Target _element or position
+	 * @param {(DOMElement|Object|string|number)} target Target element or position
 	 * @returns {*} DOMElement
 	 */
 	element(target) {
@@ -189,15 +188,16 @@ export class ScrollAnimation {
 		this._timeElapsed = timeCurrent - this._timeStart;
 
 		// Calculate _next scroll position
-		this._next = this._options.easing(this._timeElapsed, this._start, this._distance, this._options.duration);
+		this._next = this._options.easing(this._timeElapsed, this._start, this._distance,
+			this._options.duration);
 
 		// Change scroll position
-		this._container.scrollTo(0, this._next);
+		this.scroll(this._next);
 
 		// Check progress
 		if (this._timeElapsed < this._options.duration) {
 			// Continue scroll animation
-			// Note: the arrow function sets context for usage of this in animate)
+			// Note: the arrow function sets context for usage of this in animate
 			window.requestAnimationFrame((t) => this.animate(t));
 		} else {
 			// Finish scroll animation
@@ -206,11 +206,24 @@ export class ScrollAnimation {
 	}
 
 	/**
+	 * Scroll to position.
+	 *
+	 * @param {number} position Scroll position
+	 */
+	scroll(position) {
+		if (this._options.direction === Direction.VERTICAL) {
+			this._container.scrollTo(0, position);
+		} else {
+			this._container.scrollTo(position, 0);
+		}
+	}
+
+	/**
 	 * Finish scroll animation.
 	 */
 	done() {
 		// Account for time rounding inaccuracies in requestAnimationFrame
-		this._container.scrollTo(0, this._start + this._distance);
+		this.scroll(this._start + this._distance);
 
 		// Reset time for _next animation
 		this._timeStart = false;

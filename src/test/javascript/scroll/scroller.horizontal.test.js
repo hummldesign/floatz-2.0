@@ -8,6 +8,9 @@ DOM.addEvent(document, "DOMContentLoaded", () => {
 	window.setTimeout(() => {
 		new Scroller().onScroll(() => {
 			console.info("scrolled");
-		}).scrollTo("#third");
+		}).scrollTo("#third", {
+			direction: Direction.HORIZONTAL,
+			easing: Easing.easeOutCirc
+		});
 	}, 1000);
 });
