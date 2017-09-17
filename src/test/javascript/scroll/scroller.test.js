@@ -97,7 +97,7 @@ describe("> Test Suite for scroller.js", () => {
 			it("And the 4th sections vertical top position should be 1500", () => {
 				expect(DOM.queryUnique("#fourth").position().top).toBe(1500)
 			});
-			it("And the 1st sections vertical bottom position should be 0", () => {
+			it("And the 1st sections vertical bottom position should be 500", () => {
 				expect(DOM.queryUnique("#first").position().bottom).toBe(500)
 			});
 			it("And the 2nd sections vertical bottom position should be 1000", () => {
@@ -159,7 +159,7 @@ describe("> Test Suite for scroller.js", () => {
 			it("And the 4th sections vertical top position should be 1500", () => {
 				expect(DOM.queryUnique("#fourth").position().top).toBe(1500)
 			});
-			it("And the 1st sections vertical bottom position should be 0", () => {
+			it("And the 1st sections vertical bottom position should be 500", () => {
 				expect(DOM.queryUnique("#first").position().bottom).toBe(500)
 			});
 			it("And the 2nd sections vertical bottom position should be 1000", () => {

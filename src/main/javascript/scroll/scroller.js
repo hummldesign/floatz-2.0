@@ -11,6 +11,9 @@ import {DOMElement} from "../dom/dom.js";
  * childelement.getClientBoundingRect.top / left => Position relative to _container (variable)
  */
 
+
+// TODO Refactor to direction in constructor, using only start/end instead of left, right, top, bottom to ease the API
+
 /**
  * Scroll direction enum.
  *
@@ -72,7 +75,7 @@ export class Scroller {
 	/**
 	 * Get/set vertical scroll position.
 	 *
-	 * @param pos Scroll position
+	 * @param {number=} pos Scroll position
 	 * @returns {(number|Scroller)} Scroll position in px or Scroller for chaining when used as setter
 	 */
 	scrollY(pos) {
@@ -86,7 +89,7 @@ export class Scroller {
 	/**
 	 * Get/set horizontal scroll position.
 	 *
-	 * @param pos Scroll position
+	 * @param {number=} pos Scroll position
 	 * @returns {(number|Scroller)} Scroll position in px or Scroller for chaining when used as setter
 	 */
 	scrollX(pos) {
@@ -114,7 +117,7 @@ export class Scroller {
 	 * @return {number} Width in px
 	 */
 	scrollWidth() {
-		return this._scrollable.scrollLeft;
+		return this._scrollable.scrollWidth;
 	}
 
 	/**
@@ -322,8 +325,4 @@ export class ScrollAnimation {
 		// Reset time for _next animation
 		this._timeStart = false;
 	}
-}
-
-function _element(target) {
-
 }
