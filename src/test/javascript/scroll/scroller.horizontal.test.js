@@ -3,10 +3,15 @@ import Easing from "../../../main/javascript/animation/easing.js";
 import {Scroller} from "../../../main/javascript/scroll/scroller.js";
 import {Direction} from "../../../main/javascript/scroll/scroller.js";
 
+var scroller;
+
 describe("> Test Suite for scroller.js", () => {
 	// Ensure that we always start at the top
 	beforeAll((done) => {
 		setTimeout(() => {
+			scroller = new Scroller(window, {
+				direction: Direction.HORIZONTAL
+			});
 			window.scrollTo(0,0);
 			done();
 		}, 200);
@@ -17,13 +22,13 @@ describe("> Test Suite for scroller.js", () => {
 	describe("Given a horizontal scroll container with 4 scroll sections each with a width of 750px", () => {
 		describe("When the page is loaded", () => {
 			it("Then the containers viewport width is 1440", () => {
-				expect(new Scroller().width()).toBe(1440)
+				expect(scroller.viewportSize()).toBe(1440)
 			});
 			it("And the containers scroll width should be 3000", () => {
-				expect(new Scroller().scrollWidth()).toBe(3000);
+				expect(scroller.size()).toBe(3000);
 			});
 			it("And the containers horizontal scroll position is 0", () => {
-				expect(new Scroller().scrollX()).toBe(0)
+				expect(scroller.pos()).toBe(0)
 			});
 			it("And the 1st sections horizontal left scroll position is 0", () => {
 				expect(DOM.queryUnique("#first").offset().left).toBe(0);
@@ -52,8 +57,7 @@ describe("> Test Suite for scroller.js", () => {
 		});
 		describe("When we scroll to the 2nd scroll section", () => {
 			beforeAll(() => {
-				new Scroller().scrollTo("#second", {
-					direction: Direction.HORIZONTAL,
+				scroller.scrollTo("#second", {
 					duration: 100
 				});
 			});
@@ -62,7 +66,7 @@ describe("> Test Suite for scroller.js", () => {
 				setTimeout(done, 200);
 			});
 			it("Then the containers horizontal scroll position should be 750", () => {
-				expect(new Scroller().scrollX()).toBe(750)
+				expect(scroller.pos()).toBe(750)
 			});
 			it("And the 1st sections horizontal left scroll position should be -750", () => {
 				expect(DOM.queryUnique("#first").offset().left).toBe(-750)
@@ -115,8 +119,7 @@ describe("> Test Suite for scroller.js", () => {
 		});
 		describe("When we scroll to the 3rd scroll section", () => {
 			beforeAll(() => {
-				new Scroller().scrollTo("#third", {
-					direction: Direction.HORIZONTAL,
+				scroller.scrollTo("#third", {
 					duration: 100
 				});
 			});
@@ -125,7 +128,7 @@ describe("> Test Suite for scroller.js", () => {
 				setTimeout(done, 200);
 			});
 			it("Then the containers horizontal scroll position should be 1500", () => {
-				expect(new Scroller().scrollX()).toBe(1500)
+				expect(scroller.pos()).toBe(1500)
 			});
 			it("And the 1st sections horizontal left scroll position should be -1500", () => {
 				expect(DOM.queryUnique("#first").offset().left).toBe(-1500)

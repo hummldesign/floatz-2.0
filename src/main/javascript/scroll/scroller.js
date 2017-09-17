@@ -11,9 +11,6 @@ import {DOMElement} from "../dom/dom.js";
  * childelement.getClientBoundingRect.top / left => Position relative to _container (variable)
  */
 
-
-// TODO Refactor to direction in constructor, using only start/end instead of left, right, top, bottom to ease the API
-
 /**
  * Scroll direction enum.
  *
@@ -32,14 +29,19 @@ export class Scroller {
 	 * Constructor.
 	 *
 	 * @param {?(DOMElement|Object|string)} container Scroll container (default is window)
+	 * @param {?Object} options Scroll container options
 	 */
-	constructor(container = window) {
+	constructor(container = window, options = {}) {
+		this._options = options;
+		this._options.direction = options.direction || Direction.VERTICAL;
+		this._options.offset = options.offset || 0;
+
 		if (DOM.isWindow(container)) {
 			this._container = container;
-			this._scrollable = document.body;
+			this._options.scrollable = document.body;
 		} else {
 			this._container = DOM.queryUnique(container).origNode;
-			this._scrollable = this._container;
+			this._options.scrollable = this._container;
 		}
 	}
 
@@ -63,86 +65,64 @@ export class Scroller {
 	 * @returns {Scroller} Scroller for chaining
 	 */
 	scrollTo(target, options = {}) {
-		options.direction = options.direction || Direction.VERTICAL;
-		options.duration = options.duration || 600;
-		options.easing = options.easing || Easing.easeInOutQuad;
-		options.offset = options.offset || 0;
-		options.scrollable = this._scrollable;
-		new ScrollAnimation(this._container, target, options);
+		this._options.duration = options.duration || 600;
+		this._options.easing = options.easing || Easing.easeInOutQuad;
+		new ScrollAnimation(this._container, target, this._options);
 		return this;
 	}
 
 	/**
-	 * Get/set vertical scroll position.
+	 * Get scroll direction configure via the constructor.
 	 *
-	 * @param {number=} pos Scroll position
-	 * @returns {(number|Scroller)} Scroll position in px or Scroller for chaining when used as setter
+	 * @return {Object} direction Scroll Direction
 	 */
-	scrollY(pos) {
-		if (pos === undefined) {
-			return this._scrollable.scrollTop;
-		}
-		this._scrollable.scrollTop = pos;
-		return this;
+	direction() {
+		return this._options.direction;
 	}
 
 	/**
-	 * Get/set horizontal scroll position.
+	 * Get scroll position.
 	 *
-	 * @param {number=} pos Scroll position
-	 * @returns {(number|Scroller)} Scroll position in px or Scroller for chaining when used as setter
+	 * @returns {number} Scroll position in px
 	 */
-	scrollX(pos) {
-		if (pos === undefined) {
-			return this._scrollable.scrollLeft;
-		}
-		this._scrollable.scrollLeft = pos;
-		return this;
-	}
-
-	/**
-	 * Get height of the scroll containers content.
-	 * Returns the height of the scroll container in case that it is larger than its content.
-	 *
-	 * @returns {number} Height in px
-	 */
-	scrollHeight() {
-		return this._scrollable.scrollHeight;
-	}
-
-	/**
-	 * Get width of the scroll containers content.
-	 *
-	 * Returns the width of the scroll container in case that it is larger than its content.
-	 * @return {number} Width in px
-	 */
-	scrollWidth() {
-		return this._scrollable.scrollWidth;
-	}
-
-	/**
-	 * Get height of scroll containers viewport.
-	 *
-	 * @returns {number} Height in px
-	 */
-	height() {
-		if (DOM.isWindow(this._container)) {
-			return this._container.innerHeight;
+	pos() {
+		if(this.direction() === Direction.VERTICAL) {
+			return this._options.scrollable.scrollTop;
 		} else {
-			return this._container.getBoundingClientRect().height;
+			return this._options.scrollable.scrollLeft;
 		}
 	}
 
 	/**
-	 * Get width of scroll containers viewport.
-	 *
-	 * @returns {number} Width in px
+	 * Get size of scroll container (including all its scroll sections)
+	 * 
+	 * @returns {number} Scroll container size in px
 	 */
-	width() {
-		if (DOM.isWindow(this._container)) {
-			return this._container.innerWidth;
+	size() {
+		if(this.direction() === Direction.VERTICAL) {
+			return this._options.scrollable.scrollHeight;
 		} else {
-			return this._container.getBoundingClientRect().width;
+			return this._options.scrollable.scrollWidth;
+		}
+	}
+
+	/**
+	 * Get size of scroll container viewport.
+	 * @returns {number} Scroll container viewport size in px
+	 */
+	viewportSize() {
+		if(this.direction() === Direction.VERTICAL) {
+			if (DOM.isWindow(this._container)) {
+				return this._container.innerHeight;
+			} else {
+				return this._container.getBoundingClientRect().height;
+			}
+		}  else {
+			if (DOM.isWindow(this._container)) {
+				return this._container.innerWidth;
+			} else {
+				return this._container.getBoundingClientRect().width;
+			}
 		}
 	}
 

@@ -5,15 +5,15 @@ import {Direction} from "../../../main/javascript/scroll/scroller.js";
 // Startup
 DOM.addEvent(document, "DOMContentLoaded", () => {
 	window.setTimeout(() => {
-		new Scroller("#row-1").onScroll(() => {
+		new Scroller("#row-1", {
+			direction: Direction.HORIZONTAL
+		}).onScroll(() => {
 			console.info("scrolled in #container-1");
-		}).scrollTo("#second", {
+		}).scrollTo("#second");
+		new Scroller("#row-2", {
 			direction: Direction.HORIZONTAL
-		});
-		new Scroller("#row-2").onScroll(() => {
+		}).onScroll(() => {
 			console.info("scrolled in #container-2");
-		}).scrollTo("#seventh", {
-			direction: Direction.HORIZONTAL
-		});
+		}).scrollTo("#seventh");
 	}, 1000);
 });
