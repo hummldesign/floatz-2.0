@@ -25,10 +25,6 @@ export const Direction = Object.freeze({
  * Scroll manager.
  */
 export class Scroller {
-
-	// TODO: Support DOMElement as container!
-	// TODO: Support scrollTo for DOMElement?
-
 	/**
 	 * Constructor.
 	 *
@@ -37,8 +33,10 @@ export class Scroller {
 	constructor(container = window) {
 		if (DOM.isWindow(container)) {
 			this._container = container;
+			this._scrollable = document.body;
 		} else {
 			this._container = DOM.queryUnique(container).origNode;
+			this._scrollable = this._container;
 		}
 	}
 
@@ -66,8 +64,96 @@ export class Scroller {
 		options.duration = options.duration || 600;
 		options.easing = options.easing || Easing.easeInOutQuad;
 		options.offset = options.offset || 0;
+		options.scrollable = this._scrollable;
 		new ScrollAnimation(this._container, target, options);
 		return this;
+	}
+
+	/**
+	 * Get/set vertical scroll position.
+	 *
+	 * @param pos Scroll position
+	 * @returns {(number|Scroller)} Scroll position in px or Scroller for chaining when used as setter
+	 */
+	scrollY(pos) {
+		if (pos === undefined) {
+			return this._scrollable.scrollTop;
+		}
+		this._scrollable.scrollTop = pos;
+		return this;
+	}
+
+	/**
+	 * Get/set horizontal scroll position.
+	 *
+	 * @param pos Scroll position
+	 * @returns {(number|Scroller)} Scroll position in px or Scroller for chaining when used as setter
+	 */
+	scrollX(pos) {
+		if (pos === undefined) {
+			return this._scrollable.scrollLeft;
+		}
+		this._scrollable.scrollLeft = pos;
+		return this;
+	}
+
+	/**
+	 * Get height of the scroll containers content.
+	 * Returns the height of the scroll container in case that it is larger than its content.
+	 *
+	 * @returns {number} Height in px
+	 */
+	scrollHeight() {
+		return this._scrollable.scrollHeight;
+	}
+
+	/**
+	 * Get width of the scroll containers content.
+	 *
+	 * Returns the width of the scroll container in case that it is larger than its content.
+	 * @return {number} Width in px
+	 */
+	scrollWidth() {
+		return this._scrollable.scrollLeft;
+	}
+
+	/**
+	 * Get height of scroll containers viewport.
+	 *
+	 * @returns {number} Height in px
+	 */
+	height() {
+		if (DOM.isWindow(this._container)) {
+			return this._container.innerHeight;
+		} else {
+			return this._container.getBoundingClientRect().height;
+		}
+	}
+
+	/**
+	 * Get width of scroll containers viewport.
+	 *
+	 * @returns {number} Width in px
+	 */
+	width() {
+		if (DOM.isWindow(this._container)) {
+			return this._container.innerWidth;
+		} else {
+			return this._container.getBoundingClientRect().width;
+		}
+	}
+
+	/**
+	 * Determine if target is visible within the viewport of the scroll container.
+	 *
+	 * @param target
+	 */
+	visible(target) {
+		// TODO
+		// overlap top
+		// overlap bottom
+		// overlap top and bottom
+
 	}
 }
 
@@ -88,7 +174,6 @@ export class ScrollAnimation {
 	 */
 	constructor(container, target, options) {
 		this._container = null;      // Scroll container
-		this._scrollable = null;     // Scroll container that supports scrollTop, scrollLeft
 		this._options = null;        // Scroll configuration
 		this._element = null;        // Scroll target DOMElement
 		this._start = null;          // Scroll start position in px
@@ -99,7 +184,6 @@ export class ScrollAnimation {
 		this._next = null;           // Next scroll position in px
 
 		this._container = container;
-		this._scrollable = DOM.isWindow(container) ? document.body : container;
 		this._options = options;
 
 		// Convert target to DOMElement
@@ -122,14 +206,14 @@ export class ScrollAnimation {
 	/**
 	 * Get start position.
 	 *
-	 * @returns {(number|null)} Start position
+	 * @returns {(number)} Start position
 	 */
 	startPos() {
 		// Get scroll _start position depending on scroll direction
 		if (this._options.direction === Direction.VERTICAL) {
-			return this._scrollable.scrollTop;
+			return this._options.scrollable.scrollTop;
 		} else {
-			return this._scrollable.scrollLeft;
+			return this._options.scrollable.scrollLeft;
 		}
 	}
 
@@ -153,6 +237,7 @@ export class ScrollAnimation {
 		}
 	}
 
+	// noinspection JSMethodCanBeStatic
 	/**
 	 * Convert target to DOMElement.
 	 *
@@ -221,9 +306,9 @@ export class ScrollAnimation {
 	 */
 	scroll(position) {
 		if (this._options.direction === Direction.VERTICAL) {
-			this._scrollable.scrollTop = position;
+			this._options.scrollable.scrollTop = position;
 		} else {
-			this._scrollable.scrollLeft = position;
+			this._options.scrollable.scrollLeft = position;
 		}
 	}
 
@@ -237,4 +322,8 @@ export class ScrollAnimation {
 		// Reset time for _next animation
 		this._timeStart = false;
 	}
+}
+
+function _element(target) {
+
 }

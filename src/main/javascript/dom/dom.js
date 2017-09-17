@@ -129,9 +129,9 @@ export class DOMElement {
 	}
 
 	/**
-	 * Get / set height
+	 * Get / set height.
 	 * @param {number=} value Value to set (optional)
-	 * @returns {*} Height or DOMElement for chaining when used as setter
+	 * @returns {*} Height in px or DOMElement for chaining when used as setter
 	 */
 	height(value) {
 		if (value === undefined) {
@@ -139,6 +139,50 @@ export class DOMElement {
 		} else {
 			this.origNode.style.height = `${value}${PX}`;
 			return this;
+		}
+	}
+
+	/**
+	 * Get / set width.
+	 *
+	 * @param {number=} value Value to set (optional)
+	 * @returns {*} Width in px or DOMElement for chaining when used as setter
+	 */
+	width(value) {
+		if (value === undefined) {
+			return this.origNode.getBoundingClientRect().width;
+		} else {
+			this.origNode.style.width = `${value}${PX}`;
+			return this;
+		}
+	}
+
+	/**
+	 * Get fixed position relative to scroll container.
+	 *
+	 * @returns {{top: (Number|number), left: (Number|number), bottom: *, right: *}}
+	 */
+	position() {
+		return {
+			top: this.origNode.offsetTop,
+			left: this.origNode.offsetLeft,
+			bottom: this.origNode.offsetTop + this.origNode.offsetHeight,
+			right: this.origNode.offsetLeft + this.origNode.offsetWidth
+
+		}
+	}
+
+	/**
+	 * Get scroll position relative to visible viewport.
+	 *
+	 * @returns {{top: Number, left: Number, bottom: Number, right: Number}}
+	 */
+	offset() {
+		return {
+			top: this.origNode.getBoundingClientRect().top,
+			left: this.origNode.getBoundingClientRect().left,
+			bottom: this.origNode.getBoundingClientRect().bottom,
+			right: this.origNode.getBoundingClientRect().right
 		}
 	}
 
@@ -309,6 +353,8 @@ export class DOMElement {
 		DOM.triggerEvent(this.origNode, eventName);
 		return this;
 	}
+
+
 }
 
 ///////////////////////////////////////
