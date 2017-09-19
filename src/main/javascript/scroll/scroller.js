@@ -85,7 +85,7 @@ export class Scroller {
 	 *
 	 * @returns {number} Scroll position in px
 	 */
-	pos() {
+	scrollPos() {
 		if(this.direction() === Direction.VERTICAL) {
 			return this._options.scrollable.scrollTop;
 		} else {
@@ -98,7 +98,7 @@ export class Scroller {
 	 * 
 	 * @returns {number} Scroll container size in px
 	 */
-	size() {
+	scrollSize() {
 		if(this.direction() === Direction.VERTICAL) {
 			return this._options.scrollable.scrollHeight;
 		} else {
@@ -172,13 +172,13 @@ export class ScrollAnimation {
 		// Convert target to DOMElement
 		this._element = this.element(target);
 
-		// Get _start pos
+		// Get start position
 		this._start = this.startPos();
 
-		// Get _stop position
+		// Get stop position
 		this._stop = this.stopPos(target);
 
-		// Get _distance
+		// Get distance
 		this._distance = this._stop - this._start + this._options.offset;
 
 		// Start scroll animation

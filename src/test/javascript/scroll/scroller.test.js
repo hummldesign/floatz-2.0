@@ -1,7 +1,7 @@
 import DOM from "../../../main/javascript/dom/dom.js";
 import {Scroller} from "../../../main/javascript/scroll/scroller.js";
 
-var scroller;
+let scroller;
 
 describe("> Test Suite for scroller.js", () => {
 	// Ensure that we always start at the top
@@ -21,10 +21,10 @@ describe("> Test Suite for scroller.js", () => {
 				expect(scroller.viewportSize()).toBe(900)
 			});
 			it("And the containers scroll height should be 2000", () => {
-				expect(scroller.size()).toBe(2000);
+				expect(scroller.scrollSize()).toBe(2000);
 			});
 			it("And the containers vertical scroll position is 0", () => {
-				expect(scroller.pos()).toBe(0)
+				expect(scroller.scrollPos()).toBe(0)
 			});
 			it("And the 1st sections vertical top scroll position is 0", () => {
 				expect(DOM.queryUnique("#first").offset().top).toBe(0);
@@ -62,7 +62,7 @@ describe("> Test Suite for scroller.js", () => {
 				setTimeout(done, 200);
 			});
 			it("Then the containers vertical scroll position should be 500", () => {
-				expect(scroller.pos()).toBe(500)
+				expect(scroller.scrollPos()).toBe(500)
 			});
 			it("And the 1st sections vertical top scroll position should be -500", () => {
 				expect(DOM.queryUnique("#first").offset().top).toBe(-500)
@@ -124,7 +124,7 @@ describe("> Test Suite for scroller.js", () => {
 				setTimeout(done, 200);
 			});
 			it("Then the containers vertical scroll position should be 1000", () => {
-				expect(scroller.pos()).toBe(1000)
+				expect(scroller.scrollPos()).toBe(1000)
 			});
 			it("And the 1st sections vertical top scroll position should be -1000", () => {
 				expect(DOM.queryUnique("#first").offset().top).toBe(-1000)
