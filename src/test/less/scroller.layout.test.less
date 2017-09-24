@@ -1,0 +1,98 @@
+@import '../../main/less/core/floatz.core.less';
+@import '../../main/less/navigation/floatz.navigation.less';
+@import '../../main/less/animation/floatz.animation.easing.less';
+
+body {
+	padding: 0;
+	margin-top: 4em;
+}
+
+h2 {
+	font-size: 2rem;
+}
+
+header {
+	background-color: yellow;
+	height: 4em;
+	width: 100%;
+	position: fixed;
+	top: 0;
+}
+
+#first, #second, #third, #fourth {
+	box-sizing: border-box;
+	min-height: 500px;
+}
+
+#first {
+	background-color: lightcoral;
+}
+
+#second {
+	background-color: lightyellow;
+}
+
+#third {
+	background-color: lightgreen;
+}
+
+#fourth {
+	background-color: lightblue;
+}
+
+.flz-nav-list {
+	text-align: right;
+	position: absolute;
+	right: @flz-var-gutter-layout-x / 2;
+	top: 0;
+}
+
+.flz-header-fixed,
+.flz-header-fixed-slideOut {
+	height: 4em;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+.flz-header-fixed-slideout {
+	.flz-mx-transition(top, 0.42s, @flz-easing-inout);
+}
+
+.box {
+	width: 10em;
+	height: 2em;
+	background-color: coral;
+}
+
+@duration: 0.75s;
+
+.linear:hover {
+	width: 100%;
+	.flz-mx-transition(all, @duration, @flz-easing-linear);
+}
+
+.ease:hover {
+	width: 100%;
+	.flz-mx-transition(all, @duration, @flz-easing-ease);
+}
+
+.easeIn:hover {
+	width: 100%;
+	.flz-mx-transition(all, @duration, @flz-easing-in);
+}
+
+.easeOut:hover {
+	width: 100%;
+	.flz-mx-transition(all, @duration, @flz-easing-out);
+}
+
+.easeInExpo:hover {
+	width: 100%;
+	.flz-mx-transition(all, @duration, @flz-easing-inexpo);
+}
+
+.easeOutExpo:hover {
+	width: 100%;
+	.flz-mx-transition(all, @duration, @flz-easing-outexpo);
+}

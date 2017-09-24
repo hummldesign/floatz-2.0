@@ -35,6 +35,8 @@ export class Scroller {
 		this._options = options;
 		this._options.direction = options.direction || Direction.VERTICAL;
 		this._options.offset = options.offset || 0;
+		this._plugins = [];
+		this._handlers = [];
 
 		if (DOM.isWindow(container)) {
 			this._container = container;
@@ -43,6 +45,42 @@ export class Scroller {
 			this._container = DOM.queryUnique(container).origNode;
 			this._options.scrollable = this._container;
 		}
+		this._prevScrollPos = this.scrollPos();
+	}
+
+	/**
+	 * Inject scroll plugin.
+	 *
+	 * @param plugin {ScrollPlugin} Scroll plugin
+	 * @returns {Scroller} Scroller for chaining
+	 */
+	plugin(plugin) {
+		if (!(plugin instanceof ScrollPlugin)) {
+			throw "Plugin must extend class ScrollPlugin";
+		}
+
+		this._plugins.push(plugin);
+		this.onScroll(() => {
+			plugin.onScroll(this);
+		});
+		this.onScrollBackward(() => {
+			plugin.onScrollBackward(this);
+		});
+		this.onScrollForward(() => {
+			plugin.onScrollForward(this);
+		});
+		return this;
+	}
+
+	/**
+	 * Set scroll offset correction.
+	 *
+	 * @param {number} offset Scroll offset correction
+	 * @returns {Scroller} Scroller for chaining
+	 */
+	offset(offset) {
+		this._options.offset = offset;
+		return this;
 	}
 
 	/**
@@ -53,7 +91,41 @@ export class Scroller {
 	 */
 	onScroll(handler) {
 		DOM.addEvent(this._container, "scroll", () => {
-			handler();
+			handler(this);
+			this._handlers.forEach((handler) => {
+				handler(this);
+			});
+			this._prevScrollPos = this.scrollPos();
+		});
+		return this;
+	}
+
+	/**
+	 * Scroll forward handler.
+	 *
+	 * @param handler Custom handler
+	 * @returns {Scroller} Scroller for chaining
+	 */
+	onScrollForward(handler) {
+		this._handlers.push(() => {
+			if (this._prevScrollPos < this.scrollPos()) {
+				handler(this);
+			}
+		});
+		return this;
+	}
+
+	/**
+	 * Scroll backward handler.
+	 *
+	 * @param handler Custom handler
+	 * @returns {Scroller} Scroller for chaining
+	 */
+	onScrollBackward(handler) {
+		this._handlers.push(() => {
+			if (this._prevScrollPos > this.scrollPos()) {
+				handler(this);
+			}
 		});
 		return this;
 	}
@@ -67,6 +139,7 @@ export class Scroller {
 	scrollTo(target, options = {}) {
 		this._options.duration = options.duration || 600;
 		this._options.easing = options.easing || Easing.easeInOutQuad;
+		this._options.complete = options.complete || null;
 		new ScrollAnimation(this._container, target, this._options);
 		return this;
 	}
@@ -86,7 +159,7 @@ export class Scroller {
 	 * @returns {number} Scroll position in px
 	 */
 	scrollPos() {
-		if(this.direction() === Direction.VERTICAL) {
+		if (this.direction() === Direction.VERTICAL) {
 			return this._options.scrollable.scrollTop;
 		} else {
 			return this._options.scrollable.scrollLeft;
@@ -95,11 +168,11 @@ export class Scroller {
 
 	/**
 	 * Get size of scroll container (including all its scroll sections)
-	 * 
+	 *
 	 * @returns {number} Scroll container size in px
 	 */
 	scrollSize() {
-		if(this.direction() === Direction.VERTICAL) {
+		if (this.direction() === Direction.VERTICAL) {
 			return this._options.scrollable.scrollHeight;
 		} else {
 			return this._options.scrollable.scrollWidth;
@@ -111,13 +184,13 @@ export class Scroller {
 	 * @returns {number} Scroll container viewport size in px
 	 */
 	viewportSize() {
-		if(this.direction() === Direction.VERTICAL) {
+		if (this.direction() === Direction.VERTICAL) {
 			if (DOM.isWindow(this._container)) {
 				return this._container.innerHeight;
 			} else {
 				return this._container.getBoundingClientRect().height;
 			}
-		}  else {
+		} else {
 			if (DOM.isWindow(this._container)) {
 				return this._container.innerWidth;
 			} else {
@@ -304,5 +377,35 @@ export class ScrollAnimation {
 
 		// Reset time for _next animation
 		this._timeStart = false;
+
+		// Run custom complete function if available
+		if (this._options.complete !== null) {
+			this._options.complete();
+		}
+	}
+}
+
+export class ScrollPlugin {
+
+	constructor(scroller, options = {}) {
+		this._scroller = scroller;
+		this._options = options;
+	}
+
+	scroller() {
+		return this._scroller;
+	}
+
+	options() {
+		return this._options;
+	}
+
+	onScroll() {
+	}
+
+	onScrollBackward() {
+	}
+
+	onScrollForward() {
 	}
 }

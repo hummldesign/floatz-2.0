@@ -124,6 +124,7 @@ export class DOMElement {
 	 * @param node Original node
 	 */
 	constructor(node) {
+		// TODO Refactor to private members and provide public getters
 		this.origNode = node;
 		this.tagName = node.tagName.toLowerCase();
 	}
@@ -131,7 +132,7 @@ export class DOMElement {
 	/**
 	 * Get / set height.
 	 * @param {number=} value Value to set (optional)
-	 * @returns {*} Height in px or DOMElement for chaining when used as setter
+	 * @returns Height in px or DOMElement for chaining when used as setter
 	 */
 	height(value) {
 		if (value === undefined) {
@@ -146,7 +147,7 @@ export class DOMElement {
 	 * Get / set width.
 	 *
 	 * @param {number=} value Value to set (optional)
-	 * @returns {*} Width in px or DOMElement for chaining when used as setter
+	 * @returns Width in px or DOMElement for chaining when used as setter
 	 */
 	width(value) {
 		if (value === undefined) {
@@ -296,6 +297,11 @@ export class DOMElement {
 			}
 			return this;
 		}
+	}
+
+	parent() {
+		// TODO Cache parent?
+		return new DOMElement(this.origNode.parentNode);
 	}
 
 	/**
