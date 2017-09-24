@@ -1,0 +1,45 @@
+// Mixins
+.flz-mx-transition(@property, @duration, @easing) {
+	-webkit-transition: @property @duration @easing;
+	transition: @property @duration @easing;
+}
+
+// Variables (see: http://easings.net/en)
+@flz-easing-ease: cubic-bezier(0.25,0.1,0.25,1);
+@flz-easing-linear: cubic-bezier(0, 0, 1, 1);
+
+@flz-easing-in: cubic-bezier(0.42, 0, 1, 1);
+@flz-easing-out: cubic-bezier(0, 0, 0.58, 1);
+@flz-easing-inout: cubic-bezier(0.42, 0, 0.58, 1);
+
+@flz-easing-insine: cubic-bezier(0.47, 0, 0.745, 0.715);
+@flz-easing-outsine: cubic-bezier(0.39, 0.575, 0.565, 1);
+@flz-easing-inoutsine: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+
+@flz-easing-inquad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+@flz-easing-outquad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+@flz-easing-outquad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
+@flz-easing-incubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+@flz-easing-outcubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+@flz-easing-inoutcubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+
+@flz-easing-inquart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+@flz-easing-outquart: cubic-bezier(0.165, 0.84, 0.44, 1);
+@flz-easing-inoutquart: cubic-bezier(0.77, 0, 0.175, 1);
+
+@flz-easeing-inquint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+@flz-easeing-outquint: cubic-bezier(0.23, 1, 0.32, 1);
+@flz-easeing-inoutquint: cubic-bezier(0.86, 0, 0.07, 1);
+
+@flz-easing-inexpo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+@flz-easing-outexpo: cubic-bezier(0.19, 1, 0.22, 1);
+@flz-easing-inoutexpo: cubic-bezier(1, 0, 0, 1);
+
+@flz-easing-incirc: cubic-bezier(0.6, 0.04, 0.98, 0.335);
+@flz-easing-outcirc: cubic-bezier(0.075, 0.82, 0.165, 1);
+@flz-easing-outcirc: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+
+@flz-easing-inback: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+@flz-easing-outback: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+@flz-easing-inoutback: cubic-bezier(0.68, -0.55, 0.265, 1.55);
