@@ -134,6 +134,15 @@ export class DOMElement {
 	}
 
 	/**
+	 * Get id.
+	 *
+	 * @return Element id or null
+	 */
+	id() {
+		return this.origNode.id;
+	}
+
+	/**
 	 * Get / set height.
 	 * @param {number=} value Value to set (optional)
 	 * @returns Height in px or DOMElement for chaining when used as setter
@@ -193,6 +202,7 @@ export class DOMElement {
 
 	/**
 	 * Check if class is set.
+	 *
 	 * @param className Class name
 	 * @returns {boolean} true if set, false if not
 	 */
@@ -207,6 +217,7 @@ export class DOMElement {
 
 	/**
 	 * Add class.
+	 *
 	 * @param className Class name
 	 * @returns {DOMElement} DOMElement for chaining
 	 */
@@ -221,6 +232,7 @@ export class DOMElement {
 
 	/**
 	 * Remove class.
+	 *
 	 * @param className Class name
 	 * @returns {DOMElement} DOMElement for chaining
 	 */
@@ -240,7 +252,8 @@ export class DOMElement {
 	}
 
 	/**
-	 * Check if _element is hidden.
+	 * Check if element is hidden.
+	 *
 	 * @returns {boolean} true if hidden, false if visible
 	 */
 	hidden() {
@@ -249,7 +262,8 @@ export class DOMElement {
 	}
 
 	/**
-	 * Check if _element is visible
+	 * Check if element is visible.
+	 *
 	 * @returns {boolean} true if visible, false if hidden
 	 */
 	visible() {
@@ -258,6 +272,7 @@ export class DOMElement {
 
 	/**
 	 * Get / set attribute value.
+	 *
 	 * @param name Attribute name
 	 * @param {string=} value Attribute value (optional)
 	 * @returns {*} Attribute value or DOMElement for chaining when used as setter
@@ -364,6 +379,7 @@ export class DOMElement {
 
 	/**
 	 * Trigger event.
+	 *
 	 * @param eventName Event name
 	 * @returns {DOMElement} DOMElement for chaining
 	 */
@@ -371,8 +387,6 @@ export class DOMElement {
 		DOM.triggerEvent(this.origNode, eventName);
 		return this;
 	}
-
-
 }
 
 ///////////////////////////////////////

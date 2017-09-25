@@ -33,9 +33,9 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 		describe("When they are queried by their common CSS class", () => {
 			it("Then 3 objects of type DOMElement should be returned", () => {
 				expect(DOM.query(".child").length).toBe(3);
-				expect(DOM.query(".child")[0] instanceof DOMElement).toBeTruthy()
-				expect(DOM.query(".child")[1] instanceof DOMElement).toBeTruthy()
-				expect(DOM.query(".child")[2] instanceof DOMElement).toBeTruthy()
+				expect(DOM.query(".child")[0] instanceof DOMElement).toBeTruthy();
+				expect(DOM.query(".child")[1] instanceof DOMElement).toBeTruthy();
+				expect(DOM.query(".child")[2] instanceof DOMElement).toBeTruthy();
 			});
 		});
 	});
@@ -43,8 +43,8 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 		describe("When they are queried in the context of the parent id", () => {
 			it("Then 2 objects of type DOMElement should be returned", () => {
 				expect(DOM.query("#root > .child").length).toBe(2);
-				expect(DOM.query("#root > .child")[0] instanceof DOMElement).toBeTruthy()
-				expect(DOM.query("#root > .child")[1] instanceof DOMElement).toBeTruthy()
+				expect(DOM.query("#root > .child")[0] instanceof DOMElement).toBeTruthy();
+				expect(DOM.query("#root > .child")[1] instanceof DOMElement).toBeTruthy();
 			});
 		});
 		describe("When they are queried in the context the parent DOMElement", () => {
@@ -182,7 +182,7 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 				expect(eventCounter.resize).toBe(3);
 			});
 
-		})
+		});
 		describe("When the second resize event is removed and the resize event is triggered", () => {
 			beforeEach(() => {
 				DOM.removeEvent(window, "resize", handleLoad2);
@@ -219,18 +219,18 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 	describe("Given a DOM element with only one CSS class", () => {
 		describe("When the element is queried", () => {
 			it("Then the DOMElement should have the expected CSS class", () => {
-				expect(DOM.queryUnique(".one").hasClass("one")).toBeTruthy()
-				expect(DOM.queryUnique(".one").hasClass("two")).toBeFalsy()
+				expect(DOM.queryUnique(".one").hasClass("one")).toBeTruthy();
+				expect(DOM.queryUnique(".one").hasClass("two")).toBeFalsy();
 			});
 		});
 	});
 	describe("Given a DOM element with multiple CSS classes", () => {
 		describe("When the element is queried", () => {
 			it("Then the DOMElement should have all the expected CSS classes", () => {
-				expect(DOM.queryUnique(".one.two.three").hasClass("one")).toBeTruthy()
-				expect(DOM.queryUnique(".one.two.three").hasClass("two")).toBeTruthy()
-				expect(DOM.queryUnique(".one.two.three").hasClass("three")).toBeTruthy()
-				expect(DOM.queryUnique(".one.two.three").hasClass("four")).toBeFalsy()
+				expect(DOM.queryUnique(".one.two.three").hasClass("one")).toBeTruthy();
+				expect(DOM.queryUnique(".one.two.three").hasClass("two")).toBeTruthy();
+				expect(DOM.queryUnique(".one.two.three").hasClass("three")).toBeTruthy();
+				expect(DOM.queryUnique(".one.two.three").hasClass("four")).toBeFalsy();
 			});
 		});
 	});
@@ -243,6 +243,18 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 		describe("When the height is changed to 32px", () => {
 			it("Then the DOMElement should have a height of 32px", () => {
 				expect(DOM.queryUnique(".divWithHeight").height(32).height()).toBe(32);
+			});
+		});
+	});
+	describe("Given an element with a width of 25px", () => {
+		describe("When the element is queried", () => {
+			it("Then the DOMElement should have a width of 25px", () => {
+				expect(DOM.queryUnique(".divWithWidth").width()).toBe(25);
+			});
+		});
+		describe("When the width is changed to 32px", () => {
+			it("Then the DOMElement should have a width of 32px", () => {
+				expect(DOM.queryUnique(".divWithWidth").width(32).width()).toBe(32);
 			});
 		});
 	});
@@ -269,25 +281,25 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 	describe("Given a DOM element", () => {
 		describe("When the class test is added", () => {
 			it("Then the DOMElement should have the class test", () => {
-				expect(DOM.queryById("root").addClass("test").hasClass("test")).toBeTruthy()
+				expect(DOM.queryById("root").addClass("test").hasClass("test")).toBeTruthy();
 			});
 		});
 		describe("When the class test2 is added", () => {
 			it("Then the DOMElement should have the classes test and test2", () => {
-				expect(DOM.queryById("root").addClass("test").hasClass("test")).toBeTruthy()
-				expect(DOM.queryById("root").addClass("test2").hasClass("test2")).toBeTruthy()
+				expect(DOM.queryById("root").addClass("test").hasClass("test")).toBeTruthy();
+				expect(DOM.queryById("root").addClass("test2").hasClass("test2")).toBeTruthy();
 			});
 		});
 		describe("When the class test2 is removed", () => {
 			it("Then the DOMElement should have the class test but not test2", () => {
-				expect(DOM.queryById("root").removeClass("test2").hasClass("test2")).toBeFalsy()
-				expect(DOM.queryById("root").hasClass("test")).toBeTruthy()
+				expect(DOM.queryById("root").removeClass("test2").hasClass("test2")).toBeFalsy();
+				expect(DOM.queryById("root").hasClass("test")).toBeTruthy();
 			});
 		});
 		describe("When the class test is removed", () => {
 			it("Then the DOMElement should have neither class test nor test2", () => {
 				expect(DOM.queryById("root").removeClass("test").hasClass("test")).toBeFalsy();
-				expect(DOM.queryById("root").hasClass("test2")).toBeFalsy()
+				expect(DOM.queryById("root").hasClass("test2")).toBeFalsy();
 			});
 			it("And the DOMElement should have no empty class attribute", () => {
 				expect(DOM.queryById("root").attr("class")).toBeNull();
@@ -304,7 +316,7 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 			it("The the attribute style should be display: block;", () => {
 				expect(DOM.queryUnique(".one").css("float", "left").attr("style")).toBe("display: block; float: left;");
 			});
-		})
+		});
 		describe("When the style display is removed", () => {
 			it("Then the attribute style should be float: left;", () => {
 				expect(DOM.queryUnique(".one").css("display", null).attr("style")).toBe("float: left;");
@@ -435,6 +447,20 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 			});
 			it("And should have no custom attribute flz-prev-inline-display", () => {
 				expect(DOM.queryUnique(".inlineShown").attr("flz-prev-inline-display")).toBeNull();
+			});
+		});
+	});
+	describe("Given a DOM element with a parent having the id #root", () => {
+		describe("When the element is queried", () => {
+			it("Then the elements parent id should be #root", () => {
+				expect(DOM.query(".child")[0].parent().id()).toBe("root");
+			});
+		});
+	});
+	describe("Given a DOM element without an id", () => {
+		describe("When the element is queried", () => {
+			it("Then the elements id should be ''", () => {
+				expect(DOM.query(".shown")[0].id()).toBe("");
 			});
 		});
 	});
