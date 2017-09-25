@@ -20,7 +20,7 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 				expect(DOM.queryById("root") instanceof DOMElement).toBeTruthy()
 			});
 			it("And its id should be as expected", () => {
-				expect(DOM.queryById("root").origNode.id).toBe("root");
+				expect(DOM.queryById("root").origNode().id).toBe("root");
 			});
 		});
 		describe("When the element is queried by an invalid id", () => {
@@ -71,7 +71,7 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 				expect(DOM.queryUnique("#root") instanceof DOMElement).toBeTruthy()
 			});
 			it("And its id should be as expected", () => {
-				expect(DOM.queryUnique("#root").origNode.id).toBe("root");
+				expect(DOM.queryUnique("#root").origNode().id()).toBe("root");
 			});
 		});
 	});
@@ -81,7 +81,7 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 				expect(DOM.queryUnique(".child") instanceof DOMElement).toBeTruthy()
 			});
 			it("And its class name should be as expected", () => {
-				expect(DOM.queryUnique(".child").origNode.className).toBe("child");
+				expect(DOM.queryUnique(".child").origNode().className).toBe("child");
 			});
 		});
 	});
@@ -198,21 +198,21 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 	describe("Given a BODY element", () => {
 		describe("When its queried", () => {
 			it("Then the returned DOMElement tag name should be body", () => {
-				expect(DOM.queryUnique("body").tagName).toBe("body");
+				expect(DOM.queryUnique("body").tag()).toBe("body");
 			});
 		});
 	});
 	describe("Given a DIV element with a CSS id", () => {
 		describe("When the element is queried by its id", () => {
 			it("Then the returned DOMElement tag name should be div", () => {
-				expect(DOM.queryById("root").tagName).toBe("div");
+				expect(DOM.queryById("root").tag()).toBe("div");
 			});
 		});
 	});
 	describe("Given a DIV element with a CSS id", () => {
 		describe("When the element is queried by its id", () => {
 			it("Then the returned DOMElement orig node should equal to the native element", () => {
-				expect(DOM.queryById("root").origNode).toBe(document.getElementById("root"));
+				expect(DOM.queryById("root").origNode()).toBe(document.getElementById("root"));
 			});
 		});
 	});

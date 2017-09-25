@@ -42,7 +42,7 @@ export class Scroller {
 			this._container = container;
 			this._options.scrollable = document.body;
 		} else {
-			this._container = DOM.queryUnique(container).origNode;
+			this._container = DOM.queryUnique(container).origNode();
 			this._options.scrollable = this._container;
 		}
 		this._prevScrollPos = this.scrollPos();
@@ -295,9 +295,9 @@ export class ScrollAnimation {
 		} else {
 			// Get scroll _stop position depending on scroll direction
 			if (this._options.direction === Direction.VERTICAL) {
-				return this._element.origNode.getBoundingClientRect().top + this._start;
+				return this._element.origNode().getBoundingClientRect().top + this._start;
 			} else {
-				return this._element.origNode.getBoundingClientRect().left + this._start;
+				return this._element.origNode().getBoundingClientRect().left + this._start;
 			}
 		}
 	}

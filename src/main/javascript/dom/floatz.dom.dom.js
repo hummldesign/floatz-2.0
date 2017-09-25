@@ -40,7 +40,7 @@ export default class DOM {
 		// TODO: Support class or id as context?
 		let root = DOM.isWindow(context) ? window.document.documentElement : context;
 		if (root instanceof DOMElement) {
-			root = root.origNode;
+			root = root.origNode();
 		}
 		let nodes = [];
 		try {
@@ -129,8 +129,17 @@ export class DOMElement {
 	 */
 	constructor(node) {
 		// TODO Refactor to private members and provide public getters
-		this.origNode = node;
-		this.tagName = node.tagName.toLowerCase();
+		this._origNode = node;
+		this._tagName = node.tagName.toLowerCase();
+	}
+
+	/**
+	 * Get original node.
+	 *
+	 * @returns Original node
+	 */
+	origNode() {
+		return this._origNode;
 	}
 
 	/**
@@ -139,7 +148,16 @@ export class DOMElement {
 	 * @return Element id or null
 	 */
 	id() {
-		return this.origNode.id;
+		return this._origNode.id;
+	}
+
+	/**
+	 * Get tag name.
+	 *
+	 * @returns {string|*}
+	 */
+	tag() {
+		return this._tagName;
 	}
 
 	/**
@@ -149,9 +167,9 @@ export class DOMElement {
 	 */
 	height(value) {
 		if (value === undefined) {
-			return this.origNode.getBoundingClientRect().height;
+			return this._origNode.getBoundingClientRect().height;
 		} else {
-			this.origNode.style.height = `${value}${PX}`;
+			this._origNode.style.height = `${value}${PX}`;
 			return this;
 		}
 	}
@@ -164,9 +182,9 @@ export class DOMElement {
 	 */
 	width(value) {
 		if (value === undefined) {
-			return this.origNode.getBoundingClientRect().width;
+			return this._origNode.getBoundingClientRect().width;
 		} else {
-			this.origNode.style.width = `${value}${PX}`;
+			this._origNode.style.width = `${value}${PX}`;
 			return this;
 		}
 	}
@@ -178,10 +196,10 @@ export class DOMElement {
 	 */
 	position() {
 		return {
-			top: this.origNode.offsetTop,
-			left: this.origNode.offsetLeft,
-			bottom: this.origNode.offsetTop + this.origNode.offsetHeight,
-			right: this.origNode.offsetLeft + this.origNode.offsetWidth
+			top: this._origNode.offsetTop,
+			left: this._origNode.offsetLeft,
+			bottom: this._origNode.offsetTop + this._origNode.offsetHeight,
+			right: this._origNode.offsetLeft + this._origNode.offsetWidth
 
 		}
 	}
@@ -193,10 +211,10 @@ export class DOMElement {
 	 */
 	offset() {
 		return {
-			top: this.origNode.getBoundingClientRect().top,
-			left: this.origNode.getBoundingClientRect().left,
-			bottom: this.origNode.getBoundingClientRect().bottom,
-			right: this.origNode.getBoundingClientRect().right
+			top: this._origNode.getBoundingClientRect().top,
+			left: this._origNode.getBoundingClientRect().left,
+			bottom: this._origNode.getBoundingClientRect().bottom,
+			right: this._origNode.getBoundingClientRect().right
 		}
 	}
 
@@ -207,8 +225,8 @@ export class DOMElement {
 	 * @returns {boolean} true if set, false if not
 	 */
 	hasClass(className) {
-		if (this.origNode.classList) {
-			return this.origNode.classList.contains(className);
+		if (this._origNode.classList) {
+			return this._origNode.classList.contains(className);
 		} else {
 			// TODO;
 			return false;
@@ -222,8 +240,8 @@ export class DOMElement {
 	 * @returns {DOMElement} DOMElement for chaining
 	 */
 	addClass(className) {
-		if (this.origNode.classList) {
-			this.origNode.classList.add(className);
+		if (this._origNode.classList) {
+			this._origNode.classList.add(className);
 		} else {
 			// TODO
 		}
@@ -237,8 +255,8 @@ export class DOMElement {
 	 * @returns {DOMElement} DOMElement for chaining
 	 */
 	removeClass(className) {
-		if (this.origNode.classList) {
-			this.origNode.classList.remove(className);
+		if (this._origNode.classList) {
+			this._origNode.classList.remove(className);
 		} else {
 			// TODO
 		}
@@ -257,7 +275,7 @@ export class DOMElement {
 	 * @returns {boolean} true if hidden, false if visible
 	 */
 	hidden() {
-		let computedStyles = window.getComputedStyle(this.origNode);
+		let computedStyles = window.getComputedStyle(this._origNode);
 		return computedStyles.display.toLowerCase() === NONE || computedStyles.visibility.toLowerCase() === HIDDEN;
 	}
 
@@ -279,9 +297,9 @@ export class DOMElement {
 	 */
 	attr(name, value) {
 		if (value === undefined) {
-			return this.origNode.getAttribute(name);
+			return this._origNode.getAttribute(name);
 		} else {
-			this.origNode.setAttribute(name, value);
+			this._origNode.setAttribute(name, value);
 			return this;
 		}
 	}
@@ -293,7 +311,7 @@ export class DOMElement {
 	 * @returns {DOMElement} DOMElement for chaining
 	 */
 	removeAttr(attrName) {
-		this.origNode.removeAttribute(attrName);
+		this._origNode.removeAttribute(attrName);
 		return this;
 	}
 
@@ -309,9 +327,9 @@ export class DOMElement {
 	 */
 	css(style, value) {
 		if (value === undefined) {
-			return window.getComputedStyle(this.origNode)[style];
+			return window.getComputedStyle(this._origNode)[style];
 		} else {
-			this.origNode.style[style] = value;
+			this._origNode.style[style] = value;
 			if (this.attr(STYLE) === "") {
 				this.removeAttr(STYLE);
 			}
@@ -326,7 +344,7 @@ export class DOMElement {
 	 */
 	parent() {
 		// TODO Cache parent?
-		return new DOMElement(this.origNode.parentNode);
+		return new DOMElement(this._origNode.parentNode);
 	}
 
 	/**
@@ -360,7 +378,7 @@ export class DOMElement {
 	 * return {DOMElement} DOMElement for chaining
 	 */
 	addEvent(eventName, handler, capture = false) {
-		DOM.addEvent(this.origNode, eventName, handler, capture);
+		DOM.addEvent(this._origNode, eventName, handler, capture);
 		return this;
 	}
 
@@ -373,7 +391,7 @@ export class DOMElement {
 	 * return {DOMElement} DOMElement for chaining
 	 */
 	removeEvent(eventName, handler, capture = false) {
-		DOM.removeEvent(this.origNode, eventName, handler, capture);
+		DOM.removeEvent(this._origNode, eventName, handler, capture);
 		return this;
 	}
 
@@ -384,7 +402,7 @@ export class DOMElement {
 	 * @returns {DOMElement} DOMElement for chaining
 	 */
 	triggerEvent(eventName) {
-		DOM.triggerEvent(this.origNode, eventName);
+		DOM.triggerEvent(this._origNode, eventName);
 		return this;
 	}
 }
