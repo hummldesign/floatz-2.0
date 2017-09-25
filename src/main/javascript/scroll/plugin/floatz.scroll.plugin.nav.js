@@ -1,6 +1,6 @@
-import DOM from "../../dom/dom.js";
-import {DOMElement} from "../../dom/dom.js";
-import {ScrollPlugin} from "../scroller.js";
+import DOM from "../../dom/floatz.dom.dom.js";
+import {DOMElement} from "../../dom/floatz.dom.dom.js";
+import {ScrollPlugin} from "../floatz.scroll.scroller.js";
 
 /**
  * Scroll navigation plugin.
@@ -44,8 +44,18 @@ export class ScrollNavPlugin extends ScrollPlugin {
  */
 function _prepareNavItems(plugin) {
 	let navItems = DOM.query(plugin.options().selector);
+	let header = DOM.queryUnique("header");
+
 	navItems.forEach((navItem) => {
-		navItem.addEvent("click", () => {
+		navItem.addEvent("click", (event) => {
+			event.preventDefault();
+
+			// Remove header offset for slideout header
+			if(header.hasClass("flz-header-fixed-slideout")) {
+				plugin.scroller().options().offset = 0;
+			}
+
+			// Scroll to section the menu navigation item points to
 			plugin.scroller().scrollTo(navItem.attr("href"), {
 				complete: () => {
 					_handleScrollComplete(plugin, navItem);

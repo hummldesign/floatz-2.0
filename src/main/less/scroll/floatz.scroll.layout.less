@@ -1,0 +1,12 @@
+@import '../animation/floatz.animation.easing.less';
+
+.flz-header-fixed,
+.flz-header-fixed-slideOut {
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+.flz-header-fixed-slideout {
+	.flz-mx-transition(top, 0.42s, @flz-easing-inout);
+}

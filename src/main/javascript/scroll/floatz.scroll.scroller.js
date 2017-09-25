@@ -1,6 +1,6 @@
-import DOM from "../dom/dom.js";
-import Easing from "../animation/easing.js"
-import {DOMElement} from "../dom/dom.js";
+import DOM from "../dom/floatz.dom.dom.js";
+import Easing from "../animation/floatz.animation.easing.js"
+import {DOMElement} from "../dom/floatz.dom.dom.js";
 
 /**
  * Notes:
@@ -70,6 +70,15 @@ export class Scroller {
 			plugin.onScrollForward(this);
 		});
 		return this;
+	}
+
+	/**
+	 * Get scroll options.
+	 *
+	 * @returns Scroll options
+	 */
+	options() {
+		return this._options;
 	}
 
 	/**

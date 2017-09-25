@@ -1,5 +1,5 @@
-import DOM from "../../dom/dom.js";
-import {ScrollPlugin} from "../scroller.js";
+import DOM from "../../dom/floatz.dom.dom.js";
+import {ScrollPlugin} from "../floatz.scroll.scroller.js";
 
 /**
  * Scroll header plugin.
@@ -17,22 +17,27 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 
 		// Default options
 		this.options().selector = options.selector || "header";
-		this.options().hideOnScrollForward = options.hideOnScrollForward || false;
 
 		// Add header offset correction to scroller
 		this._header = DOM.queryUnique(this._options.selector);
 		this.scroller().offset(this._header.height() * -1);
 	}
 
+	/**
+	 * Scroll forward handler.
+	 */
 	onScrollForward() {
-		if (this.options().hideOnScrollForward) {
+		if (this._header.hasClass("flz-header-fixed-slideout")) {
 			this._header.css("top", -this._header.height() + "px");
 			this.scroller().offset(0);
 		}
 	}
 
+	/**
+	 * Scroll backward handler.
+	 */
 	onScrollBackward() {
-		if(this.options().hideOnScrollForward) {
+		if (this._header.hasClass("flz-header-fixed-slideout")) {
 			this._header.css("top", null);
 			this.scroller().offset(-this._header.height());
 		}

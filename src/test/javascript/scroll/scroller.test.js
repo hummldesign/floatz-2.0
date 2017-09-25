@@ -1,9 +1,9 @@
-import DOM from "../../../main/javascript/dom/dom.js";
-import {Scroller} from "../../../main/javascript/scroll/scroller.js";
+import DOM from "../../../main/javascript/dom/floatz.dom.dom.js";
+import {Scroller} from "../../../main/javascript/scroll/floatz.scroll.scroller.js";
 
 let scroller;
 
-describe("> Test Suite for scroller.js", () => {
+describe("> Test Suite for floatz.scroll.scroller.js", () => {
 	// Ensure that we always start at the top
 	beforeAll((done) => {
 		setTimeout(() => {

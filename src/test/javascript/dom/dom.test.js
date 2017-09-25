@@ -1,5 +1,5 @@
-import DOM from "../../../main/javascript/dom/dom.js";
-import {DOMElement} from "../../../main/javascript/dom/dom.js";
+import DOM from "../../../main/javascript/dom/floatz.dom.dom.js";
+import {DOMElement} from "../../../main/javascript/dom/floatz.dom.dom.js";
 
 let eventCounter = {
 	resize: 0
@@ -13,7 +13,7 @@ let handleLoad2 = () => {
 	eventCounter.resize += 1;
 };
 
-describe("> Test Suite for dom.js", () => {
+describe("> Test Suite for floatz.dom.dom.js", () => {
 	describe("Given an _element with an id", () => {
 		describe("When the _element is queried by its id", () => {
 			it("Then an object of type DOMElement should be returned", () => {

@@ -1,6 +1,7 @@
 @import '../../main/less/core/floatz.core.less';
 @import '../../main/less/navigation/floatz.navigation.less';
 @import '../../main/less/animation/floatz.animation.easing.less';
+@import '../../main/less/scroll/floatz.scroll.layout.less';
 
 body {
 	padding: 0;
@@ -45,18 +46,6 @@ header {
 	position: absolute;
 	right: @flz-var-gutter-layout-x / 2;
 	top: 0;
-}
-
-.flz-header-fixed,
-.flz-header-fixed-slideOut {
-	height: 4em;
-	position: fixed;
-	top: 0;
-	width: 100%;
-}
-
-.flz-header-fixed-slideout {
-	.flz-mx-transition(top, 0.42s, @flz-easing-inout);
 }
 
 .box {

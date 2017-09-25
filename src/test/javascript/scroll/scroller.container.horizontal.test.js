@@ -1,27 +1,11 @@
-import DOM from "../../../main/javascript/dom/dom.js";
-import {Scroller} from "../../../main/javascript/scroll/scroller.js";
-import {Direction} from "../../../main/javascript/scroll/scroller.js";
-
-// Startup
-/*DOM.addEvent(document, "DOMContentLoaded", () => {
-	window.setTimeout(() => {
-		new Scroller("#row-1", {
-			direction: Direction.HORIZONTAL
-		}).onScroll(() => {
-			console.info("scrolled in #container-1");
-		}).scrollTo("#second");
-		new Scroller("#row-2", {
-			direction: Direction.HORIZONTAL
-		}).onScroll(() => {
-			console.info("scrolled in #container-2");
-		}).scrollTo("#seventh");
-	}, 1000);
-});*/
+import DOM from "../../../main/javascript/dom/floatz.dom.dom.js";
+import {Scroller} from "../../../main/javascript/scroll/floatz.scroll.scroller.js";
+import {Direction} from "../../../main/javascript/scroll/floatz.scroll.scroller.js";
 
 let scroller1;
 let scroller2;
 
-describe("> Test Suite for scroller.js", () => {
+describe("> Test Suite for floatz.scroll.scroller.js", () => {
 	// Ensure that we always start at the top
 	beforeAll((done) => {
 		setTimeout(() => {

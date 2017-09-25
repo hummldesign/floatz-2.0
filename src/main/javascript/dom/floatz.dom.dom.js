@@ -1,4 +1,4 @@
-import StringUtils from "../util/strings.js";
+import StringUtils from "../util/floatz.util.strings.js";
 
 /**
  * Constants
