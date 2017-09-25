@@ -1,0 +1,40 @@
+@import '../../main/less/core/floatz.core.less';
+@import '../../main/less/animation/floatz.animation.easing.less';
+
+@duration: 0.75s;
+
+.box {
+	width: 10em;
+	height: 2em;
+	background-color: coral;
+}
+
+.linear:hover {
+	width: 100%;
+	.flz-mx-transition(all, @duration, @flz-easing-linear);
+}
+
+.ease:hover {
+	width: 100%;
+	.flz-mx-transition(all, @duration, @flz-easing-ease);
+}
+
+.easeIn:hover {
+	width: 100%;
+	.flz-mx-transition(all, @duration, @flz-easing-in);
+}
+
+.easeOut:hover {
+	width: 100%;
+	.flz-mx-transition(all, @duration, @flz-easing-out);
+}
+
+.easeInExpo:hover {
+	width: 100%;
+	.flz-mx-transition(all, @duration, @flz-easing-inexpo);
+}
+
+.easeOutExpo:hover {
+	width: 100%;
+	.flz-mx-transition(all, @duration, @flz-easing-outexpo);
+}

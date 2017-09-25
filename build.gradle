@@ -24,7 +24,7 @@ task compileDomJsTest(type: JavaExec) {
   closureArgs << "--language_in=ES6"
   closureArgs << "--language_out=ES5"
   // closureArgs << "--formatting=pretty_print"
-  // closureArgs << "--create_source_map=build/floatz.dom.test.min.js.map"
+  // closureArgs << "--create_source_map=build/floatz.dom.dom.test.min.js.map"
   // closureArgs << "--debug"
   // closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
   closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
@@ -34,7 +34,7 @@ task compileDomJsTest(type: JavaExec) {
   // Must be in correct order otherwise modules are not found
   closureArgs << "lib/polyfills/**.js"
   closureArgs << "src/main/javascript/**.js"
-  closureArgs << "src/test/javascript/dom/dom.test.js"
+  closureArgs << "src/test/javascript/dom/floatz.dom.dom.test.js"
   args closureArgs
 }
 
@@ -52,7 +52,7 @@ task compileScrollerJsTest(type: JavaExec) {
   // Must be in correct order otherwise modules are not found
   closureArgs << "lib/polyfills/**.js"
   closureArgs << "src/main/javascript/**.js"
-  closureArgs << "src/test/javascript/scroll/scroller.test.js"
+  closureArgs << "src/test/javascript/scroll/floatz.scroll.scroller.test.js"
   args closureArgs
 }
 
@@ -69,7 +69,7 @@ task compileScrollerHorizontalJsTest(type: JavaExec) {
   // Must be in correct order otherwise modules are not found
   closureArgs << "lib/polyfills/**.js"
   closureArgs << "src/main/javascript/**.js"
-  closureArgs << "src/test/javascript/scroll/scroller.horizontal.test.js"
+  closureArgs << "src/test/javascript/scroll/floatz.scroll.scroller.horizontal.test.js"
   args closureArgs
 }
 
@@ -86,7 +86,7 @@ task compileScrollerContainerJsTest(type: JavaExec) {
   // Must be in correct order otherwise modules are not found
   closureArgs << "lib/polyfills/**.js"
   closureArgs << "src/main/javascript/**.js"
-  closureArgs << "src/test/javascript/scroll/scroller.container.test.js"
+  closureArgs << "src/test/javascript/scroll/floatz.scroll.scroller.container.test.js"
   args closureArgs
 }
 
@@ -103,7 +103,7 @@ task compileScrollerContainerHorizontalJsTest(type: JavaExec) {
   // Must be in correct order otherwise modules are not found
   closureArgs << "lib/polyfills/**.js"
   closureArgs << "src/main/javascript/**.js"
-  closureArgs << "src/test/javascript/scroll/scroller.container.horizontal.test.js"
+  closureArgs << "src/test/javascript/scroll/floatz.scroll.scroller.container.horizontal.test.js"
   args closureArgs
 }
 
@@ -120,7 +120,7 @@ task compileScrollerLayoutJsTest(type: JavaExec) {
   // Must be in correct order otherwise modules are not found
   closureArgs << "lib/polyfills/**.js"
   closureArgs << "src/main/javascript/**.js"
-  closureArgs << "src/test/javascript/scroll/scroller.layout.test.js"
+  closureArgs << "src/test/javascript/scroll/floatz.scroll.layout.test.js"
   args closureArgs
 }
 

@@ -18,7 +18,8 @@ const STYLE = "style";
 export default class DOM {
 
 	/**
-	 * Check if _element is the window.
+	 * Check if element is the window.
+	 *
 	 * @param element Element
 	 * @returns {boolean} true if window, false if not
 	 */
@@ -31,8 +32,8 @@ export default class DOM {
 	 *
 	 * Syntax: DOM.query(<selectors>[,<context>]);
 	 *
-	 * @param selectors String with selectors
-	 * @param context Context native _element or DOMElement (optional, default is window)
+	 * @param {string} selectors String with selectors
+	 * @param {(Node|DOMElement|Object)=} context Context native element or DOMElement (optional, default is window)
 	 * @returns {!Array} Array of DOMElement items
 	 */
 	static query(selectors, context = window) {
@@ -55,7 +56,8 @@ export default class DOM {
 	}
 
 	/**
-	 * Query _element by id.
+	 * Query element by id.
+	 *
 	 * @param id Element id
 	 * @returns {DOMElement} DOMElement or null if not found
 	 */
@@ -65,7 +67,8 @@ export default class DOM {
 	}
 
 	/**
-	 * Query only unique _element.
+	 * Query only unique element.
+	 *
 	 * @param selector Selector
 	 * @returns {DOMElement} DOMElement or null if not found
 	 */
@@ -76,6 +79,7 @@ export default class DOM {
 
 	/**
 	 * Add event listener.
+	 *
 	 * @param element Element
 	 * @param eventName Event name
 	 * @param handler Event handler
@@ -269,6 +273,7 @@ export class DOMElement {
 
 	/**
 	 * Remove attribute.
+	 *
 	 * @param attrName Attribute name
 	 * @returns {DOMElement} DOMElement for chaining
 	 */
@@ -299,13 +304,18 @@ export class DOMElement {
 		}
 	}
 
+	/**
+	 * Get parent.
+	 *
+	 * @returns {DOMElement} Parent element
+	 */
 	parent() {
 		// TODO Cache parent?
 		return new DOMElement(this.origNode.parentNode);
 	}
 
 	/**
-	 * Show _element.
+	 * Show element.
 	 *
 	 * Is able to save/restore the initial display value even if its an inline style.
 	 *
@@ -317,7 +327,7 @@ export class DOMElement {
 	}
 
 	/**
-	 * Hide _element.
+	 * Hide element.
 	 *
 	 * Is able to save/restore the initial display value even if its an inline style.
 	 */
@@ -328,6 +338,7 @@ export class DOMElement {
 
 	/**
 	 * Add event listener.
+	 *
 	 * @param eventName Event name
 	 * @param handler Event handler
 	 * @param capture true for capture phase, false for bubbling phase
@@ -340,6 +351,7 @@ export class DOMElement {
 
 	/**
 	 * Remove event listener.
+	 *
 	 * @param eventName Event name
 	 * @param handler Event handler
 	 * @param capture true for capture phase, false for bubbling phase
