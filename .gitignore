@@ -2,3 +2,4 @@
 *.min.css
 *.min.js
 /build/
+.idea
