@@ -9,15 +9,16 @@ dependencies {
 }
 
 task compileTest {
-	dependsOn 'compileDomJsTest'
-	dependsOn 'compileScrollerJsTest'
-	dependsOn 'compileScrollerHorizontalJsTest'
-	dependsOn 'compileScrollerContainerJsTest'
-	dependsOn 'compileScrollerContainerHorizontalJsTest'
-	dependsOn 'compileScrollerLayoutJsTest'
+	dependsOn 'compileDomTest'
+	dependsOn 'compileScrollTest'
+	dependsOn 'compileScrollHorizontalTest'
+	dependsOn 'compileScrollContainerTest'
+	dependsOn 'compileScrollContainerHorizontalTest'
+	dependsOn 'compileScrollLayoutHeaderTest'
+	dependsOn 'compileScrollLayoutHeaderSlideoutTest'
 }
 
-task compileDomJsTest(type: JavaExec) {
+task compileDomTest(type: JavaExec) {
   classpath configurations.closureCompiler
   main = 'com.google.javascript.jscomp.CommandLineRunner'
   def closureArgs = []
@@ -38,7 +39,7 @@ task compileDomJsTest(type: JavaExec) {
   args closureArgs
 }
 
-task compileScrollerJsTest(type: JavaExec) {
+task compileScrollTest(type: JavaExec) {
   classpath configurations.closureCompiler
   main = 'com.google.javascript.jscomp.CommandLineRunner'
   def closureArgs = []
@@ -46,7 +47,7 @@ task compileScrollerJsTest(type: JavaExec) {
   closureArgs << "--language_out=ES5"
   closureArgs << "--formatting=pretty_print"
   closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
-  closureArgs << "--js_output_file=build/floatz.scroller.test.min.js"
+  closureArgs << "--js_output_file=build/floatz.scroll.test.min.js"
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
   // Must be in correct order otherwise modules are not found
@@ -56,14 +57,14 @@ task compileScrollerJsTest(type: JavaExec) {
   args closureArgs
 }
 
-task compileScrollerHorizontalJsTest(type: JavaExec) {
+task compileScrollHorizontalTest(type: JavaExec) {
   classpath configurations.closureCompiler
   main = 'com.google.javascript.jscomp.CommandLineRunner'
   def closureArgs = []
   closureArgs << "--language_in=ES6"
   closureArgs << "--language_out=ES5"
   closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
-  closureArgs << "--js_output_file=build/floatz.scroller.horizontal.test.min.js"
+  closureArgs << "--js_output_file=build/floatz.scroll.horizontal.test.min.js"
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
   // Must be in correct order otherwise modules are not found
@@ -73,14 +74,14 @@ task compileScrollerHorizontalJsTest(type: JavaExec) {
   args closureArgs
 }
 
-task compileScrollerContainerJsTest(type: JavaExec) {
+task compileScrollContainerTest(type: JavaExec) {
   classpath configurations.closureCompiler
   main = 'com.google.javascript.jscomp.CommandLineRunner'
   def closureArgs = []
   closureArgs << "--language_in=ES6"
   closureArgs << "--language_out=ES5"
   closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
-  closureArgs << "--js_output_file=build/floatz.scroller.container.test.min.js"
+  closureArgs << "--js_output_file=build/floatz.scroll.container.test.min.js"
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
   // Must be in correct order otherwise modules are not found
@@ -90,14 +91,14 @@ task compileScrollerContainerJsTest(type: JavaExec) {
   args closureArgs
 }
 
-task compileScrollerContainerHorizontalJsTest(type: JavaExec) {
+task compileScrollContainerHorizontalTest(type: JavaExec) {
   classpath configurations.closureCompiler
   main = 'com.google.javascript.jscomp.CommandLineRunner'
   def closureArgs = []
   closureArgs << "--language_in=ES6"
   closureArgs << "--language_out=ES5"
   closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
-  closureArgs << "--js_output_file=build/floatz.scroller.container.horizontal.test.min.js"
+  closureArgs << "--js_output_file=build/floatz.scroll.container.horizontal.test.min.js"
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
   // Must be in correct order otherwise modules are not found
@@ -107,20 +108,36 @@ task compileScrollerContainerHorizontalJsTest(type: JavaExec) {
   args closureArgs
 }
 
-task compileScrollerLayoutJsTest(type: JavaExec) {
+task compileScrollLayoutHeaderTest(type: JavaExec) {
   classpath configurations.closureCompiler
   main = 'com.google.javascript.jscomp.CommandLineRunner'
   def closureArgs = []
   closureArgs << "--language_in=ES6"
   closureArgs << "--language_out=ES5"
   closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
-  closureArgs << "--js_output_file=build/floatz.scroller.layout.test.min.js"
+  closureArgs << "--js_output_file=build/floatz.scroll.layout.header.test.min.js"
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
   // Must be in correct order otherwise modules are not found
   closureArgs << "lib/polyfills/**.js"
   closureArgs << "src/main/javascript/**.js"
-  closureArgs << "src/test/javascript/scroll/floatz.scroll.layout.test.js"
+  closureArgs << "src/test/javascript/scroll/floatz.scroll.layout.header.test.js"
   args closureArgs
 }
 
+task compileScrollLayoutHeaderSlideoutTest(type: JavaExec) {
+  classpath configurations.closureCompiler
+  main = 'com.google.javascript.jscomp.CommandLineRunner'
+  def closureArgs = []
+  closureArgs << "--language_in=ES6"
+  closureArgs << "--language_out=ES5"
+  closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
+  closureArgs << "--js_output_file=build/floatz.scroll.layout.header.slideout.test.min.js"
+  closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
+
+  // Must be in correct order otherwise modules are not found
+  closureArgs << "lib/polyfills/**.js"
+  closureArgs << "src/main/javascript/**.js"
+  closureArgs << "src/test/javascript/scroll/floatz.scroll.layout.header.slideout.test.js"
+  args closureArgs
+}

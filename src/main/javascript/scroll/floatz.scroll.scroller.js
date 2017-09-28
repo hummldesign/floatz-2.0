@@ -59,6 +59,7 @@ export class Scroller {
 			throw "Plugin must extend class ScrollPlugin";
 		}
 
+		plugin.scroller(this);
 		this._plugins.push(plugin);
 		this.onScroll(() => {
 			plugin.onScroll(this);
@@ -394,27 +395,59 @@ export class ScrollAnimation {
 	}
 }
 
+/**
+ * Scroller plugin.
+ */
 export class ScrollPlugin {
 
-	constructor(scroller, options = {}) {
-		this._scroller = scroller;
+	/**
+	 * Constructor.
+	 * @param {Object=} options Options
+	 */
+	constructor(options = {}) {
+		this._scroller = null;
 		this._options = options;
 	}
 
-	scroller() {
-		return this._scroller;
+	/**
+	 * Get / set scroller.
+	 *
+	 * @param {Scroller=} scroller
+	 * @returns {(Scroller|ScrollPlugin)} Scroller or ScrollPlugin for chaining when used as setter
+	 */
+	scroller(scroller) {
+		if(scroller) {
+			this._scroller = scroller;
+			return this;
+		} else {
+			return this._scroller;
+		}
 	}
 
+	/**
+	 * Get options.
+	 *
+	 * @returns {Object}
+	 */
 	options() {
 		return this._options;
 	}
 
+	/**
+	 * Scroll handler.
+	 */
 	onScroll() {
 	}
 
+	/**
+	 * Scroll backward handler.
+	 */
 	onScrollBackward() {
 	}
 
+	/**
+	 * Scroll forward handler.
+	 */
 	onScrollForward() {
 	}
 }

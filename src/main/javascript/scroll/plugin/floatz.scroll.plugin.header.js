@@ -9,11 +9,10 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 	/**
 	 * Constructor.
 	 *
-	 * @param scroller Reference to scroller
 	 * @param options Plugin options
 	 */
-	constructor(scroller, options = {}) {
-		super(scroller, options);
+	constructor(options = {}) {
+		super(options);
 
 		// Default options
 		this.options().selector = options.selector || "header";
