@@ -71,7 +71,7 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 				expect(DOM.queryUnique("#root") instanceof DOMElement).toBeTruthy()
 			});
 			it("And its id should be as expected", () => {
-				expect(DOM.queryUnique("#root").origNode().id()).toBe("root");
+				expect(DOM.queryUnique("#root").id()).toBe("root");
 			});
 		});
 	});

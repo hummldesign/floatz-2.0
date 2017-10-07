@@ -40,7 +40,8 @@ export class Scroller {
 
 		if (DOM.isWindow(container)) {
 			this._container = container;
-			this._options.scrollable = document.body;
+			// Note: document.body does not work since Chrome 61
+			this._options.scrollable = document.scrollingElement || document.documentElement;
 		} else {
 			this._container = DOM.queryUnique(container).origNode();
 			this._options.scrollable = this._container;
@@ -105,6 +106,8 @@ export class Scroller {
 			this._handlers.forEach((handler) => {
 				handler(this);
 			});
+
+			// Set new position AFTER firing handlers!
 			this._prevScrollPos = this.scrollPos();
 		});
 		return this;

@@ -7,11 +7,6 @@ import {ScrollPlugin} from "../floatz.scroll.scroller.js";
  */
 export class ScrollNavPlugin extends ScrollPlugin {
 
-	/**
-	 * Constructor.
-	 *
-	 * @param options Plugin options
-	 */
 	constructor(options = {}) {
 		super(options);
 
@@ -25,9 +20,9 @@ export class ScrollNavPlugin extends ScrollPlugin {
 	/**
 	 * Scroll handler.
 	 */
-	onScroll() {
-		console.info("scrolled");
-	}
+/*	onScroll() {
+		console.info("nav scrolled");
+	}*/
 
 	navItems() {
 		return this._navItems;

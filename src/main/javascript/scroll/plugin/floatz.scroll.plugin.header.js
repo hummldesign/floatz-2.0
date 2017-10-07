@@ -16,10 +16,23 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 
 		// Default options
 		this.options().selector = options.selector || "header";
-
-		// Add header offset correction to scroller
 		this._header = DOM.queryUnique(this._options.selector);
-		this.scroller().offset(this._header.height() * -1);
+
+	}
+
+	/**
+	 * @override
+	 */
+	scroller(scroller) {
+		let _scroller = super.scroller(scroller);
+
+		// Add header offset correction to given scroller
+		if(scroller) {
+			if(this._header.css("position") === "fixed") {
+				_scroller.scroller().offset(this._header.height() * -1)
+			}
+		}
+		return _scroller;
 	}
 
 	/**
