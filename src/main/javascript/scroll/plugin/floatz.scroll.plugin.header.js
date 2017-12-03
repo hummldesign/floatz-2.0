@@ -59,7 +59,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 		// FIXME Show only once, not on every scroll change
 		if (this._header.hasClass("flz-header-fixed-slideout")) {
 			// Don´t show header when scrolling below bottom position on mobile device
-			if ((this.scroller().scrollPos() + this.scroller().viewportSize()) <= this.scroller().scrollSize()) {
+			if ((this.scroller().prevScrollPos() + this.scroller().viewportSize()) <= this.scroller().scrollSize()) {
 				this._header.css("top", null);
 				this.scroller().offset(-this._header.height());
 			}

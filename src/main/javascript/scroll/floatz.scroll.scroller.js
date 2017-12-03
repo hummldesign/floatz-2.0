@@ -180,6 +180,15 @@ export class Scroller {
 	}
 
 	/**
+	 * Get previous scroll position.
+	 * 
+	 * @returns {Number} Previous scroll position in px
+	 */
+	prevScrollPos() {
+		return this._prevScrollPos;
+	}
+
+	/**
 	 * Get size of scroll container (including all its scroll sections)
 	 *
 	 * @returns {number} Scroll container size in px
@@ -419,7 +428,7 @@ export class ScrollPlugin {
 	 * @returns {(Scroller|ScrollPlugin)} Scroller or ScrollPlugin for chaining when used as setter
 	 */
 	scroller(scroller) {
-		if(scroller) {
+		if (scroller) {
 			this._scroller = scroller;
 			return this;
 		} else {
