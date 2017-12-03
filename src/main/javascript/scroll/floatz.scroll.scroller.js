@@ -182,7 +182,7 @@ export class Scroller {
 	/**
 	 * Get previous scroll position.
 	 * 
-	 * @returns {Number} Previous scroll position in px
+	 * @returns {number} Previous scroll position in px
 	 */
 	prevScrollPos() {
 		return this._prevScrollPos;
