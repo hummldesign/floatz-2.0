@@ -15,9 +15,8 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 		super(options);
 
 		// Default options
-		this.options().selector = options.selector || "header";
-		this._header = DOM.queryUnique(this._options.selector);
-
+		this.options().headerSelector = options.headerSelector || "header";
+		this._header = DOM.queryUnique(this._options.headerSelector);
 	}
 
 	/**

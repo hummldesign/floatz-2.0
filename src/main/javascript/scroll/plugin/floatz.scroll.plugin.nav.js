@@ -11,7 +11,8 @@ export class ScrollNavPlugin extends ScrollPlugin {
 		super(options);
 
 		// Default options
-		this.options().selector = options.selector || "header li > a";
+		this.options().headerSelector = options.headerSelector || "header";
+		this.options().navItemsSelector = options.navItemsSelector || "header li > a";
 
 		// Add click handlers to navigation items
 		this._navItems = _prepareNavItems(this);
@@ -37,8 +38,8 @@ export class ScrollNavPlugin extends ScrollPlugin {
  * @private
  */
 function _prepareNavItems(plugin) {
-	let navItems = DOM.query(plugin.options().selector);
-	let header = DOM.queryUnique("header");
+	let navItems = DOM.query(plugin.options().navItemsSelector);
+	let header = DOM.queryUnique(plugin.options().headerSelector);
 
 	navItems.forEach((navItem) => {
 		navItem.addEvent("click", (event) => {
