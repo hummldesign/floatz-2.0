@@ -20,6 +20,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 		// Default options
 		this.options().headerSelector = options.headerSelector || "header";
 		this._header = DOM.queryUnique(this._options.headerSelector);
+		this.options().slideOutOffset = this._header.height();
 	}
 
 	/**
@@ -29,8 +30,8 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 		let _scroller = super.scroller(scroller);
 
 		// Add header offset correction to given scroller
-		if(scroller) {
-			if(this._header.css("position") === "fixed") {
+		if (scroller) {
+			if (this._header.css("position") === "fixed") {
 				_scroller.scroller().offset(this._header.height() * -1)
 			}
 		}
@@ -41,9 +42,13 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 	 * Scroll forward handler.
 	 */
 	onScrollForward() {
+		// FIXME Hide only once, not on every scroll change
 		if (this._header.hasClass("flz-header-fixed-slideout")) {
-			this._header.css("top", -this._header.height() + "px");
-			this.scroller().offset(0);
+			// Don´t hide header when scrolling over top position on mobile devices
+			if (this.scroller().scrollPos() >= this.options().slideOutOffset) {
+				this._header.css("top", -this._header.height() + "px");
+				this.scroller().offset(0);
+			}
 		}
 	}
 
@@ -51,9 +56,13 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 	 * Scroll backward handler.
 	 */
 	onScrollBackward() {
+		// FIXME Show only once, not on every scroll change
 		if (this._header.hasClass("flz-header-fixed-slideout")) {
-			this._header.css("top", null);
-			this.scroller().offset(-this._header.height());
+			// Don´t show header when scrolling below bottom position on mobile device
+			if ((this.scroller().scrollPos() + this.scroller().viewportSize()) <= this.scroller().scrollSize()) {
+				this._header.css("top", null);
+				this.scroller().offset(-this._header.height());
+			}
 		}
 	}
 }
