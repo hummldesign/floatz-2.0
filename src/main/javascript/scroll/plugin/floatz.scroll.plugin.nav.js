@@ -4,6 +4,9 @@ import {ScrollPlugin} from "../floatz.scroll.scroller.js";
 
 /**
  * Scroll navigation plugin.
+ * <p>
+ *    Adds scroll-to navigation to all navigation items.
+ * </p>
  */
 export class ScrollNavPlugin extends ScrollPlugin {
 
@@ -43,19 +46,23 @@ function _prepareNavItems(plugin) {
 
 	navItems.forEach((navItem) => {
 		navItem.addEvent("click", (event) => {
-			event.preventDefault();
+			
+			// Use scroll navigation only when href contains an id
+			if(navItem.attr("href").startsWith("#")) {
+				event.preventDefault();
 
-			// Remove header offset for slideout header
-			if(header.hasClass("flz-header-fixed-slideout")) {
-				plugin.scroller().options().offset = 0;
+				// Remove header offset for slideout header
+				if(header.hasClass("flz-header-fixed-slideout")) {
+					plugin.scroller().options().offset = 0;
+				}
+
+				// Scroll to section the menu navigation item points to
+				plugin.scroller().scrollTo(navItem.attr("href"), {
+					complete: () => {
+						_handleScrollComplete(plugin, navItem);
+					},
+				});
 			}
-
-			// Scroll to section the menu navigation item points to
-			plugin.scroller().scrollTo(navItem.attr("href"), {
-				complete: () => {
-					_handleScrollComplete(plugin, navItem);
-				},
-			});
 		});
 	});
 

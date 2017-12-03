@@ -3,6 +3,9 @@ import {ScrollPlugin} from "../floatz.scroll.scroller.js";
 
 /**
  * Scroll header plugin.
+ * <p>
+ *    Adds fixed header support to scrolled page.
+ * </p>
  */
 export class ScrollHeaderPlugin extends ScrollPlugin {
 
