@@ -155,13 +155,6 @@
 	}
 }
 
-// http://shouldiprefix.com/#transforms
-.flz-mx-transform(@deg) {
-	-webkit-transform: rotate(@deg); /* Ch <36, Saf 5.1+, iOS < 9.2, An =<4.4.4 */
-	-ms-transform: rotate(@deg); /* IE 9 */
-	transform: rotate(@deg); /* IE 10, Fx 16+, Op 12.1+ */
-}
-
 .flz-mx-shadow(@x, @y, @blur, @spread: 0, @color, @opacity) {
 	@rgba: rgba(red(@color), green(@color), blue(@color), @opacity);
 	-webkit-box-shadow: @x @y @blur @spread @rgba;

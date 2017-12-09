@@ -1,0 +1,47 @@
+@import '../animation/floatz.animation.mixins.less';
+
+// Mixins
+.flz-mx-dialog-glass {
+	background-color: #000;
+	bottom: 0;
+	left: 0;
+	opacity: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+}
+
+// Glass effect styles
+.flz-dialog-glass::after {
+	.flz-mx-dialog-glass;
+	height: auto; // Override flz-mx-enwrap
+	visibility: visible; // Override flz-mx-enwrap
+}
+
+// Glass animations
+.flz-animate-glass-fadein::after {
+	.flz-mx-animation(flz-animation-glass-fadein 0.3s ease forwards);
+}
+
+.flz-animate-glass-fadeout::after {
+	.flz-mx-animation(flz-animation-glass-fadeout 0.3s ease forwards);
+}
+
+// Glass animation keyframes
+.flz-mx-keyframes(flz-animation-glass-fadein, {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0.7;
+	}
+});
+
+.flz-mx-keyframes(flz-animation-glass-fadeout, {
+	0% {
+		opacity: 0.7;
+	}
+	100% {
+		opacity: 0;
+	}
+});

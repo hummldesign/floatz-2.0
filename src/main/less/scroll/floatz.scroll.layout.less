@@ -1,13 +1,37 @@
+@import '../animation/floatz.animation.mixins.less';
 @import '../animation/floatz.animation.easing.less';
 
-.flz-header-fixed,
-.flz-header-fixed-slideout {
+.flz-page {
+}
+
+// Outer page section (like subpage)
+.flz-page-section {
+	.flz-mx-enwrap;
+	background-color: @bg-color;
+	padding: @flz-var-gutter-layout-y / 2 0;
+}
+
+// Inner page section content
+.flz-page-content {
+	.flz-mx-enwrap;
+	margin: 0 auto;
+	max-width: @page-width;
+	position: relative;
+}
+
+// Fixed header
+.flz-page-header-fixed,
+.flz-page-header-fixed-slided {
 	position: fixed;
 	top: 0;
 	width: 100%;
-	z-index: 9;
+	z-index: 1;
 }
 
-.flz-header-fixed-slideout {
+.flz-page-header-fixed-slided {
 	.flz-mx-transition(top, 0.42s, @flz-easing-inout);
+}
+
+.flz-noscroll {
+	overflow: hidden;
 }

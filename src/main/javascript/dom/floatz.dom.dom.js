@@ -229,6 +229,7 @@ export class DOMElement {
 			return this._origNode.classList.contains(className);
 		} else {
 			// TODO;
+			console.error("classList not available");
 			return false;
 		}
 	}
@@ -244,6 +245,29 @@ export class DOMElement {
 			this._origNode.classList.add(className);
 		} else {
 			// TODO
+			console.error("classList not available");
+		}
+		return this;
+	}
+
+	/**
+	 * Replace class.
+	 *
+	 * @param className Class name to be replaced
+	 * @param otherClassName Class name to be set
+	 *
+	 * @returns {DOMElement} DOMElement for chaining
+	 */
+	replaceClass(className, otherClassName) {
+		if (this._origNode.classList) {
+			if (this._origNode.classList.replace) {
+				this._origNode.classList.replace(className, otherClassName);
+			} else {
+				this.removeClass(className).addClass(otherClassName);
+			}
+		} else {
+			// TODO
+			console.error("classList not available");
 		}
 		return this;
 	}
@@ -259,6 +283,7 @@ export class DOMElement {
 			this._origNode.classList.remove(className);
 		} else {
 			// TODO
+			console.error("classList not available");
 		}
 
 		// Remove class attribute if we have no more class set

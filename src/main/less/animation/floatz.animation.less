@@ -1,0 +1,30 @@
+@import 'floatz.animation.mixins.less';
+@import 'floatz.animation.easing.less';
+
+// Animation classes
+.flz-animate-fadein {
+	.flz-mx-animation(flz-animation-fadein ease forwards);
+}
+
+.flz-animate-fadeout {
+	.flz-mx-animation(flz-animation-fadeout ease forwards);
+}
+
+// Keyframes
+.flz-mx-keyframes(flz-animation-fadein, {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+});
+
+.flz-mx-keyframes(flz-animation-fadeout, {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+});

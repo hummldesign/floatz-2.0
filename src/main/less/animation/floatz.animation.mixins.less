@@ -1,0 +1,22 @@
+// http://shouldiprefix.com/#transforms
+.flz-mx-transform(@deg) {
+	-webkit-transform: rotate(@deg); /* Ch <36, Saf 5.1+, iOS < 9.2, An =<4.4.4 */
+	-ms-transform: rotate(@deg); /* IE 9 */
+	transform: rotate(@deg); /* IE 10, Fx 16+, Op 12.1+ */
+}
+
+// FIXME Use only one parameter
+.flz-mx-transition(@property, @duration, @easing) {
+	-webkit-transition: @property @duration @easing;
+	transition: @property @duration @easing;
+}
+
+.flz-mx-animation(@arguments) {
+	-webkit-animation: @arguments;
+	animation: @arguments;
+}
+
+.flz-mx-keyframes(@name, @arguments) {
+	@-webkit-keyframes @name { @arguments(); }
+	@keyframes @name { @arguments(); }
+}
