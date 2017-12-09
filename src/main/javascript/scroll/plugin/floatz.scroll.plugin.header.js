@@ -43,7 +43,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 	 */
 	onScrollForward() {
 		// FIXME Hide only once, not on every scroll change
-		if (this._header.hasClass("flz-header-fixed-slideout")) {
+		if (this._header.hasClass("flz-page-header-fixed-slided")) {
 			// Don´t hide header when scrolling over top position on mobile devices
 			if (this.scroller().scrollPos() >= this.options().slideOutOffset) {
 				this._header.css("top", -this._header.height() + "px");
@@ -57,7 +57,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 	 */
 	onScrollBackward() {
 		// FIXME Show only once, not on every scroll change
-		if (this._header.hasClass("flz-header-fixed-slideout")) {
+		if (this._header.hasClass("flz-page-header-fixed-slided")) {
 			// Don´t show header when scrolling below bottom position on mobile device
 			if ((this.scroller().prevScrollPos() + this.scroller().viewportSize()) <= this.scroller().scrollSize()) {
 				this._header.css("top", null);

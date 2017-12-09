@@ -52,7 +52,7 @@ function _prepareNavItems(plugin) {
 				event.preventDefault();
 
 				// Remove header offset for slideout header
-				if(header.hasClass("flz-header-fixed-slideout")) {
+				if(header.hasClass("flz-page-header-fixed-slided")) {
 					plugin.scroller().options().offset = 0;
 				}
 
