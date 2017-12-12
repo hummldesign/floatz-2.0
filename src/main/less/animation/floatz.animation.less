@@ -3,11 +3,43 @@
 
 // Animation classes
 .flz-animate-fadein {
-	.flz-mx-animation(flz-animation-fadein ease forwards);
+	.flz-mx-animation(flz-animation-fadein 0.3s ease forwards);
 }
 
 .flz-animate-fadeout {
-	.flz-mx-animation(flz-animation-fadeout ease forwards);
+	.flz-mx-animation(flz-animation-fadeout 0.3s ease forwards);
+}
+
+.flz-animate-slideinleft {
+	.flz-mx-animation(flz-animation-slideinleft 0.3s ease forwards);
+}
+
+.flz-animate-slideoutleft {
+	.flz-mx-animation(flz-animation-slideoutleft 0.3s ease forwards);
+}
+
+.flz-animate-slideinright {
+	.flz-mx-animation(flz-animation-slideinright 0.3s ease forwards);
+}
+
+.flz-animate-slideoutright {
+	.flz-mx-animation(flz-animation-slideoutright 0.3s ease forwards);
+}
+
+.flz-animate-slideindown {
+	.flz-mx-animation(flz-animation-slideindown 0.3s ease forwards);
+}
+
+.flz-animate-slideoutdown {
+	.flz-mx-animation(flz-animation-slideoutdown 0.3s ease forwards);
+}
+
+.flz-animate-slideinup {
+	.flz-mx-animation(flz-animation-slideinup 0.3s ease forwards);
+}
+
+.flz-animate-slideoutup {
+	.flz-mx-animation(flz-animation-slideoutup 0.3s ease forwards);
 }
 
 // Keyframes
@@ -28,3 +60,77 @@
 		opacity: 0;
 	}
 });
+
+.flz-mx-keyframes(flz-animation-slideinleft, {
+	0% {
+		left: -100vw;
+	}
+	100% {
+		left: 0;
+	}
+});
+
+.flz-mx-keyframes(flz-animation-slideoutleft, {
+	0% {
+		left: 0;
+	}
+	100% {
+		left: -100vw;
+	}
+});
+
+.flz-mx-keyframes(flz-animation-slideinright, {
+	0% {
+		right: -100vw;
+	}
+	100% {
+		right: 0;
+	}
+});
+
+.flz-mx-keyframes(flz-animation-slideoutright, {
+	0% {
+		right: 0;
+	}
+	100% {
+		right: -100vw;
+	}
+});
+
+.flz-mx-keyframes(flz-animation-slideindown, {
+	0% {
+		top: -100vh;
+	}
+	100% {
+		top: 0;
+	}
+});
+
+.flz-mx-keyframes(flz-animation-slideoutdown, {
+	0% {
+		top: 0;
+	}
+	100% {
+		top: -100vh;
+	}
+});
+
+.flz-mx-keyframes(flz-animation-slideinup, {
+	0% {
+		bottom: -100vh;
+	}
+	100% {
+		bottom: 0;
+	}
+});
+
+.flz-mx-keyframes(flz-animation-slideoutup, {
+	0% {
+		bottom: 0;
+	}
+	100% {
+		bottom: -100vh;
+	}
+});
+
+
