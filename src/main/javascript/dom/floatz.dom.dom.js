@@ -237,12 +237,12 @@ export class DOMElement {
 	/**
 	 * Add class.
 	 *
-	 * @param className Class name
+	 * @param {...string} classNames Class names
 	 * @returns {DOMElement} DOMElement for chaining
 	 */
-	addClass(className) {
+	addClass(...classNames) {
 		if (this._origNode.classList) {
-			this._origNode.classList.add(className);
+			this._origNode.classList.add(classNames);
 		} else {
 			// TODO
 			console.error("classList not available");
@@ -275,12 +275,12 @@ export class DOMElement {
 	/**
 	 * Remove class.
 	 *
-	 * @param className Class name
+	 * @param {...string} classNames Class names
 	 * @returns {DOMElement} DOMElement for chaining
 	 */
-	removeClass(className) {
+	removeClass(...classNames) {
 		if (this._origNode.classList) {
-			this._origNode.classList.remove(className);
+			this._origNode.classList.remove(classNames);
 		} else {
 			// TODO
 			console.error("classList not available");
