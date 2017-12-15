@@ -24,11 +24,11 @@ task compileDomTest(type: JavaExec) {
   def closureArgs = []
   closureArgs << "--language_in=ES6"
   closureArgs << "--language_out=ES5"
-  // closureArgs << "--formatting=pretty_print"
+  closureArgs << "--formatting=pretty_print"
   // closureArgs << "--create_source_map=build/floatz.dom.dom.test.min.js.map"
-  // closureArgs << "--debug"
-  // closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
-  closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
+  closureArgs << "--debug"
+  closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
+  // closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
   closureArgs << "--js_output_file=build/floatz.dom.test.min.js"
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 

@@ -128,7 +128,6 @@ export class DOMElement {
 	 * @param node Original node
 	 */
 	constructor(node) {
-		// TODO Refactor to private members and provide public getters
 		this._origNode = node;
 		this._tagName = node.tagName.toLowerCase();
 	}
@@ -163,7 +162,7 @@ export class DOMElement {
 	/**
 	 * Get / set height.
 	 * @param {number=} value Value to set (optional)
-	 * @returns Height in px or DOMElement for chaining when used as setter
+	 * @returns {number|DOMElement} Height in px or DOMElement for chaining when used as setter
 	 */
 	height(value) {
 		if (value === undefined) {
@@ -178,7 +177,7 @@ export class DOMElement {
 	 * Get / set width.
 	 *
 	 * @param {number=} value Value to set (optional)
-	 * @returns Width in px or DOMElement for chaining when used as setter
+	 * @returns {number|DOMElement} Width in px or DOMElement for chaining when used as setter
 	 */
 	width(value) {
 		if (value === undefined) {
@@ -228,7 +227,6 @@ export class DOMElement {
 		if (this._origNode.classList) {
 			return this._origNode.classList.contains(className);
 		} else {
-			// TODO;
 			console.error("classList not available");
 			return false;
 		}
@@ -242,9 +240,8 @@ export class DOMElement {
 	 */
 	addClass(...classNames) {
 		if (this._origNode.classList) {
-			this._origNode.classList.add(classNames);
+			this._origNode.classList.add(...classNames);
 		} else {
-			// TODO
 			console.error("classList not available");
 		}
 		return this;
@@ -266,7 +263,6 @@ export class DOMElement {
 				this.removeClass(className).addClass(otherClassName);
 			}
 		} else {
-			// TODO
 			console.error("classList not available");
 		}
 		return this;
@@ -280,9 +276,30 @@ export class DOMElement {
 	 */
 	removeClass(...classNames) {
 		if (this._origNode.classList) {
-			this._origNode.classList.remove(classNames);
+			this._origNode.classList.remove(...classNames);
 		} else {
-			// TODO
+			console.error("classList not available");
+		}
+
+		// Remove class attribute if we have no more class set
+		if (this.attr("class") === "") {
+			this.removeAttr("class");
+		}
+
+		return this;
+	}
+
+	/**
+	 * Toggle class.
+	 *
+	 * @param {string} className Class name
+	 * @param {boolean=} force Force add or remove (optional)
+	 * @returns {DOMElement}
+	 */
+	toggleClass(className, force) {
+		if (this._origNode.classList) {
+			this._origNode.classList.toggle(className, force)
+		} else {
 			console.error("classList not available");
 		}
 

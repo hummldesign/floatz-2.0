@@ -290,15 +290,50 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 				expect(DOM.queryById("root").addClass("test2").hasClass("test2")).toBeTruthy();
 			});
 		});
-		describe("When the class test2 is removed", () => {
-			it("Then the DOMElement should have the class test but not test2", () => {
-				expect(DOM.queryById("root").removeClass("test2").hasClass("test2")).toBeFalsy();
+		describe("When the class test2 is replaced with test3", () => {
+			it("Then the DOMElement should have the classes test and test3", () => {
+				expect(DOM.queryById("root").replaceClass("test2", "test3").hasClass("test3")).toBeTruthy();
+				expect(DOM.queryById("root").addClass("test").hasClass("test")).toBeTruthy();
+				expect(DOM.queryById("root").hasClass("test2")).toBeFalsy();
+			});
+		});
+		describe("When the class test3 is removed", () => {
+			it("Then the DOMElement should have the class test but not test3", () => {
+				expect(DOM.queryById("root").removeClass("test3").hasClass("test3")).toBeFalsy();
 				expect(DOM.queryById("root").hasClass("test")).toBeTruthy();
 			});
 		});
 		describe("When the class test is removed", () => {
-			it("Then the DOMElement should have neither class test nor test2", () => {
+			it("Then the DOMElement should have neither class test nor test3", () => {
 				expect(DOM.queryById("root").removeClass("test").hasClass("test")).toBeFalsy();
+				expect(DOM.queryById("root").hasClass("test3")).toBeFalsy();
+			});
+			it("And the DOMElement should have no empty class attribute", () => {
+				expect(DOM.queryById("root").attr("class")).toBeNull();
+			});
+		});
+		describe("When the class test4 is toggled", () => {
+			it("Then the DOMElement should have the class test4", () => {
+				expect(DOM.queryById("root").toggleClass("test4").hasClass("test4")).toBeTruthy();
+			});
+		});
+		describe("When the class test4 is toggled again", () => {
+			it("Then the DOMElement should not have the class test4", () => {
+				expect(DOM.queryById("root").toggleClass("test4").hasClass("test4")).toBeFalsy();
+			});
+			it("And the DOMElement should have no empty class attribute", () => {
+				expect(DOM.queryById("root").attr("class")).toBeNull();
+			});
+		});
+		describe("When the class test and test2 are added at once", () => {
+			it("Then the DOMElement should have the class test and test2", () => {
+				expect(DOM.queryById("root").addClass("test", "test2").hasClass("test")).toBeTruthy();
+				expect(DOM.queryById("root").hasClass("test2")).toBeTruthy();
+			});
+		});
+		describe("When the class test and test2 are removed at once", () => {
+			it("Then the DOMElement should have no class test and test2", () => {
+				expect(DOM.queryById("root").removeClass("test", "test2").hasClass("test")).toBeFalsy();
 				expect(DOM.queryById("root").hasClass("test2")).toBeFalsy();
 			});
 			it("And the DOMElement should have no empty class attribute", () => {
