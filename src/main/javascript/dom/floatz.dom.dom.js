@@ -134,9 +134,10 @@ export default class DOM {
 	 *
 	 * @param element Element
 	 * @param event Event name or event
+	 * @return {boolean} true for canceled, false if event has not been cancelled
 	 */
 	static dispatchEvent(element, event) {
-		element.dispatchEvent(event instanceof Event ? event : DOM.createEvent(event));
+		return element.dispatchEvent(event instanceof Event ? event : DOM.createEvent(event));
 	}
 }
 
@@ -463,11 +464,10 @@ export class DOMElement {
 	 * Trigger event.
 	 *
 	 * @param {string|Event|CustomEvent} event Event name or event
-	 * @returns {DOMElement} DOMElement for chaining
+	 * @returns {boolean} true if cancelled, false if event has not been cancelled
 	 */
 	dispatchEvent(event) {
-		DOM.dispatchEvent(this._origNode, event);
-		return this;
+		return DOM.dispatchEvent(this._origNode, event);
 	}
 }
 
