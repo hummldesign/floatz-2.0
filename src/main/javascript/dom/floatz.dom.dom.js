@@ -81,16 +81,16 @@ export default class DOM {
 	 * Create event.
 	 *
 	 * @param {string} eventName Event name
-	 * @param {boolean} bubble Event bubbles up. Default is true.
-	 * @param {boolean} cancel Event can be canceled. Default is false.
+	 * @param {boolean} bubbles Event bubbles up.
+	 * @param {boolean} cancelable Event can be canceled.
 	 * @returns {Event} Event
 	 */
-	static createEvent(eventName, bubble = true, cancel = false) {
+	static createEvent(eventName, bubbles = false, cancelable = false) {
 		if (typeof window.Event === "function") {
-			return new Event(eventName);
+			return new Event(eventName, {"bubbles": bubbles, "cancelable": cancelable});
 		} else {
 			let event = document.createEvent('Event');
-			event.initEvent(eventName, bubble, cancel);
+			event.initEvent(eventName, bubbles, cancelable);
 			return event;
 		}
 	}
