@@ -78,14 +78,33 @@ export default class DOM {
 	}
 
 	/**
+	 * Create event.
+	 *
+	 * @param {string} eventName Event name
+	 * @param {boolean} bubble Event bubbles up. Default is true.
+	 * @param {boolean} cancel Event can be canceled. Default is false.
+	 * @returns {Event} Event
+	 */
+	static createEvent(eventName, bubble = true, cancel = false) {
+		if (typeof window.Event === "function") {
+			return new Event(eventName);
+		} else {
+			let event = document.createEvent('Event');
+			event.initEvent(eventName, bubble, cancel);
+			return event;
+		}
+	}
+
+	/**
 	 * Add event listener.
 	 *
 	 * @param element Element
-	 * @param eventName Event name
+	 * @param {string|Event|CustomEvent} event Event name or event
 	 * @param handler Event handler
 	 * @param capture true for capture phase, false for bubbling phase
 	 */
-	static addEvent(element, eventName, handler, capture = false) {
+	static addEvent(element, event, handler, capture = false) {
+		let eventName = event instanceof Event ? event.type : event;
 		if (element.addEventListener) {
 			element.addEventListener(eventName, handler, capture);
 		} else if (element.attachEvent) {
@@ -95,12 +114,14 @@ export default class DOM {
 
 	/**
 	 * Remove event listener.
+	 *
 	 * @param element Element
-	 * @param eventName Event name
+	 * @param {string|Event|CustomEvent} event Event name or event
 	 * @param handler Event handler
 	 * @param capture true for capture phase, false for bubbling phase
 	 */
-	static removeEvent(element, eventName, handler, capture = false) {
+	static removeEvent(element, event, handler, capture = false) {
+		let eventName = event instanceof Event ? event.type : event;
 		if (element.removeEventListener) {
 			element.removeEventListener(eventName, handler, capture);
 		} else if (element.detachEvent) {
@@ -110,11 +131,12 @@ export default class DOM {
 
 	/**
 	 * Trigger event.
+	 *
 	 * @param element Element
-	 * @param eventName Event name
+	 * @param event Event name or event
 	 */
-	static triggerEvent(element, eventName) {
-		element.dispatchEvent(new Event(eventName));
+	static dispatchEvent(element, event) {
+		element.dispatchEvent(event instanceof Event ? event : DOM.createEvent(event));
 	}
 }
 
@@ -414,37 +436,37 @@ export class DOMElement {
 	/**
 	 * Add event listener.
 	 *
-	 * @param eventName Event name
+	 * @param {string|Event|CustomEvent} event Event name or event
 	 * @param handler Event handler
 	 * @param capture true for capture phase, false for bubbling phase
 	 * return {DOMElement} DOMElement for chaining
 	 */
-	addEvent(eventName, handler, capture = false) {
-		DOM.addEvent(this._origNode, eventName, handler, capture);
+	addEvent(event, handler, capture = false) {
+		DOM.addEvent(this._origNode, event, handler, capture);
 		return this;
 	}
 
 	/**
 	 * Remove event listener.
 	 *
-	 * @param eventName Event name
+	 * @param {string|Event|CustomEvent} event Event name or event
 	 * @param handler Event handler
 	 * @param capture true for capture phase, false for bubbling phase
 	 * return {DOMElement} DOMElement for chaining
 	 */
-	removeEvent(eventName, handler, capture = false) {
-		DOM.removeEvent(this._origNode, eventName, handler, capture);
+	removeEvent(event, handler, capture = false) {
+		DOM.removeEvent(this._origNode, event, handler, capture);
 		return this;
 	}
 
 	/**
 	 * Trigger event.
 	 *
-	 * @param eventName Event name
+	 * @param {string|Event|CustomEvent} event Event name or event
 	 * @returns {DOMElement} DOMElement for chaining
 	 */
-	triggerEvent(eventName) {
-		DOM.triggerEvent(this._origNode, eventName);
+	dispatchEvent(event) {
+		DOM.dispatchEvent(this._origNode, event);
 		return this;
 	}
 }

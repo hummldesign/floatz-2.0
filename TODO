@@ -1,6 +1,4 @@
-=> Additional tests for addClass, removeClass with multiple parameters
-=> Additional test for replaceClass
-=> Add toggleClass to DOMElement
+=> IE10, 11 compatibility
 => layout test: embedded content
 => No padding in image
 => Different spacing in text elements and layout elements!

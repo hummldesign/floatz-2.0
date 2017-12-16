@@ -2,7 +2,8 @@ import DOM from "../../../main/javascript/dom/floatz.dom.dom.js";
 import {DOMElement} from "../../../main/javascript/dom/floatz.dom.dom.js";
 
 let eventCounter = {
-	resize: 0
+	resize: 0,
+	myEvent: 0
 };
 
 let handleLoad = () => {
@@ -12,6 +13,16 @@ let handleLoad = () => {
 let handleLoad2 = () => {
 	eventCounter.resize += 1;
 };
+
+let handleMyEvent = () => {
+	eventCounter.myEvent += 1;
+};
+
+let handleMyEvent2 = () => {
+	eventCounter.myEvent += 1;
+};
+
+let event = DOM.createEvent("myEvent");
 
 describe("> Test Suite for floatz.dom.dom.js", () => {
 	describe("Given an element with an id", () => {
@@ -167,7 +178,7 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 			beforeEach(() => {
 				DOM.addEvent(window, "resize", handleLoad);
 				DOM.addEvent(window, "resize", handleLoad2);
-				DOM.triggerEvent(window, "resize");
+				DOM.dispatchEvent(window, "resize");
 			});
 			it("Then 2 resize events should be fired", () => {
 				expect(eventCounter.resize).toBe(2);
@@ -176,7 +187,7 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 		describe("When the first resize event is removed and the resize event is triggered", () => {
 			beforeEach(() => {
 				DOM.removeEvent(window, "resize", handleLoad);
-				DOM.triggerEvent(window, "resize");
+				DOM.dispatchEvent(window, "resize");
 			});
 			it("The 1 resize event should be fired", () => {
 				expect(eventCounter.resize).toBe(3);
@@ -186,12 +197,42 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 		describe("When the second resize event is removed and the resize event is triggered", () => {
 			beforeEach(() => {
 				DOM.removeEvent(window, "resize", handleLoad2);
-				DOM.triggerEvent(window, "resize");
+				DOM.dispatchEvent(window, "resize");
 			});
 			it("The no resize event should be fired", () => {
 				expect(eventCounter.resize).toBe(3);
 			});
+		})
+	});
 
+	describe("Given a window object", () => {
+		describe("When 2 custom handlers are added and the custom event is triggered", () => {
+			beforeEach(() => {
+				DOM.addEvent(window, event, handleMyEvent);
+				DOM.addEvent(window, event, handleMyEvent2);
+				DOM.dispatchEvent(window, event);
+			});
+			it("Then 2 custom events should be fired", () => {
+				expect(eventCounter.myEvent).toBe(2);
+			});
+		});
+		describe("When the first custom event is removed and the custom event is triggered by name", () => {
+			beforeEach(() => {
+				DOM.removeEvent(window, event, handleMyEvent);
+				DOM.dispatchEvent(window, "myEvent");
+			});
+			it("The 1 resize event should be fired", () => {
+				expect(eventCounter.myEvent).toBe(3);
+			});
+		});
+		describe("When the second custom event is removed and the custom event is triggered by object", () => {
+			beforeEach(() => {
+				DOM.removeEvent(window, event, handleMyEvent2);
+				DOM.dispatchEvent(window, event);
+			});
+			it("The no custom event should be fired", () => {
+				expect(eventCounter.myEvent).toBe(3);
+			});
 		})
 	});
 
@@ -260,7 +301,7 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 	});
 	describe("Given a DOM element", () => {
 		describe("When the attribute test=123 is added", () => {
-			beforeEach(()=> {
+			beforeEach(() => {
 				DOM.queryUnique(".divWithHeight").attr("test", "123");
 			});
 			it("Then the DOMElement should have an attribute test with the value 123", () => {
