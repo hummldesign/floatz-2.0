@@ -21,13 +21,6 @@ export class ScrollNavPlugin extends ScrollPlugin {
 		this._navItems = _prepareNavItems(this);
 	}
 
-	/**
-	 * Scroll handler.
-	 */
-/*	onScroll() {
-		console.info("nav scrolled");
-	}*/
-
 	navItems() {
 		return this._navItems;
 	}
@@ -37,36 +30,47 @@ export class ScrollNavPlugin extends ScrollPlugin {
  * Prepare navigation items.
  *
  * @param plugin Reference to plugin
- * @return Navigation items
+ * @return {Array} Navigation items
  * @private
  */
 function _prepareNavItems(plugin) {
 	let navItems = DOM.query(plugin.options().navItemsSelector);
 	let header = DOM.queryUnique(plugin.options().headerSelector);
-
 	navItems.forEach((navItem) => {
 		navItem.addEvent("click", (event) => {
-			
-			// Use scroll navigation only when href contains an id
-			if(navItem.attr("href").startsWith("#")) {
-				event.preventDefault();
-
-				// Remove header offset for slideout header
-				if(header.hasClass("flz-page-header-fixed-slided")) {
-					plugin.scroller().options().offset = 0;
-				}
-
-				// Scroll to section the menu navigation item points to
-				plugin.scroller().scrollTo(navItem.attr("href"), {
-					complete: () => {
-						_handleScrollComplete(plugin, navItem);
-					},
-				});
-			}
+			_handleClick(plugin, header, navItem, event);
 		});
 	});
 
 	return navItems;
+}
+
+/**
+ * Handle click on navigation item.
+ * 
+ * @param plugin Reference to plugin
+ * @param header Reference to header
+ * @param navItem Reference to navigation item that has been clicked
+ * @param event Click event
+ * @private
+ */
+function _handleClick(plugin, header, navItem, event) {
+	// Use scroll navigation only when href contains an id
+	if (navItem.attr("href").startsWith("#")) {
+		event.preventDefault();
+
+		// Remove header offset for slideout header
+		if (header.hasClass("flz-page-header-fixed-slided")) {
+			plugin.scroller().options().offset = 0;
+		}
+
+		// Scroll to section the menu navigation item points to
+		plugin.scroller().scrollTo(navItem.attr("href"), {
+			complete: () => {
+				_handleScrollComplete(plugin, navItem);
+			},
+		});
+	}
 }
 
 /**
@@ -77,11 +81,10 @@ function _prepareNavItems(plugin) {
  * @private
  */
 function _handleScrollComplete(plugin, navItem) {
-	// TODO Replace with specific menu item objects
 	// Unselect previous navigation item
 	let navItems = plugin.navItems();
 	navItems.forEach((item) => {
-		if(item.parent().hasClass("flz-nav-selected")) {
+		if (item.parent().hasClass("flz-nav-selected")) {
 			item.parent().removeClass("flz-nav-selected");
 		}
 	});

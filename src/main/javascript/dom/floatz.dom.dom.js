@@ -153,6 +153,7 @@ export class DOMElement {
 	constructor(node) {
 		this._origNode = node;
 		this._tagName = node.tagName.toLowerCase();
+		this._parent = null;
 	}
 
 	/**
@@ -268,12 +269,8 @@ export class DOMElement {
 				// Workaround for browser that do not support multiple class names
 				if (!this.hasClass(classNames[1])) {
 					classNames
-						.filter((className) => {
-							return !this.hasClass(className);
-						})
-						.forEach((className) => {
-							this.addClass(className);
-						})
+						.filter((className) => !this.hasClass(className))
+						.forEach((className) => this.addClass(className))
 					;
 				}
 			}
@@ -317,12 +314,8 @@ export class DOMElement {
 				// Workaround for browser that do not support multiple class names
 				if (this.hasClass(classNames[1])) {
 					classNames
-						.filter((className) => {
-							return this.hasClass(className);
-						})
-						.forEach((className) => {
-							this.removeClass(className);
-						})
+						.filter((className) => this.hasClass(className))
+						.forEach((className) => this.removeClass(className))
 					;
 				}
 			}
@@ -434,8 +427,10 @@ export class DOMElement {
 	 * @returns {DOMElement} Parent element
 	 */
 	parent() {
-		// TODO Cache parent?
-		return new DOMElement(this._origNode.parentNode);
+		if (!this._parent) {
+			this._parent = DOMElement(this._origNode.parentNode);
+		}
+		return this._parent;
 	}
 
 	/**
