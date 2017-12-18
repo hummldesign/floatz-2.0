@@ -22,6 +22,16 @@ export const Direction = Object.freeze({
 });
 
 /**
+ * Scroll events.
+ *
+ * @type {Object}
+ */
+export const ScrollEvent = Object.freeze({
+	BEFORE_NAVGIATE: Symbol("flz-event-before-navigate"),
+	AFTER_NAVIGATE: Symbol("flz-event-after-navigate")
+});
+
+/**
  * Scroll manager.
  */
 export class Scroller {
@@ -72,6 +82,15 @@ export class Scroller {
 			plugin.onScrollForward(this);
 		});
 		return this;
+	}
+
+	/**
+	 * Get scroll container.
+	 *
+	 * @returns {Object} Scroll container
+	 */
+	container() {
+		return this._container;
 	}
 
 	/**
@@ -181,7 +200,7 @@ export class Scroller {
 
 	/**
 	 * Get previous scroll position.
-	 * 
+	 *
 	 * @returns {number} Previous scroll position in px
 	 */
 	prevScrollPos() {

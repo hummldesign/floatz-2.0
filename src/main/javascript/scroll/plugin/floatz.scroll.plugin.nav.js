@@ -1,6 +1,7 @@
 import DOM from "../../dom/floatz.dom.dom.js";
 import {DOMElement} from "../../dom/floatz.dom.dom.js";
 import {ScrollPlugin} from "../floatz.scroll.scroller.js";
+import {ScrollEvent} from "../floatz.scroll.scroller.js";
 
 /**
  * Scroll navigation plugin.
@@ -16,8 +17,6 @@ export class ScrollNavPlugin extends ScrollPlugin {
 		// Default options
 		this.options().headerSelector = options.headerSelector || "header";
 		this.options().navItemsSelector = options.navItemsSelector || "header li > a";
-
-		// Add click handlers to navigation items
 		this._navItems = _prepareNavItems(this);
 	}
 
@@ -47,7 +46,7 @@ function _prepareNavItems(plugin) {
 
 /**
  * Handle click on navigation item.
- * 
+ *
  * @param plugin Reference to plugin
  * @param header Reference to header
  * @param navItem Reference to navigation item that has been clicked
@@ -55,21 +54,26 @@ function _prepareNavItems(plugin) {
  * @private
  */
 function _handleClick(plugin, header, navItem, event) {
+
 	// Use scroll navigation only when href contains an id
 	if (navItem.attr("href").startsWith("#")) {
-		event.preventDefault();
+		let beforeEvent = DOM.createEvent(ScrollEvent.BEFORE_NAVGIATE, true, true);
+		let afterEvent = DOM.createEvent(ScrollEvent.AFTER_NAVIGATE, true, false);
 
-		// Remove header offset for slideout header
-		if (header.hasClass("flz-page-header-fixed-slided")) {
-			plugin.scroller().options().offset = 0;
+		// Fire before navigation event
+		if (DOM.dispatchEvent(plugin.scroller().container(), beforeEvent)) {
+			event.preventDefault();
+
+			// Scroll to section the menu navigation item points to
+			plugin.scroller().scrollTo(navItem.attr("href"), {
+				complete: () => {
+					_handleScrollComplete(plugin, navItem);
+
+					// Fire after navigation event
+					DOM.dispatchEvent(plugin.scroller().container(), afterEvent);
+				},
+			});
 		}
-
-		// Scroll to section the menu navigation item points to
-		plugin.scroller().scrollTo(navItem.attr("href"), {
-			complete: () => {
-				_handleScrollComplete(plugin, navItem);
-			},
-		});
 	}
 }
 

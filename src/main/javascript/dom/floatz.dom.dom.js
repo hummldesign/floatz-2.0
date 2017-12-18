@@ -80,17 +80,18 @@ export default class DOM {
 	/**
 	 * Create event.
 	 *
-	 * @param {string} eventName Event name
+	 * @param {symbol|string} eventName Event name
 	 * @param {boolean} bubbles Event bubbles up.
 	 * @param {boolean} cancelable Event can be canceled.
 	 * @returns {Event} Event
 	 */
 	static createEvent(eventName, bubbles = false, cancelable = false) {
+		let _eventName = typeof eventName === "symbol" ? eventName.toString() : eventName;
 		if (typeof window.Event === "function") {
-			return new Event(eventName, {"bubbles": bubbles, "cancelable": cancelable});
+			return new Event(_eventName, {"bubbles": bubbles, "cancelable": cancelable});
 		} else {
 			let event = document.createEvent('Event');
-			event.initEvent(eventName, bubbles, cancelable);
+			event.initEvent(_eventName, bubbles, cancelable);
 			return event;
 		}
 	}
@@ -99,12 +100,14 @@ export default class DOM {
 	 * Add event listener.
 	 *
 	 * @param element Element
-	 * @param {string|Event|CustomEvent} event Event name or event
+	 * @param {symbol|string|Event|CustomEvent} event Event name or event
 	 * @param handler Event handler
 	 * @param capture true for capture phase, false for bubbling phase
 	 */
 	static addEvent(element, event, handler, capture = false) {
-		let eventName = event instanceof Event ? event.type : event;
+		let eventName = event instanceof Event ? event.type :
+			typeof event === "symbol" ? event.toString() : event;
+
 		if (element.addEventListener) {
 			element.addEventListener(eventName, handler, capture);
 		} else if (element.attachEvent) {
@@ -116,12 +119,14 @@ export default class DOM {
 	 * Remove event listener.
 	 *
 	 * @param element Element
-	 * @param {string|Event|CustomEvent} event Event name or event
+	 * @param {symbol|string|Event|CustomEvent} event Event name or event
 	 * @param handler Event handler
 	 * @param capture true for capture phase, false for bubbling phase
 	 */
 	static removeEvent(element, event, handler, capture = false) {
-		let eventName = event instanceof Event ? event.type : event;
+		let eventName = event instanceof Event ? event.type :
+			typeof event === "symbol" ? event.toString() : event;
+
 		if (element.removeEventListener) {
 			element.removeEventListener(eventName, handler, capture);
 		} else if (element.detachEvent) {
@@ -428,7 +433,7 @@ export class DOMElement {
 	 */
 	parent() {
 		if (!this._parent) {
-			this._parent = DOMElement(this._origNode.parentNode);
+			this._parent = new DOMElement(this._origNode.parentNode);
 		}
 		return this._parent;
 	}
