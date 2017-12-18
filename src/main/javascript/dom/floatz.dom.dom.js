@@ -264,6 +264,19 @@ export class DOMElement {
 	addClass(...classNames) {
 		if (this._origNode.classList) {
 			this._origNode.classList.add(...classNames);
+			if (classNames.length > 1) {
+				// Workaround for browser that do not support multiple class names
+				if (!this.hasClass(classNames[1])) {
+					classNames
+						.filter((className) => {
+							return !this.hasClass(className);
+						})
+						.forEach((className) => {
+							this.addClass(className);
+						})
+					;
+				}
+			}
 		} else {
 			console.error("classList not available");
 		}
@@ -300,6 +313,19 @@ export class DOMElement {
 	removeClass(...classNames) {
 		if (this._origNode.classList) {
 			this._origNode.classList.remove(...classNames);
+			if (classNames.length > 1) {
+				// Workaround for browser that do not support multiple class names
+				if (this.hasClass(classNames[1])) {
+					classNames
+						.filter((className) => {
+							return this.hasClass(className);
+						})
+						.forEach((className) => {
+							this.removeClass(className);
+						})
+					;
+				}
+			}
 		} else {
 			console.error("classList not available");
 		}
