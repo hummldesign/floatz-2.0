@@ -389,8 +389,9 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 			});
 		});
 		describe("When the style float: left is added", () => {
-			it("The the attribute style should be display: block;", () => {
-				expect(DOM.queryUnique(".one").css("float", "left").attr("style")).toBe("display: block; float: left;");
+			it("The the attribute style should contain display: block; and float: left;", () => {
+				expect(DOM.queryUnique(".one").css("float", "left").attr("style")).toContain("float: left;");
+				expect(DOM.queryUnique(".one").attr("style")).toContain("display: block;");
 			});
 		});
 		describe("When the style display is removed", () => {

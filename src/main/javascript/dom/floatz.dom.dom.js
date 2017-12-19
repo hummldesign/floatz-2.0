@@ -418,7 +418,7 @@ export class DOMElement {
 		if (value === undefined) {
 			return window.getComputedStyle(this._origNode)[style];
 		} else {
-			this._origNode.style[style] = value;
+			this._origNode.style[style] = value ? value : "";
 			if (this.attr(STYLE) === "") {
 				this.removeAttr(STYLE);
 			}
