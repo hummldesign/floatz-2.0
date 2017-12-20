@@ -75,8 +75,10 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 
 	/**
 	 * Before navigation handler.
+	 *
+	 * @param {Event} event
 	 */
-	onBeforeNavigate() {
+	onBeforeNavigate(event) {
 		// Remove header offset for slideout header on navigation
 		if (this._header.hasClass("flz-page-header-fixed-slided")) {
 			this.scroller().options().offset = 0;
