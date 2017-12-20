@@ -33,7 +33,7 @@ export default class DOM {
 	 * Syntax: DOM.query(<selectors>[,<context>]);
 	 *
 	 * @param {string} selectors String with selectors
-	 * @param {(Node|DOMElement|Object)=} context Context native element or DOMElement (optional, default is window)
+	 * @param {Node|DOMElement|Object=} context Context native element or DOMElement (optional, default is window)
 	 * @returns {!Array} Array of DOMElement items
 	 */
 	static query(selectors, context = window) {

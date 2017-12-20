@@ -1,3 +1,6 @@
+/**
+ * String utilities.
+ */
 export default class Strings {
 
 	/**
