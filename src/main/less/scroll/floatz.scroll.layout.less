@@ -1,3 +1,5 @@
+@import '../core/floatz.core.less';
+@import '../core/floatz.core.mixins.less';
 @import '../animation/floatz.animation.mixins.less';
 @import '../animation/floatz.animation.easing.less';
 
@@ -7,7 +9,7 @@
 // Outer page section (like subpage)
 .flz-page-section {
 	.flz-mx-enwrap;
-	background-color: @bg-color;
+	background-color: #fff;
 	padding: @flz-var-gutter-layout-y / 2 0;
 }
 
@@ -15,7 +17,7 @@
 .flz-page-content {
 	.flz-mx-enwrap;
 	margin: 0 auto;
-	max-width: @page-width;
+	max-width: 75.000em; // 1200px
 	position: relative;
 }
 
