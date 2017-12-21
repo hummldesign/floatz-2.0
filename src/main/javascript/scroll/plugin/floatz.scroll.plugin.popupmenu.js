@@ -92,9 +92,9 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		return this._menu;
 	}
 
-    /**
+	/**
 	 * Get menu icon.
-     *
+	 *
 	 * @returns {DOMElement|*}
 	 */
 	menuIcon() {
@@ -104,7 +104,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 	/**
 	 * Open menu.
 	 */
-    openMenu() {
+	openMenu() {
 		this.menuIcon().replaceClass("icon-menu", "icon-x"); // FIXME
 		this.menu()
 			.replaceClass(this.options().menuClass, this.options().responsiveMenuClass)
@@ -115,7 +115,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 	/**
 	 * Close menu.
 	 */
-    closeMenu() {
+	closeMenu() {
 		this.menu().replaceClass(ANIMATE_SLIDEINLEFT, ANIMATE_SLIDEOUTLEFT);
 		this.menuIcon().replaceClass("icon-x", "icon-menu"); // FIXME
 	}
