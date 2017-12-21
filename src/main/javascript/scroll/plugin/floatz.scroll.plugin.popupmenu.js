@@ -110,7 +110,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 			.replaceClass(this.options().menuClass, this.options().responsiveMenuClass)
 			.addClass(ANIMATE_SLIDEINLEFT)
 		;
-    }
+	}
 
 	/**
 	 * Close menu.
