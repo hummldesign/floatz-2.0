@@ -36,8 +36,8 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 			}
 
 			// Add custom event handler
-			DOM.addEvent(scroller.container(), ScrollEvent.BEFORE_NAVGIATE, (e) => {
-				this.onBeforeNavigate(e);
+			DOM.addEvent(scroller.container(), ScrollEvent.BEFORE_NAVGIATE, () => {
+				_handleBeforeNavigate(this);
 			});
 		}
 
@@ -72,16 +72,11 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 			}
 		}
 	}
+}
 
-	/**
-	 * Before navigation handler.
-	 *
-	 * @param {Event} event
-	 */
-	onBeforeNavigate(event) {
-		// Remove header offset for slideout header on navigation
-		if (this._header.hasClass("flz-page-header-fixed-slided")) {
-			this.scroller().options().offset = 0;
-		}
+function _handleBeforeNavigate(plugin) {
+	// Remove header offset for slideout header on navigation
+	if (plugin._header.hasClass("flz-page-header-fixed-slided")) {
+		plugin.scroller().options().offset = 0;
 	}
 }
