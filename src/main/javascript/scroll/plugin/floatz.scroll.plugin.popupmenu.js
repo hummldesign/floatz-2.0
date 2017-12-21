@@ -74,36 +74,36 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		return _scroller;
 	}
 
-    /**
+	/**
 	 * Get body.
 	 *
-     * @returns {DOMElement|*}
-     */
+	 * @returns {DOMElement|*}
+	 */
 	body() {
 		return this._body;
 	}
 
-    /**
+	/**
 	 * Get menu.
 	 *
-     * @returns {DOMElement|*}
-     */
+	 * @returns {DOMElement|*}
+	 */
 	menu() {
 		return this._menu;
 	}
 
     /**
 	 * Get menu icon.
-	 *
-     * @returns {DOMElement|*}
-     */
+     *
+	 * @returns {DOMElement|*}
+	 */
 	menuIcon() {
 		return this._menuIcon;
 	}
 
-    /**
+	/**
 	 * Open menu.
-     */
+	 */
     openMenu() {
 		this.menuIcon().replaceClass("icon-menu", "icon-x"); // FIXME
 		this.menu()
@@ -112,38 +112,38 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		;
     }
 
-    /**
+	/**
 	 * Close menu.
-     */
+	 */
     closeMenu() {
 		this.menu().replaceClass(ANIMATE_SLIDEINLEFT, ANIMATE_SLIDEOUTLEFT);
 		this.menuIcon().replaceClass("icon-x", "icon-menu"); // FIXME
 	}
 
-    /**
+	/**
 	 * Show glass overlay.
-     */
+	 */
 	showGlass() {
 		this.body().addClass(DIALOG_GLASS, ANIMATE_GLASS_FADEIN);
 	}
 
-    /**
+	/**
 	 * Hide glass overlay.
-     */
+	 */
 	hideGlass() {
 		this.body().replaceClass(ANIMATE_GLASS_FADEIN, ANIMATE_GLASS_FADEOUT);
 	}
 
-    /**
+	/**
 	 * Remove and cleanup glass related styles.
-     */
+	 */
 	removeGlass() {
 		this.body().removeClass(ANIMATE_GLASS_FADEOUT, DIALOG_GLASS);
 	}
 
-    /**
+	/**
 	 * Remove and cleanup menu related styles.
-     */
+	 */
 	removeMenu() {
 		this.menu()
 			.removeClass(ANIMATE_SLIDEOUTLEFT)
