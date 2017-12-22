@@ -86,7 +86,7 @@ export default class DOM {
 	 * @returns {Event} Event
 	 */
 	static createEvent(eventName, bubbles = false, cancelable = false) {
-		let _eventName = typeof eventName === "symbol" ? eventName.toString() : eventName;
+		let _eventName = typeof eventName === "symbol" ? StringUtils.fromSymbol(eventName) : eventName;
 		if (typeof window.Event === "function") {
 			return new Event(_eventName, {"bubbles": bubbles, "cancelable": cancelable});
 		} else {
@@ -106,7 +106,7 @@ export default class DOM {
 	 */
 	static addEvent(element, event, handler, capture = false) {
 		let eventName = event instanceof Event ? event.type :
-			typeof event === "symbol" ? event.toString() : event;
+			typeof event === "symbol" ? StringUtils.fromSymbol(event) : event;
 
 		if (element.addEventListener) {
 			element.addEventListener(eventName, handler, capture);
@@ -125,7 +125,7 @@ export default class DOM {
 	 */
 	static removeEvent(element, event, handler, capture = false) {
 		let eventName = event instanceof Event ? event.type :
-			typeof event === "symbol" ? event.toString() : event;
+			typeof event === "symbol" ? StringUtils.fromSymbol(event) : event;
 
 		if (element.removeEventListener) {
 			element.removeEventListener(eventName, handler, capture);
