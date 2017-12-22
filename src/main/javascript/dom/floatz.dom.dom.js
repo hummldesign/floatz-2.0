@@ -463,7 +463,7 @@ export class DOMElement {
 	/**
 	 * Add event listener.
 	 *
-	 * @param {string|Event|CustomEvent} event Event name or event
+	 * @param {symbol|string|Event|CustomEvent} event Event name or event
 	 * @param handler Event handler
 	 * @param capture true for capture phase, false for bubbling phase
 	 * return {DOMElement} DOMElement for chaining
@@ -476,7 +476,7 @@ export class DOMElement {
 	/**
 	 * Remove event listener.
 	 *
-	 * @param {string|Event|CustomEvent} event Event name or event
+	 * @param {symbol|string|Event|CustomEvent} event Event name or event
 	 * @param handler Event handler
 	 * @param capture true for capture phase, false for bubbling phase
 	 * return {DOMElement} DOMElement for chaining

@@ -2,6 +2,7 @@ import DOM from "../../dom/floatz.dom.dom.js";
 import {DOMElement} from "../../dom/floatz.dom.dom.js";
 import {ScrollPlugin} from "../floatz.scroll.scroller.js";
 import {ScrollEvent} from "../floatz.scroll.scroller.js";
+import {EventType} from "../../dom/floatz.dom.events.js";
 
 /**
  * Scroll navigation plugin.
@@ -36,7 +37,7 @@ function _prepareNavItems(plugin) {
 	let navItems = DOM.query(plugin.options().navItemsSelector);
 	let header = DOM.queryUnique(plugin.options().headerSelector);
 	navItems.forEach((navItem) => {
-		navItem.addEvent("click", (event) => {
+		navItem.addEvent(EventType.CLICK, (event) => {
 			_handleClick(plugin, header, navItem, event);
 		});
 	});

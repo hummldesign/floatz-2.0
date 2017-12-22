@@ -39,7 +39,7 @@ export default class MediaQuery {
 	 *     In case of AND operator use CSS syntax "(<query>) and (<query>)".
 	 * </p>
 	 *
-	 * @param {...symbol|...string} queries
+	 * @param queries One or more media queries (symbols or strings)
 	 */
 	static match(...queries) {
 		if (window.matchMedia) {

@@ -1,6 +1,7 @@
 import DOM from "../dom/floatz.dom.dom.js";
 import Easing from "../animation/floatz.animation.easing.js"
 import {DOMElement} from "../dom/floatz.dom.dom.js";
+import {EventType} from "../dom/floatz.dom.events.js";
 
 /**
  * Notes:
@@ -120,7 +121,7 @@ export class Scroller {
 	 * @returns {Scroller} Scroller for chaining
 	 */
 	onScroll(handler) {
-		DOM.addEvent(this._container, "scroll", () => {
+		DOM.addEvent(this._container, EventType.SCROLL, () => {
 			handler(this);
 			this._handlers.forEach((handler) => {
 				handler(this);
