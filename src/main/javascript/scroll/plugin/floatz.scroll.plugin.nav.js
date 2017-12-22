@@ -63,6 +63,7 @@ function _handleClick(plugin, header, navItem, event) {
 		// Fire before navigation event
 		if (DOM.dispatchEvent(plugin.scroller().container(), beforeEvent)) {
 			event.preventDefault();
+			event.stopPropagation();
 
 			// Scroll to section the menu navigation item points to
 			plugin.scroller().scrollTo(navItem.attr("href"), {

@@ -1,4 +1,5 @@
 import DOM from "../../dom/floatz.dom.dom.js";
+import {DOMElement} from "../../dom/floatz.dom.dom.js";
 import {ScrollPlugin} from "../floatz.scroll.scroller.js";
 import {ScrollEvent} from "../floatz.scroll.scroller.js";
 
@@ -35,8 +36,11 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		this._body = DOM.queryUnique("body");
 		this._menu = DOM.queryUnique(this.options().menuSelector);
 		this._menuIcon = DOM.queryUnique(this.options().menuIconSelector);
+		this._handleGlassClick = null;
 
-		this._menuIcon.addEvent(EVENT_CLICK, () => {
+		// Open/close popup menu
+		this._menuIcon.addEvent(EVENT_CLICK, (e) => {
+			e.stopPropagation();
 			if (this._menuIcon.hasClass("icon-menu")) { // FIXME
 				this.showGlass();
 				this.openMenu();
@@ -46,12 +50,14 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 			}
 		});
 
+		// Remove glass styles after glass hide animation finishes
 		this._body.addEvent(EVENT_ANIMATION_END, () => {
 			if (this._body.hasClass(ANIMATE_GLASS_FADEOUT)) {
 				this.removeGlass();
 			}
 		});
 
+		// Remove menu styles after menu close animation finishes
 		this._menu.addEvent(EVENT_ANIMATION_END, () => {
 			if (this._menu.hasClass(ANIMATE_SLIDEOUTLEFT)) {
 				this.removeMenu();
@@ -67,7 +73,8 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		if (scroller) {
 			// Add custom event handler
 			DOM.addEvent(scroller.container(), ScrollEvent.BEFORE_NAVGIATE, () => {
-				_handleBeforeNavigate(this);
+				this.closeMenu();
+				this.hideGlass();
 			});
 		}
 
@@ -124,14 +131,25 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 	 * Show glass overlay.
 	 */
 	showGlass() {
-		this.body().addClass(DIALOG_GLASS, ANIMATE_GLASS_FADEIN);
+		// Remember click handler so that its removable
+		this._handleGlassClick = () => {
+			_handleGlassClick(this);
+		};
+
+		this.body()
+			.addClass(DIALOG_GLASS, ANIMATE_GLASS_FADEIN)
+			.addEvent(EVENT_CLICK, this._handleGlassClick)
+		;
 	}
 
 	/**
 	 * Hide glass overlay.
 	 */
 	hideGlass() {
-		this.body().replaceClass(ANIMATE_GLASS_FADEIN, ANIMATE_GLASS_FADEOUT);
+		this.body()
+			.replaceClass(ANIMATE_GLASS_FADEIN, ANIMATE_GLASS_FADEOUT)
+			.removeEvent(EVENT_CLICK, this._handleGlassClick);
+		;
 	}
 
 	/**
@@ -148,77 +166,11 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		this.menu()
 			.removeClass(ANIMATE_SLIDEOUTLEFT)
 			.replaceClass(this.options().responsiveMenuClass, this.options().menuClass)
-        ;
+		;
 	}
 }
 
-// /**
-//  * Open menu.
-//  *
-//  * @param plugin Scroll menu plugin
-//  * @private
-//  */
-// function _openMenu(plugin) {
-// 	plugin._menuIcon
-// 		.replaceClass("icon-menu", "icon-x") // FIXME
-// 	;
-// 	plugin._menu
-// 		.replaceClass(plugin.options().menuClass, plugin.options().responsiveMenuClass)
-// 		.addClass(ANIMATE_SLIDEINLEFT)
-// 	;
-// 	plugin._body
-// 		.addClass(DIALOG_GLASS, ANIMATE_GLASS_FADEIN)
-// 	;
-// }
-//
-// /**
-//  * Close menu.
-//  *
-//  * @param plugin Scroll menu plugin
-//  * @private
-//  */
-// function _closeMenu(plugin) {
-// 	plugin._menu
-// 		.replaceClass(ANIMATE_SLIDEINLEFT, ANIMATE_SLIDEOUTLEFT)
-// 	;
-// 	plugin._menuIcon
-// 		.replaceClass("icon-x", "icon-menu") // FIXME
-// 	;
-// 	plugin._body
-// 		.replaceClass(ANIMATE_GLASS_FADEIN, ANIMATE_GLASS_FADEOUT)
-// 	;
-// }
-//
-// /**
-//  * Remove glass.
-//  *
-//  * @param plugin Scroll menu plugin
-//  * @private
-//  */
-// function _removeGlass(plugin) {
-// 	plugin._body
-// 		.removeClass(ANIMATE_GLASS_FADEOUT, DIALOG_GLASS)
-// 	;
-// }
-//
-// /**
-//  * Switch from responsive menu to normal menu.
-//  *
-//  * @param plugin Scroll menu plugin
-//  * @private
-//  */
-// function _removeReponsiveMenu(plugin) {
-// 	plugin._menu
-// 		.removeClass(ANIMATE_SLIDEOUTLEFT)
-// 		.replaceClass(plugin.options().responsiveMenuClass, plugin.options().menuClass)
-// 	;
-// }
-//
-// /**
-//  * Before navigation handler.
-//  *
-//  * @param plugin Scroll menu plugin
-//  */
-// function _handleBeforeNavigate(plugin) {
-// 	_closeMenu(plugin);
-// }
+function _handleGlassClick(plugin) {
+	plugin.closeMenu();
+	plugin.hideGlass();
+}
