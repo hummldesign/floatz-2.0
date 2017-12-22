@@ -80,18 +80,17 @@ export default class DOM {
 	/**
 	 * Create event.
 	 *
-	 * @param {symbol|string} eventName Event name
+	 * @param {string} eventName Event name
 	 * @param {boolean} bubbles Event bubbles up.
 	 * @param {boolean} cancelable Event can be canceled.
 	 * @returns {Event} Event
 	 */
 	static createEvent(eventName, bubbles = false, cancelable = false) {
-		let _eventName = typeof eventName === "symbol" ? StringUtils.fromSymbol(eventName) : eventName;
 		if (typeof window.Event === "function") {
-			return new Event(_eventName, {"bubbles": bubbles, "cancelable": cancelable});
+			return new Event(eventName, {"bubbles": bubbles, "cancelable": cancelable});
 		} else {
 			let event = document.createEvent('Event');
-			event.initEvent(_eventName, bubbles, cancelable);
+			event.initEvent(eventName, bubbles, cancelable);
 			return event;
 		}
 	}
@@ -100,18 +99,17 @@ export default class DOM {
 	 * Add event listener.
 	 *
 	 * @param element Element
-	 * @param {symbol|string|Event|CustomEvent} event Event name or event
+	 * @param {string|Event|CustomEvent} event Event name or event
 	 * @param handler Event handler
 	 * @param capture true for capture phase, false for bubbling phase
 	 */
 	static addEvent(element, event, handler, capture = false) {
-		let eventName = event instanceof Event ? event.type :
-			typeof event === "symbol" ? StringUtils.fromSymbol(event) : event;
-
+		let _eventName = event instanceof Event ? event.type : event;
+		console.debug("floatz | Adding event: " + _eventName);
 		if (element.addEventListener) {
-			element.addEventListener(eventName, handler, capture);
+			element.addEventListener(_eventName, handler, capture);
 		} else if (element.attachEvent) {
-			element.attachEvent(eventName, handler);
+			element.attachEvent(_eventName, handler);
 		}
 	}
 
@@ -119,14 +117,12 @@ export default class DOM {
 	 * Remove event listener.
 	 *
 	 * @param element Element
-	 * @param {symbol|string|Event|CustomEvent} event Event name or event
+	 * @param {string|Event|CustomEvent} event Event name or event
 	 * @param handler Event handler
 	 * @param capture true for capture phase, false for bubbling phase
 	 */
 	static removeEvent(element, event, handler, capture = false) {
-		let eventName = event instanceof Event ? event.type :
-			typeof event === "symbol" ? StringUtils.fromSymbol(event) : event;
-
+		let eventName = event instanceof Event ? event.type : event;
 		if (element.removeEventListener) {
 			element.removeEventListener(eventName, handler, capture);
 		} else if (element.detachEvent) {
@@ -463,7 +459,7 @@ export class DOMElement {
 	/**
 	 * Add event listener.
 	 *
-	 * @param {symbol|string|Event|CustomEvent} event Event name or event
+	 * @param {string|Event|CustomEvent} event Event name or event
 	 * @param handler Event handler
 	 * @param capture true for capture phase, false for bubbling phase
 	 * return {DOMElement} DOMElement for chaining
@@ -476,7 +472,7 @@ export class DOMElement {
 	/**
 	 * Remove event listener.
 	 *
-	 * @param {symbol|string|Event|CustomEvent} event Event name or event
+	 * @param {string|Event|CustomEvent} event Event name or event
 	 * @param handler Event handler
 	 * @param capture true for capture phase, false for bubbling phase
 	 * return {DOMElement} DOMElement for chaining

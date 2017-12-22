@@ -3,8 +3,8 @@ import MediaQuery from "../../util/floatz.util.mediaquery.js";
 import {MediaSize} from "../../util/floatz.util.mediaquery.js";
 import {DOMElement} from "../../dom/floatz.dom.dom.js";
 import {ScrollPlugin} from "../floatz.scroll.scroller.js";
-import {ScrollEvent} from "../floatz.scroll.scroller.js";
-import {EventType} from "../../dom/floatz.dom.events.js";
+import {SCROLL_EVENT_BEFORENAVGIATE} from "../floatz.scroll.scroller.js";
+import {EVENT_ANIMATIONEND, EVENT_CLICK, EVENT_RESIZE} from "../../dom/floatz.dom.events.js";
 
 /**
  * Constants
@@ -40,7 +40,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		this._handleGlassClick = null;
 
 		// Open/close popup menu
-		this._menuIcon.addEvent(EventType.CLICK, (e) => {
+		this._menuIcon.addEvent(EVENT_CLICK, (e) => {
 			e.stopPropagation();
 			if (this._menuIcon.hasClass("icon-menu")) { // FIXME
 				this.showGlass();
@@ -52,21 +52,21 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		});
 
 		// Remove glass styles after glass hide animation finishes
-		this._body.addEvent(EventType.ANIMATION_END, () => {
+		this._body.addEvent(EVENT_ANIMATIONEND, () => {
 			if (this._body.hasClass(ANIMATE_GLASS_FADEOUT)) { // FIXME
 				this.removeGlass();
 			}
 		});
 
 		// Remove menu styles after menu close animation finishes
-		this._menu.addEvent(EventType.ANIMATION_END, () => {
+		this._menu.addEvent(EVENT_ANIMATIONEND, () => {
 			if (this._menu.hasClass(ANIMATE_SLIDEOUTLEFT)) { // FIXME
 				this.removeMenu();
 			}
 		});
 
 		// Remove menu and glass in case that viewpoint gets larger
-		DOM.addEvent(window, EventType.RESIZE, () => {
+		DOM.addEvent(window, EVENT_RESIZE, () => {
 			if(MediaQuery.match(MediaSize.GTE_L)) { // FIXME
 				this.closeMenu();
 				this.hideGlass();
@@ -81,7 +81,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		let _scroller = super.scroller(scroller);
 		if (scroller) {
 			// Add custom event handler
-			DOM.addEvent(scroller.container(), ScrollEvent.BEFORE_NAVGIATE, () => {
+			DOM.addEvent(scroller.container(), SCROLL_EVENT_BEFORENAVGIATE, () => {
 				this.closeMenu();
 				this.hideGlass();
 			});
@@ -148,7 +148,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 
 		this.body()
 			.addClass(DIALOG_GLASS, ANIMATE_GLASS_FADEIN)
-			.addEvent(EventType.CLICK, this._handleGlassClick)
+			.addEvent(EVENT_CLICK, this._handleGlassClick)
 		;
 	}
 
@@ -158,7 +158,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 	hideGlass() {
 		this.body()
 			.replaceClass(ANIMATE_GLASS_FADEIN, ANIMATE_GLASS_FADEOUT)
-			.removeEvent(EventType.CLICK, this._handleGlassClick)
+			.removeEvent(EVENT_CLICK, this._handleGlassClick)
 		;
 	}
 

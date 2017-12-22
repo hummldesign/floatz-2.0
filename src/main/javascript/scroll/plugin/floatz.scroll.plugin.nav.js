@@ -1,8 +1,8 @@
 import DOM from "../../dom/floatz.dom.dom.js";
 import {DOMElement} from "../../dom/floatz.dom.dom.js";
 import {ScrollPlugin} from "../floatz.scroll.scroller.js";
-import {ScrollEvent} from "../floatz.scroll.scroller.js";
-import {EventType} from "../../dom/floatz.dom.events.js";
+import {EVENT_CLICK} from "../../dom/floatz.dom.events.js";
+import {SCROLL_EVENT_AFTERNAVGIATE, SCROLL_EVENT_BEFORENAVGIATE} from "../floatz.scroll.scroller.js";
 
 /**
  * Scroll navigation plugin.
@@ -37,7 +37,7 @@ function _prepareNavItems(plugin) {
 	let navItems = DOM.query(plugin.options().navItemsSelector);
 	let header = DOM.queryUnique(plugin.options().headerSelector);
 	navItems.forEach((navItem) => {
-		navItem.addEvent(EventType.CLICK, (event) => {
+		navItem.addEvent(EVENT_CLICK, (event) => {
 			_handleClick(plugin, header, navItem, event);
 		});
 	});
@@ -58,8 +58,8 @@ function _handleClick(plugin, header, navItem, event) {
 
 	// Use scroll navigation only when href contains an id
 	if (navItem.attr("href").startsWith("#")) {
-		let beforeEvent = DOM.createEvent(ScrollEvent.BEFORE_NAVGIATE, true, true);
-		let afterEvent = DOM.createEvent(ScrollEvent.AFTER_NAVIGATE, true, false);
+		let beforeEvent = DOM.createEvent(SCROLL_EVENT_BEFORENAVGIATE, true, true);
+		let afterEvent = DOM.createEvent(SCROLL_EVENT_AFTERNAVGIATE, true, false);
 
 		// Fire before navigation event
 		if (DOM.dispatchEvent(plugin.scroller().container(), beforeEvent)) {

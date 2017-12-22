@@ -1,6 +1,6 @@
 import DOM from "../../dom/floatz.dom.dom.js";
 import {ScrollPlugin} from "../floatz.scroll.scroller.js";
-import {ScrollEvent} from "../floatz.scroll.scroller.js";
+import {SCROLL_EVENT_BEFORENAVGIATE} from "../floatz.scroll.scroller.js";
 
 /**
  * Scroll header plugin.
@@ -36,7 +36,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 			}
 
 			// Add custom event handler
-			DOM.addEvent(scroller.container(), ScrollEvent.BEFORE_NAVGIATE, () => {
+			DOM.addEvent(scroller.container(), SCROLL_EVENT_BEFORENAVGIATE, () => {
 				_handleBeforeNavigate(this);
 			});
 		}

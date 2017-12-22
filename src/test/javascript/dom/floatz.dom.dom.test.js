@@ -1,6 +1,6 @@
 import DOM from "../../../main/javascript/dom/floatz.dom.dom.js";
 import {DOMElement} from "../../../main/javascript/dom/floatz.dom.dom.js";
-import {EventType} from "../../../main/javascript/dom/floatz.dom.events.js";
+import {EVENT_RESIZE} from "../../../main/javascript/dom/floatz.dom.events.js";
 
 let eventCounter = {
 	resize: 0,
@@ -177,9 +177,9 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 	describe("Given a window object", () => {
 		describe("When 2 resize handlers are added and the resize event is triggered", () => {
 			beforeEach(() => {
-				DOM.addEvent(window, EventType.RESIZE, handleLoad);
-				DOM.addEvent(window, EventType.RESIZE, handleLoad2);
-				DOM.dispatchEvent(window, EventType.RESIZE);
+				DOM.addEvent(window, EVENT_RESIZE, handleLoad);
+				DOM.addEvent(window, EVENT_RESIZE, handleLoad2);
+				DOM.dispatchEvent(window, EVENT_RESIZE);
 			});
 			it("Then 2 resize events should be fired", () => {
 				expect(eventCounter.resize).toBe(2);
@@ -187,8 +187,8 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 		});
 		describe("When the first resize event is removed and the resize event is triggered", () => {
 			beforeEach(() => {
-				DOM.removeEvent(window, EventType.RESIZE, handleLoad);
-				DOM.dispatchEvent(window, EventType.RESIZE);
+				DOM.removeEvent(window, EVENT_RESIZE, handleLoad);
+				DOM.dispatchEvent(window, EVENT_RESIZE);
 			});
 			it("The 1 resize event should be fired", () => {
 				expect(eventCounter.resize).toBe(3);
@@ -197,8 +197,8 @@ describe("> Test Suite for floatz.dom.dom.js", () => {
 		});
 		describe("When the second resize event is removed and the resize event is triggered", () => {
 			beforeEach(() => {
-				DOM.removeEvent(window, EventType.RESIZE, handleLoad2);
-				DOM.dispatchEvent(window, EventType.RESIZE);
+				DOM.removeEvent(window, EVENT_RESIZE, handleLoad2);
+				DOM.dispatchEvent(window, EVENT_RESIZE);
 			});
 			it("The no resize event should be fired", () => {
 				expect(eventCounter.resize).toBe(3);

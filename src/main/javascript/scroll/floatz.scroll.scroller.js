@@ -1,7 +1,7 @@
 import DOM from "../dom/floatz.dom.dom.js";
 import Easing from "../animation/floatz.animation.easing.js"
 import {DOMElement} from "../dom/floatz.dom.dom.js";
-import {EventType} from "../dom/floatz.dom.events.js";
+import {EVENT_SCROLL} from "../dom/floatz.dom.events.js";
 
 /**
  * Notes:
@@ -12,6 +12,11 @@ import {EventType} from "../dom/floatz.dom.events.js";
  * childelement.getClientBoundingRect.top / left => Position relative to _container (variable)
  */
 
+// Constants for events
+// Note: Symbols can´t be used because closure compiler will change names
+export const SCROLL_EVENT_BEFORENAVGIATE = "flz-event-before-navigate";
+export const SCROLL_EVENT_AFTERNAVGIATE = "flz-event-after-navigate";
+
 /**
  * Scroll direction enum.
  *
@@ -20,16 +25,6 @@ import {EventType} from "../dom/floatz.dom.events.js";
 export const Direction = Object.freeze({
 	HORIZONTAL: Symbol("horizontal"),
 	VERTICAL: Symbol("vertical")
-});
-
-/**
- * Scroll events.
- *
- * @type {Object}
- */
-export const ScrollEvent = Object.freeze({
-	BEFORE_NAVGIATE: Symbol("flz-event-before-navigate"),
-	AFTER_NAVIGATE: Symbol("flz-event-after-navigate")
 });
 
 /**
@@ -121,7 +116,7 @@ export class Scroller {
 	 * @returns {Scroller} Scroller for chaining
 	 */
 	onScroll(handler) {
-		DOM.addEvent(this._container, EventType.SCROLL, () => {
+		DOM.addEvent(this._container, EVENT_SCROLL, () => {
 			handler(this);
 			this._handlers.forEach((handler) => {
 				handler(this);
