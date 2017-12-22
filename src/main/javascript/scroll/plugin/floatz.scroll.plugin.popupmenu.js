@@ -1,4 +1,6 @@
 import DOM from "../../dom/floatz.dom.dom.js";
+import MediaQuery from "../../util/floatz.util.mediaquery.js";
+import {MediaSize} from "../../util/floatz.util.mediaquery.js";
 import {DOMElement} from "../../dom/floatz.dom.dom.js";
 import {ScrollPlugin} from "../floatz.scroll.scroller.js";
 import {ScrollEvent} from "../floatz.scroll.scroller.js";
@@ -61,6 +63,14 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		this._menu.addEvent(EVENT_ANIMATION_END, () => {
 			if (this._menu.hasClass(ANIMATE_SLIDEOUTLEFT)) {
 				this.removeMenu();
+			}
+		});
+
+		// Remove menu and glass in case that viewpoint gets larger
+		DOM.addEvent(window, "resize", () => {
+			if(MediaQuery.match(MediaSize.GTE_L)) { // FIXME
+				this.closeMenu();
+				this.hideGlass();
 			}
 		});
 	}
@@ -133,7 +143,8 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 	showGlass() {
 		// Remember click handler so that its removable
 		this._handleGlassClick = () => {
-			_handleGlassClick(this);
+			this.closeMenu();
+			this.hideGlass();
 		};
 
 		this.body()
@@ -168,9 +179,4 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 			.replaceClass(this.options().responsiveMenuClass, this.options().menuClass)
 		;
 	}
-}
-
-function _handleGlassClick(plugin) {
-	plugin.closeMenu();
-	plugin.hideGlass();
 }
