@@ -45,6 +45,8 @@ export default class MediaQuery {
 		if (window.matchMedia) {
 			let results = [];
 
+			>>> Does not work in IE11 (e.g. resize should remove glass and popupmenu)
+
 			// Execute media queries and remember results
 			queries.forEach((query) => {
 				results.push(window.matchMedia(typeof query === "symbol" ?
