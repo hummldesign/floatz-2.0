@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>floatz 2.0 - Text baseline test</title>
-		<link rel="stylesheet" href="../../main/less/core/floatz.core.min.css">
+		<link rel="stylesheet" href="../less/floatz.core.layout.baseline.min.css">
 	</head>
 	<body>
 		<h1>Header 1</h1>
@@ -98,5 +98,123 @@ Preformatted text
 				<param name="autoplay" value="true">
 			</object>
 		</p>
+		<h2>Standard form</h2>
+		<label>Textinput</label>
+		<input type="text" value="Text" />
+		<label>Textarea</label>
+		<textarea rows="10">Text</textarea>
+		<label>Dropdown</label>
+		<select>
+			<option>Option 1</option>
+			<option>Option 2</option>
+			<option>Option 3</option>
+		</select>
+		<input type="radio" />
+		<label>Radio 1</label>
+		<input type="radio" />
+		<label>Radio 2</label>
+		<input type="radio" />
+		<label>Radio 3</label>
+		<input type="checkbox" />
+		<label>Checkbox 1</label>
+		<input type="checkbox" />
+		<label>Checkbox 2</label>
+		<input type="checkbox" />
+		<label>Checkbox 3</label>
+		<button>Submit</button>
+		<button>Cancel</button>
+		<fieldset>
+			<legend>Legend</legend>
+			<label>Textinput</label>
+			<input type="text" value="Text" />
+			<label>Textinput</label>
+			<input type="text" value="Text" />
+		</fieldset>
+		<h2>Floatz form without boxes</h2>
+		<div class="flz-box flz-form">
+			<label>Textinput</label>
+			<input type="text" value="Text" />
+			<label>Textarea</label>
+			<textarea rows="10">Text</textarea>
+			<label>Dropdown</label>
+			<select>
+				<option>Option 1</option>
+				<option>Option 2</option>
+				<option>Option 3</option>
+			</select>
+			<input type="radio" />
+			<label>Radio 1</label>
+			<input type="radio" />
+			<label>Radio 2</label>
+			<input type="radio" />
+			<label>Radio 3</label>
+			<input type="checkbox" />
+			<label>Checkbox 1</label>
+			<input type="checkbox" />
+			<label>Checkbox 2</label>
+			<input type="checkbox" />
+			<label>Checkbox 3</label>
+			<button>Submit</button>
+			<button>Cancel</button>
+			<fieldset>
+				<legend>Legend</legend>
+				<label>Textinput</label>
+				<input type="text" value="Text" />
+				<label>Textinput</label>
+				<input type="text" value="Text" />
+			</fieldset>
+		</div>
+		<h2>Floatz form with boxes</h2>
+		<div class="flz-box flz-form flz-nospacer">
+			<div class="flz-box">
+				<label>Textinput</label>
+				<input type="text" value="Text" />
+			</div>
+			<div class="flz-box">
+				<label>Textarea</label>
+				<textarea rows="10">Text</textarea>
+			</div>
+			<div class="flz-box">
+				<label>Dropdown</label>
+				<select>
+					<option>Option 1</option>
+					<option>Option 2</option>
+					<option>Option 3</option>
+				</select>
+			</div>
+			<div class="flz-box">
+				<input type="radio" />
+				<label>Radio 1</label>
+				<input type="radio" />
+				<label>Radio 2</label>
+				<input type="radio" />
+				<label>Radio 3</label>
+			</div>
+			<div class="flz-box">
+				<input type="checkbox" />
+				<label>Checkbox 1</label>
+				<input type="checkbox" />
+				<label>Checkbox 2</label>
+				<input type="checkbox" />
+				<label>Checkbox 3</label>
+			</div>
+			<div class="flz-box">
+				<button>Submit</button>
+				<button>Cancel</button>
+			</div>
+			<div class="flz-box">
+				<fieldset>
+					<legend>Legend</legend>
+					<div class="flz-box flz-50">
+						<label>Textinput</label>
+						<input type="text" value="Text" />
+					</div>
+					<div class="flz-box flz-50">
+						<label>Textinput</label>
+						<input type="text" value="Text" />
+					</div>
+				</fieldset>
+			</div>
+		</div>
 	</body>
 </html>

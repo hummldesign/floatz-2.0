@@ -1,0 +1,40 @@
+@import "../core/floatz.core.mixins.less";
+
+@flz-var-border-color: #aaa;
+
+.flz-form {
+	input[type=text],
+	input[type=password],
+	select,
+	textarea {
+		.flz-mx-box-sizing(border-box);
+		border: 1px solid @flz-var-border-color;
+		display: block;
+		height: @flz-var-base-font-size * 2;
+		width: 100%;
+	}
+
+	label {
+		.flz-mx-box-sizing(border-box);
+		display: block;
+		padding: 0 0 @flz-var-gutter-text-y / 2 0;
+		width: 100%;
+	}
+
+	input[type=radio],
+	input[type=checkbox] {
+		&+label {
+			display: inline-block;
+			padding: 0 @flz-var-gutter-text-x / 2 0 0;
+			width: auto;
+		}
+	}
+}
+
+fieldset {
+	border: 1px solid @flz-var-border-color;
+}
+
+legend {
+	padding: 0 @flz-var-gutter-text-x / 2;
+}
