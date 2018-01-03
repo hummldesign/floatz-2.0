@@ -1,4 +1,5 @@
 import DOM from "../../dom/floatz.dom.dom.js";
+import UserAgent from "../../util/floatz.util.useragent.js";
 import MediaQuery from "../../util/floatz.util.mediaquery.js";
 import {MediaSize} from "../../util/floatz.util.mediaquery.js";
 import {DOMElement} from "../../dom/floatz.dom.dom.js";
@@ -53,16 +54,12 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 
 		// Remove glass styles after glass hide animation finishes
 		this._body.addEvent(EVENT_ANIMATIONEND, () => {
-			if (this._body.hasClass(ANIMATE_GLASS_FADEOUT)) { // FIXME
-				this.removeGlass();
-			}
+			this._handleBodyAnimationEnd();
 		});
 
 		// Remove menu styles after menu close animation finishes
 		this._menu.addEvent(EVENT_ANIMATIONEND, () => {
-			if (this._menu.hasClass(ANIMATE_SLIDEOUTLEFT)) { // FIXME
-				this.removeMenu();
-			}
+			this._handleMenuAnimationEnd();
 		});
 
 		// Remove menu and glass in case that viewpoint gets larger
@@ -134,6 +131,11 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 	closeMenu() {
 		this.menu().replaceClass(ANIMATE_SLIDEINLEFT, ANIMATE_SLIDEOUTLEFT);
 		this.menuIcon().replaceClass("icon-x", "icon-menu"); // FIXME
+
+		// Workaround for older IE browsers that do not support animation end event
+		if(UserAgent.ie().version() <= 9) {
+			this._handleMenuAnimationEnd();
+		}
 	}
 
 	/**
@@ -160,6 +162,11 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 			.replaceClass(ANIMATE_GLASS_FADEIN, ANIMATE_GLASS_FADEOUT)
 			.removeEvent(EVENT_CLICK, this._handleGlassClick)
 		;
+
+		// Workaround for older IE browsers that do not support animation end event
+		if(UserAgent.ie().version() <= 9) {
+			this._handleBodyAnimationEnd();
+		}
 	}
 
 	/**
@@ -177,5 +184,25 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 			.removeClass(ANIMATE_SLIDEOUTLEFT)
 			.replaceClass(this.options().responsiveMenuClass, this.options().menuClass)
 		;
+	}
+
+	/**
+	 * Handle animation end event on body.
+	 * @private
+	 */
+	_handleBodyAnimationEnd() {
+		if (this._body.hasClass(ANIMATE_GLASS_FADEOUT)) { // FIXME
+			this.removeGlass();
+		}
+	}
+
+	/**
+	 * Handle animation end event on menu.
+	 * @private
+	 */
+	_handleMenuAnimationEnd() {
+		if (this._menu.hasClass(ANIMATE_SLIDEOUTLEFT)) { // FIXME
+			this.removeMenu();
+		}
 	}
 }
