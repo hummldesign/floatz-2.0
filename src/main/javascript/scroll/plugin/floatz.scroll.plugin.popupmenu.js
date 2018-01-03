@@ -1,7 +1,7 @@
 import DOM from "../../dom/floatz.dom.dom.js";
 import UserAgent from "../../util/floatz.util.useragent.js";
 import MediaQuery from "../../util/floatz.util.mediaquery.js";
-import {MediaSize} from "../../util/floatz.util.mediaquery.js";
+import {MEDIA_SIZE_GTE_L} from "../../util/floatz.util.mediaquery.js";
 import {DOMElement} from "../../dom/floatz.dom.dom.js";
 import {ScrollPlugin} from "../floatz.scroll.scroller.js";
 import {SCROLL_EVENT_BEFORENAVGIATE} from "../floatz.scroll.scroller.js";
@@ -64,9 +64,11 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 
 		// Remove menu and glass in case that viewpoint gets larger
 		DOM.addEvent(window, EVENT_RESIZE, () => {
-			if(MediaQuery.match(MediaSize.GTE_L)) { // FIXME
-				this.closeMenu();
-				this.hideGlass();
+			if (MediaQuery.match(MEDIA_SIZE_GTE_L)) { // FIXME
+				if (this._menuIcon.hasClass("icon-x")) {  // FIXME
+					this.closeMenu();
+					this.hideGlass();
+				}
 			}
 		});
 	}
@@ -133,7 +135,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		this.menuIcon().replaceClass("icon-x", "icon-menu"); // FIXME
 
 		// Workaround for older IE browsers that do not support animation end event
-		if(UserAgent.ie().version() <= 9) {
+		if (UserAgent.ie().version() <= 9) {
 			this._handleMenuAnimationEnd();
 		}
 	}
@@ -164,7 +166,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		;
 
 		// Workaround for older IE browsers that do not support animation end event
-		if(UserAgent.ie().version() <= 9) {
+		if (UserAgent.ie().version() <= 9) {
 			this._handleBodyAnimationEnd();
 		}
 	}
