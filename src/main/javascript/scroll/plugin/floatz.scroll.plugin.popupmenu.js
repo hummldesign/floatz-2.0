@@ -5,7 +5,7 @@ import {MEDIA_SIZE_GTE_L} from "../../util/floatz.util.mediaquery.js";
 import {DOMElement} from "../../dom/floatz.dom.dom.js";
 import {ScrollPlugin} from "../floatz.scroll.scroller.js";
 import {SCROLL_EVENT_BEFORENAVGIATE} from "../floatz.scroll.scroller.js";
-import {EVENT_ANIMATIONEND, EVENT_CLICK, EVENT_RESIZE} from "../../dom/floatz.dom.events.js";
+import {EVENT_ANIMATIONEND, EVENT_CLICK, EVENT_RESIZE, EVENT_TOUCHSTART} from "../../dom/floatz.dom.events.js";
 
 /**
  * Constants
@@ -15,6 +15,7 @@ const ANIMATE_GLASS_FADEOUT = "flz-animate-glass-fadeout"; // TODO make it custo
 const ANIMATE_SLIDEINLEFT = "flz-animate-slideinleft"; // TODO make it customizable
 const ANIMATE_SLIDEOUTLEFT = "flz-animate-slideoutleft"; // TODO make it customizable
 const DIALOG_GLASS = "flz-dialog-glass";
+const TAG_BODY = "BODY";
 
 /**
  * Responsive popup menu plugin.
@@ -35,10 +36,9 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		this.options().responsiveMenuClass = options.responsiveMenuClass || "flz-nav-vmenu";
 		this.options().menuIconSelector = options.menuIconSelector || ".flz-nav-menu-icon";
 
-		this._body = DOM.queryUnique("body");
+		this._body = DOM.queryUnique(TAG_BODY);
 		this._menu = DOM.queryUnique(this.options().menuSelector);
 		this._menuIcon = DOM.queryUnique(this.options().menuIconSelector);
-		this._handleGlassClick = null;
 
 		// Open/close popup menu
 		this._menuIcon.addEvent(EVENT_CLICK, (e) => {
@@ -144,15 +144,14 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 	 * Show glass overlay.
 	 */
 	showGlass() {
-		// Remember click handler so that its removable
-		this._handleGlassClick = () => {
-			this.closeMenu();
-			this.hideGlass();
-		};
-
 		this.body()
 			.addClass(DIALOG_GLASS, ANIMATE_GLASS_FADEIN)
-			.addEvent(EVENT_CLICK, this._handleGlassClick)
+			.addEvent(EVENT_CLICK, (e) => {
+				this._handleGlassClick(e)
+			})
+			.addEvent(EVENT_TOUCHSTART, (e) => {
+				this._handleGlassClick(e)
+			})
 		;
 	}
 
@@ -163,6 +162,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		this.body()
 			.replaceClass(ANIMATE_GLASS_FADEIN, ANIMATE_GLASS_FADEOUT)
 			.removeEvent(EVENT_CLICK, this._handleGlassClick)
+			.removeEvent(EVENT_TOUCHSTART, this._handleGlassClick)
 		;
 
 		// Workaround for older IE browsers that do not support animation end event
@@ -189,7 +189,21 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 	}
 
 	/**
+	 * Handle click on glass.
+	 *
+	 * @param e Event
+	 * @private
+	 */
+	_handleGlassClick(e) {
+		if (e.target.tagName.toUpperCase() === TAG_BODY) {
+			this.closeMenu();
+			this.hideGlass();
+		}
+	}
+
+	/**
 	 * Handle animation end event on body.
+	 *
 	 * @private
 	 */
 	_handleBodyAnimationEnd() {
@@ -200,6 +214,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 
 	/**
 	 * Handle animation end event on menu.
+	 *
 	 * @private
 	 */
 	_handleMenuAnimationEnd() {

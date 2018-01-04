@@ -7,3 +7,4 @@ export const EVENT_DOMCONTENTLOADED = "DOMContentLoaded";
 export const EVENT_CLICK = "click";
 export const EVENT_RESIZE = "resize";
 export const EVENT_SCROLL = "scroll";
+export const EVENT_TOUCHSTART = "touchstart";
