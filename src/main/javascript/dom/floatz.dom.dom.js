@@ -89,21 +89,8 @@ export default class DOM {
 	 * @returns {Event} Event
 	 */
 	static createEvent(eventName, bubbles = false, cancelable = false, data = null) {
-		// FIXME Use polyfill for CustomEvent instead (see https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)
-
 		console.debug(LOG_PREFIX + "Creating event " + eventName);
-		if (data !== null) {
-			if (typeof window.CustomEvent === "function") {
-				return new CustomEvent(eventName, {
-					"bubbles": bubbles, "cancelable": cancelable, "detail": data
-				});
-
-			} else {
-				let event = document.createEvent('CustomEvent');
-				event.initCustomEvent(eventName, bubbles, cancelable, data);
-				return event;
-			}
-		} else {
+		if (data === null) {
 			if (typeof window.Event === "function") {
 				return new Event(eventName, {
 					"bubbles": bubbles, "cancelable": cancelable
@@ -114,6 +101,10 @@ export default class DOM {
 				event.initEvent(eventName, bubbles, cancelable);
 				return event;
 			}
+		} else {
+			return new CustomEvent(eventName, {
+				"bubbles": bubbles, "cancelable": cancelable, "detail": data
+			});
 		}
 	}
 
