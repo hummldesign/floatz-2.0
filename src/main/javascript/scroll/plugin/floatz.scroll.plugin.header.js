@@ -1,4 +1,5 @@
 import DOM from "../../dom/floatz.dom.dom.js";
+import {Direction} from "../floatz.scroll.scroller.js";
 import {ScrollPlugin} from "../floatz.scroll.scroller.js";
 import {SCROLL_EVENT_BEFORENAVGIATE} from "../floatz.scroll.scroller.js";
 
@@ -41,8 +42,8 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 			}
 
 			// Add custom event handler
-			DOM.addEvent(scroller.container(), SCROLL_EVENT_BEFORENAVGIATE, () => {
-				this._handleBeforeNavigate();
+			DOM.addEvent(scroller.container(), SCROLL_EVENT_BEFORENAVGIATE, (navItem) => {
+				this._handleBeforeNavigate(navItem);
 			});
 		}
 
@@ -73,10 +74,10 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 					this._header.animate("transition")
 						.end(() => {
 							this._hideScrollShadow();
+							this.scroller().offset(0);
 						})
 						.trigger(() => {
 							console.debug(LOG_PREFIX + "Hiding header");
-							this.scroller().offset(0);
 							this._header.css("top", -this._header.height() + "px");
 							this._visible = false;
 						})
@@ -109,13 +110,21 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 
 	/**
 	 * Handle before navigation.
+	 * @param event Event data
 	 * @private
 	 */
-	_handleBeforeNavigate() {
-		// Remove header offset for slideout header on navigation
+	_handleBeforeNavigate(event) {
+		// Define header offset for slideout header on navigation depending on scroll direction
 		if (this._header.hasClass(HEADER_FIXED_SLIDED)) {
-			// FIXME Only remove offset on forward navigation
-			// this.scroller().offset(0);
+			let target = DOM.queryUnique(event.detail.attr("href"));
+			let targetPos = this.scroller().direction() === Direction.VERTICAL ?
+				target.position().top : target.position().left;
+
+			if (targetPos > this.scroller().scrollPos()) {
+				this.scroller().offset(0);
+			} else {
+				this.scroller().offset(this._header.height() * -1);
+			}
 		}
 	}
 

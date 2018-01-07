@@ -83,18 +83,37 @@ export default class DOM {
 	 * Create event.
 	 *
 	 * @param {string} eventName Event name
-	 * @param {boolean} bubbles Event bubbles up.
-	 * @param {boolean} cancelable Event can be canceled.
+	 * @param {boolean} bubbles Event bubbles up (optional)
+	 * @param {boolean} cancelable Event can be canceled (optional)
+	 * @param {Object} data Event data (optional)
 	 * @returns {Event} Event
 	 */
-	static createEvent(eventName, bubbles = false, cancelable = false) {
+	static createEvent(eventName, bubbles = false, cancelable = false, data = null) {
+		// FIXME Use polyfill for CustomEvent instead (see https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)
+
 		console.debug(LOG_PREFIX + "Creating event " + eventName);
-		if (typeof window.Event === "function") {
-			return new Event(eventName, {"bubbles": bubbles, "cancelable": cancelable});
+		if (data !== null) {
+			if (typeof window.CustomEvent === "function") {
+				return new CustomEvent(eventName, {
+					"bubbles": bubbles, "cancelable": cancelable, "detail": data
+				});
+
+			} else {
+				let event = document.createEvent('CustomEvent');
+				event.initCustomEvent(eventName, bubbles, cancelable, data);
+				return event;
+			}
 		} else {
-			let event = document.createEvent('Event');
-			event.initEvent(eventName, bubbles, cancelable);
-			return event;
+			if (typeof window.Event === "function") {
+				return new Event(eventName, {
+					"bubbles": bubbles, "cancelable": cancelable
+				});
+
+			} else {
+				let event = document.createEvent('Event');
+				event.initEvent(eventName, bubbles, cancelable);
+				return event;
+			}
 		}
 	}
 

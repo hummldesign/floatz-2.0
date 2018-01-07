@@ -134,10 +134,10 @@ task compileScrollLayoutHeaderSlideoutTest(type: JavaExec) {
   def closureArgs = []
   closureArgs << "--language_in=ES6"
   closureArgs << "--language_out=ES5"
-  // closureArgs << "--formatting=pretty_print"
-  // closureArgs << "--debug"
-  // closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
-  closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
+  closureArgs << "--formatting=pretty_print"
+  closureArgs << "--debug"
+  closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
+  // closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
   closureArgs << "--js_output_file=build/floatz.scroll.layout.header.slideout.test.min.js"
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 

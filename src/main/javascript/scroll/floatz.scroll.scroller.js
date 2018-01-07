@@ -106,7 +106,6 @@ export class Scroller {
 	 */
 	offset(offset) {
 		this._options.offset = offset;
-		console.info(">>>>> Set offset: " + offset);
 		return this;
 	}
 
@@ -291,8 +290,6 @@ export class ScrollAnimation {
 
 		// Get distance
 		this._distance = this._stop - this._start + this._options.offset;
-		console.info(">>>> Used Distance: " + this._distance);
-		console.info(">>>> Used Offset: " + this._options.offset);
 
 		// Start scroll animation
 		// Note: the arrow function sets context for usage of this in animate

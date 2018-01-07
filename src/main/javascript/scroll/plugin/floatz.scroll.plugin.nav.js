@@ -58,8 +58,8 @@ function _handleClick(plugin, header, navItem, event) {
 
 	// Use scroll navigation only when href contains an id
 	if (navItem.attr("href").startsWith("#")) {
-		let beforeEvent = DOM.createEvent(SCROLL_EVENT_BEFORENAVGIATE, true, true);
-		let afterEvent = DOM.createEvent(SCROLL_EVENT_AFTERNAVGIATE, true, false);
+		let beforeEvent = DOM.createEvent(SCROLL_EVENT_BEFORENAVGIATE, true, true, navItem);
+		let afterEvent = DOM.createEvent(SCROLL_EVENT_AFTERNAVGIATE, true, false, navItem);
 
 		// Fire before navigation event
 		if (DOM.dispatchEvent(plugin.scroller().container(), beforeEvent)) {
