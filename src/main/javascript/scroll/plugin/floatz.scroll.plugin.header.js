@@ -73,10 +73,10 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 					this._header.animate("transition")
 						.end(() => {
 							this._hideScrollShadow();
-							this.scroller().offset(0);
 						})
 						.trigger(() => {
 							console.debug(LOG_PREFIX + "Hiding header");
+							this.scroller().offset(0);
 							this._header.css("top", -this._header.height() + "px");
 							this._visible = false;
 						})
@@ -99,7 +99,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 
 					console.debug(LOG_PREFIX + "Showing header");
 					this._header.css("top", null);
-					this.scroller().offset(-this._header.height());
+					this.scroller().offset(this._header.height() * -1);
 					this._showScrollShadow();
 					this._visible = true;
 				}
@@ -114,7 +114,8 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 	_handleBeforeNavigate() {
 		// Remove header offset for slideout header on navigation
 		if (this._header.hasClass(HEADER_FIXED_SLIDED)) {
-			this.scroller().options().offset = 0;
+			// FIXME Only remove offset on forward navigation
+			// this.scroller().offset(0);
 		}
 	}
 

@@ -10,10 +10,10 @@ DOM.addEvent(window, "DOMContentLoaded", () => {
 		.plugin(new ScrollNavPlugin())
 		.plugin(new ScrollHeaderPlugin())
 		.onScrollBackward((scroller) => {
-			console.info("scrolled backward");
+			// console.info("scrolled backward");
 		})
 		.onScrollForward((scroller) => {
-			console.info("scrolled forward");
+			// console.info("scrolled forward");
 		})
 	;
 });
