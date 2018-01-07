@@ -10,6 +10,7 @@ export default class UserAgent {
 	 * @returns {IE} IE specific utilities
 	 */
 	static ie() {
+		// FIXME Cache IE
 		return new IE();
 	}
 }

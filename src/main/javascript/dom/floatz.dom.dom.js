@@ -1,4 +1,5 @@
 import StringUtils from "../util/floatz.util.strings.js";
+import {Animation} from "../animation/floatz.animation.animation.js";
 
 /**
  * Constants
@@ -11,6 +12,7 @@ const PREV_DISPLAY = "flz-prev-display";
 const PREV_INLINE_DISPLAY = "flz-prev-inline-display";
 const PX = "px";
 const STYLE = "style";
+const LOG_PREFIX = "floatz | DOM | ";
 
 /**
  * DOM utilities.
@@ -86,6 +88,7 @@ export default class DOM {
 	 * @returns {Event} Event
 	 */
 	static createEvent(eventName, bubbles = false, cancelable = false) {
+		console.debug(LOG_PREFIX + "Creating event " + eventName);
 		if (typeof window.Event === "function") {
 			return new Event(eventName, {"bubbles": bubbles, "cancelable": cancelable});
 		} else {
@@ -104,12 +107,12 @@ export default class DOM {
 	 * @param capture true for capture phase, false for bubbling phase
 	 */
 	static addEvent(element, event, handler, capture = false) {
-		let _eventName = event instanceof Event ? event.type : event;
-		console.debug("floatz | Adding event: " + _eventName);
+		let eventName = event instanceof Event ? event.type : event;
+		console.debug(LOG_PREFIX + "Adding event " + eventName);
 		if (element.addEventListener) {
-			element.addEventListener(_eventName, handler, capture);
+			element.addEventListener(eventName, handler, capture);
 		} else if (element.attachEvent) {
-			element.attachEvent(_eventName, handler);
+			element.attachEvent(eventName, handler);
 		}
 	}
 
@@ -123,6 +126,7 @@ export default class DOM {
 	 */
 	static removeEvent(element, event, handler, capture = false) {
 		let eventName = event instanceof Event ? event.type : event;
+		console.debug(LOG_PREFIX + "Removing event " + eventName);
 		if (element.removeEventListener) {
 			element.removeEventListener(eventName, handler, capture);
 		} else if (element.detachEvent) {
@@ -138,6 +142,8 @@ export default class DOM {
 	 * @return {boolean} true for canceled, false if event has not been cancelled
 	 */
 	static dispatchEvent(element, event) {
+		let eventName = event instanceof Event ? event.type : event;
+		console.debug(LOG_PREFIX + "Dispatching event " + eventName);
 		return element.dispatchEvent(event instanceof Event ? event : DOM.createEvent(event));
 	}
 }
@@ -490,6 +496,16 @@ export class DOMElement {
 	 */
 	dispatchEvent(event) {
 		return DOM.dispatchEvent(this._origNode, event);
+	}
+
+	/**
+	 * Animate element.
+	 *
+	 * @param {string} type Animation type "transition" or "animation" (default).
+	 * @returns {Animation} Animation
+	 */
+	animate(type = "animation") {
+		return new Animation(this, type);
 	}
 }
 

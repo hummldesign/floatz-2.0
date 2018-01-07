@@ -1,7 +1,7 @@
 /**
  * Media size enum.
  *
- * @type {Object}
+ * @type {string}
  */
 
 export const MEDIA_SIZE_XXS = "(min-width: 0) and (max-width: 320px)";
