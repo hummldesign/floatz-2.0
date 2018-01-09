@@ -89,8 +89,20 @@ export default class DOM {
 	 * @returns {Event} Event
 	 */
 	static createEvent(eventName, bubbles = false, cancelable = false, data = null) {
-		console.debug(LOG_PREFIX + "Creating event " + eventName);
-		if (data === null) {
+		if (data !== null) {
+			console.debug(LOG_PREFIX + "Creating custom event " + eventName);
+			if (typeof window.CustomEvent === "function") {
+				return new CustomEvent(eventName, {
+					"bubbles": bubbles, "cancelable": cancelable, "detail": data
+				});
+
+			} else {
+				let event = document.createEvent('CustomEvent');
+				event.initCustomEvent(eventName, bubbles, cancelable, data);
+				return event;
+			}
+		} else {
+			console.debug(LOG_PREFIX + "Creating event " + eventName);
 			if (typeof window.Event === "function") {
 				return new Event(eventName, {
 					"bubbles": bubbles, "cancelable": cancelable
@@ -101,10 +113,6 @@ export default class DOM {
 				event.initEvent(eventName, bubbles, cancelable);
 				return event;
 			}
-		} else {
-			return new CustomEvent(eventName, {
-				"bubbles": bubbles, "cancelable": cancelable, "detail": data
-			});
 		}
 	}
 
