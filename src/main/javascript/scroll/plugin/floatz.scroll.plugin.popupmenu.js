@@ -36,6 +36,8 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		this.options().menuClass = options.menuClass || "flz-nav-list";
 		this.options().responsiveMenuClass = options.responsiveMenuClass || "flz-nav-vmenu";
 		this.options().menuIconSelector = options.menuIconSelector || ".flz-nav-menu-icon";
+		this.options().closeMenuIcon = options.closeMenuIcon || ".flz-icon-menu-close";
+		this.options().openMenuIcon = options.openMenuIcon || ".flz-icon-menu-open";
 
 		this._body = DOM.queryUnique(TAG_BODY);
 		this._menu = DOM.queryUnique(this.options().menuSelector);
@@ -44,7 +46,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		// Open/close popup menu
 		this._menuIcon.addEvent(EVENT_CLICK, (e) => {
 			e.stopPropagation();
-			if (this._menuIcon.hasClass("icon-menu")) { // FIXME
+			if (this._menuIcon.hasClass(this.options().openMenuIcon)) {
 				this.showGlass();
 				this.openMenu();
 			} else {
@@ -56,7 +58,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		// Remove menu and glass in case that viewpoint gets larger
 		DOM.addEvent(window, EVENT_RESIZE, () => {
 			if (MediaQuery.match(MEDIA_SIZE_GTE_L)) { // FIXME
-				if (this._menuIcon.hasClass("icon-x")) {  // FIXME
+				if (this._menuIcon.hasClass(this.options().closeMenuIcon)) {
 					this.closeMenu();
 					this.hideGlass();
 				}
@@ -112,7 +114,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 	 */
 	openMenu() {
 		console.debug(LOG_PREFIX + "Opening menu");
-		this.menuIcon().replaceClass("icon-menu", "icon-x"); // FIXME
+		this.menuIcon().replaceClass(this.options().openMenuIcon, this.options().closeMenuIcon);
 		this.menu()
 			.replaceClass(this.options().menuClass, this.options().responsiveMenuClass)
 			.addClass(ANIMATE_SLIDEINLEFT)
@@ -134,7 +136,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 				.trigger(() => {
 					console.debug(LOG_PREFIX + "Closing menu");
 					this.menu().replaceClass(ANIMATE_SLIDEINLEFT, ANIMATE_SLIDEOUTLEFT); // FIXME
-					this.menuIcon().replaceClass("icon-x", "icon-menu"); // FIXME
+					this.menuIcon().replaceClass(this.options().closeMenuIcon, this.options().openMenuIcon);
 				})
 			;
 		}
