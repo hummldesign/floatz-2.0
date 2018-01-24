@@ -2,44 +2,44 @@
 @import 'floatz.animation.easing.less';
 
 // Animation classes
-.flz-animate-fadein {
-	.flz-mx-animation(flz-animation-fadein 0.3s ease forwards);
+.flz-animate-fadein(@time: 0.3s, @easing: ease, @direction: forwards) {
+	.flz-mx-animation(flz-animation-fadein @time @easing @direction);
 }
 
-.flz-animate-fadeout {
-	.flz-mx-animation(flz-animation-fadeout 0.3s ease forwards);
+.flz-animate-fadeout(@time: 0.3s, @easing: ease, @direction: forwards) {
+	.flz-mx-animation(flz-animation-fadeout@time @easing @direction);
 }
 
-.flz-animate-slideinleft {
-	.flz-mx-animation(flz-animation-slideinleft 0.3s ease forwards);
+.flz-animate-slideinleft(@time: 0.3s, @easing: ease, @direction: forwards) {
+	.flz-mx-animation(flz-animation-slideinleft @time @easing @direction);
 }
 
-.flz-animate-slideoutleft {
-	.flz-mx-animation(flz-animation-slideoutleft 0.3s ease forwards);
+.flz-animate-slideoutleft(@time: 0.3s, @easing: ease, @direction: forwards) {
+	.flz-mx-animation(flz-animation-slideoutleft @time @easing @direction);
 }
 
-.flz-animate-slideinright {
-	.flz-mx-animation(flz-animation-slideinright 0.3s ease forwards);
+.flz-animate-slideinright(@time: 0.3s, @easing: ease, @direction: forwards) {
+	.flz-mx-animation(flz-animation-slideinright @time @easing @direction);
 }
 
-.flz-animate-slideoutright {
-	.flz-mx-animation(flz-animation-slideoutright 0.3s ease forwards);
+.flz-animate-slideoutright(@time: 0.3s, @easing: ease, @direction: forwards) {
+	.flz-mx-animation(flz-animation-slideoutright @time @easing @direction);
 }
 
-.flz-animate-slideindown {
-	.flz-mx-animation(flz-animation-slideindown 0.3s ease forwards);
+.flz-animate-slideindown(@time: 0.3s, @easing: ease, @direction: forwards) {
+	.flz-mx-animation(flz-animation-slideindown @time @easing @direction);
 }
 
-.flz-animate-slideoutdown {
-	.flz-mx-animation(flz-animation-slideoutdown 0.3s ease forwards);
+.flz-animate-slideoutdown(@time: 0.3s, @easing: ease, @direction: forwards) {
+	.flz-mx-animation(flz-animation-slideoutdown @time @easing @direction);
 }
 
-.flz-animate-slideinup {
-	.flz-mx-animation(flz-animation-slideinup 0.3s ease forwards);
+.flz-animate-slideinup(@time: 0.3s, @easing: ease, @direction: forwards) {
+	.flz-mx-animation(flz-animation-slideinup @time @easing @direction);
 }
 
-.flz-animate-slideoutup {
-	.flz-mx-animation(flz-animation-slideoutup 0.3s ease forwards);
+.flz-animate-slideoutup(@time: 0.3s, @easing: ease, @direction: forwards) {
+	.flz-mx-animation(flz-animation-slideoutup @time @easing @direction);
 }
 
 // Animation workarounds for IE9
