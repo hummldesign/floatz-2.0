@@ -37,9 +37,10 @@ export class Animation {
 		console.debug(LOG_PREFIX + this._type + " triggered");
 		handler();
 		// FIXME Find more generic way also for non-ie browsers
+		// FIXME End handler does not fire in IE11, Edge (or too late ....)
 		// Workaround if animation handlers are not supported
-		if (UserAgent.ie().detect() && UserAgent.ie().version() <= 9) {
-			console.warn(LOG_PREFIX + "Manually triggering " + this._type + " handlers for IE <= 9");
+		if (UserAgent.ie().detect() /* && UserAgent.ie().version() <= 9 */) {
+			// console.warn(LOG_PREFIX + "Manually triggering " + this._type + " handlers for IE <= 9");
 			if (this._startHandler !== null) {
 				this._startHandler();
 			}
@@ -61,7 +62,7 @@ export class Animation {
 	 */
 	start(handler, capture = false) {
 		this._startHandler = (e) => {
-			console.debug(LOG_PREFIX + "Event " + this._type + "start fired for " + this._element.tag());
+			// console.debug(LOG_PREFIX + "Event " + this._type + "start fired for " + this._element.tag());
 			handler(e);
 			this._element.removeEvent(this._type + "start", this._startHandler, capture);
 		};
@@ -79,7 +80,7 @@ export class Animation {
 	iterate(handler, capture = false) {
 		this._iterateCapture = capture;
 		this._iterateHandler = (e) => {
-			console.debug(LOG_PREFIX + "Event " + this._type + "iteration fired for " + this._element.tag());
+			// console.debug(LOG_PREFIX + "Event " + this._type + "iteration fired for " + this._element.tag());
 			handler(e);
 		};
 		this._element.addEvent(this._type + "iteration", this._iterateHandler, capture);
