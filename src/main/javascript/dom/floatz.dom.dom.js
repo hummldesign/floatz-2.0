@@ -90,7 +90,7 @@ export default class DOM {
 	 */
 	static createEvent(eventName, bubbles = false, cancelable = false, data = null) {
 		if (data !== null) {
-			console.debug(LOG_PREFIX + "Creating custom event " + eventName);
+			// console.debug(LOG_PREFIX + "Creating custom event " + eventName);
 			if (typeof window.CustomEvent === "function") {
 				return new CustomEvent(eventName, {
 					"bubbles": bubbles, "cancelable": cancelable, "detail": data
@@ -102,7 +102,7 @@ export default class DOM {
 				return event;
 			}
 		} else {
-			console.debug(LOG_PREFIX + "Creating event " + eventName);
+			// console.debug(LOG_PREFIX + "Creating event " + eventName);
 			if (typeof window.Event === "function") {
 				return new Event(eventName, {
 					"bubbles": bubbles, "cancelable": cancelable
@@ -126,7 +126,7 @@ export default class DOM {
 	 */
 	static addEvent(element, event, handler, capture = false) {
 		let eventName = event instanceof Event ? event.type : event;
-		console.debug(LOG_PREFIX + "Adding event " + eventName);
+		// console.debug(LOG_PREFIX + "Adding event " + eventName);
 		if (element.addEventListener) {
 			element.addEventListener(eventName, handler, capture);
 		} else if (element.attachEvent) {
@@ -144,7 +144,7 @@ export default class DOM {
 	 */
 	static removeEvent(element, event, handler, capture = false) {
 		let eventName = event instanceof Event ? event.type : event;
-		console.debug(LOG_PREFIX + "Removing event " + eventName);
+		// console.debug(LOG_PREFIX + "Removing event " + eventName);
 		if (element.removeEventListener) {
 			element.removeEventListener(eventName, handler, capture);
 		} else if (element.detachEvent) {
@@ -161,7 +161,7 @@ export default class DOM {
 	 */
 	static dispatchEvent(element, event) {
 		let eventName = event instanceof Event ? event.type : event;
-		console.debug(LOG_PREFIX + "Dispatching event " + eventName);
+		// console.debug(LOG_PREFIX + "Dispatching event " + eventName);
 		return element.dispatchEvent(event instanceof Event ? event : DOM.createEvent(event));
 	}
 }

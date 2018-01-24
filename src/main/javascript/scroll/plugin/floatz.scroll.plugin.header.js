@@ -77,7 +77,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 							this.scroller().offset(0);
 						})
 						.trigger(() => {
-							console.debug(LOG_PREFIX + "Hiding header");
+							//console.debug(LOG_PREFIX + "Hiding header");
 							this._header.css("top", -this._header.height() + "px");
 							this._visible = false;
 						})
@@ -98,7 +98,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 				if ((this.scroller().prevScrollPos() +
 						this.scroller().viewportSize()) <= this.scroller().scrollSize()) {
 
-					console.debug(LOG_PREFIX + "Showing header");
+					//console.debug(LOG_PREFIX + "Showing header");
 					this._header.css("top", null);
 					this.scroller().offset(this._header.height() * -1);
 					this._showScrollShadow();
@@ -134,7 +134,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 	 */
 	_showScrollShadow() {
 		if (this._visible && !this._header.hasClass(SCROLL_SHADOW)) {
-			console.debug(LOG_PREFIX + "Showing scroll shadow");
+			// console.debug(LOG_PREFIX + "Showing scroll shadow");
 			this._header.addClass(SCROLL_SHADOW);
 		}
 	}
@@ -145,7 +145,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 	 */
 	_hideScrollShadow() {
 		if (this._header.hasClass(SCROLL_SHADOW)) {
-			console.debug(LOG_PREFIX + "Hiding scroll shadow");
+			// console.debug(LOG_PREFIX + "Hiding scroll shadow");
 			this._header.removeClass(SCROLL_SHADOW);
 		}
 	}

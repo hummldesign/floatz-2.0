@@ -290,6 +290,7 @@ export class ScrollAnimation {
 
 		// Get distance
 		this._distance = this._stop - this._start + this._options.offset;
+		// console.debug(`stop: ${this._stop}, start: ${this._start}, offset: ${this._options.offset}, distance: ${this._distance}`);
 
 		// Start scroll animation
 		// Note: the arrow function sets context for usage of this in animate
@@ -321,7 +322,7 @@ export class ScrollAnimation {
 			// Just use the px position of the target
 			return this._start + target;
 		} else {
-			// Get scroll _stop position depending on scroll direction
+			// Get scroll stop position depending on scroll direction
 			if (this._options.direction === Direction.VERTICAL) {
 				return this._element.origNode().getBoundingClientRect().top + this._start;
 			} else {

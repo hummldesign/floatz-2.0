@@ -113,7 +113,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 	 * Open menu.
 	 */
 	openMenu() {
-		console.debug(LOG_PREFIX + "Opening menu");
+		// console.debug(LOG_PREFIX + "Opening menu");
 		this.menuIcon().replaceClass(this.options().openMenuIcon, this.options().closeMenuIcon);
 		this.menu()
 			.replaceClass(this.options().menuClass, this.options().responsiveMenuClass)
@@ -134,7 +134,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 					;
 				})
 				.trigger(() => {
-					console.debug(LOG_PREFIX + "Closing menu");
+					// console.debug(LOG_PREFIX + "Closing menu");
 					this.menu().replaceClass(ANIMATE_SLIDEINLEFT, ANIMATE_SLIDEOUTLEFT); // FIXME
 					this.menuIcon().replaceClass(this.options().closeMenuIcon, this.options().openMenuIcon);
 				})
@@ -146,7 +146,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 	 * Show glass overlay.
 	 */
 	showGlass() {
-		console.debug(LOG_PREFIX + "Showing glass");
+		// console.debug(LOG_PREFIX + "Showing glass");
 		this.body()
 			.addClass(DIALOG_GLASS, ANIMATE_GLASS_FADEIN)
 			.addEvent(EVENT_CLICK, (e) => {
@@ -168,7 +168,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 					this.body().removeClass(ANIMATE_GLASS_FADEOUT, DIALOG_GLASS);
 				})
 				.trigger(() => {
-					console.debug(LOG_PREFIX + "Hiding glass");
+					// console.debug(LOG_PREFIX + "Hiding glass");
 					this.body()
 						.replaceClass(ANIMATE_GLASS_FADEIN, ANIMATE_GLASS_FADEOUT)
 						.removeEvent(EVENT_CLICK, this._handleGlassClick)
