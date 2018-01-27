@@ -99,14 +99,18 @@ export class Scroller {
 	}
 
 	/**
-	 * Set scroll offset correction.
+	 * Get / set scroll offset correction.
 	 *
-	 * @param offset Scroll offset correction
-	 * @returns {Scroller} Scroller for chaining
+	 * @param {number=} offset Scroll offset correction
+	 * @returns {number|Scroller} Scroller for chaining when used as setter
 	 */
 	offset(offset) {
-		this._options.offset = offset;
-		return this;
+		if(offset === undefined) {
+			return this._options.offset;
+		} else {
+			this._options.offset = offset;
+			return this;
+		}
 	}
 
 	/**
