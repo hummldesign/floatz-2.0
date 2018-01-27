@@ -21,11 +21,11 @@
 
 // Glass animations
 .flz-animate-glass-fadein::after {
-	.flz-mx-animation(flz-animation-glass-fadein 0.3s ease forwards);
+	.flz-mx-animation(flz-keyframes-glass-fadein 0.3s ease forwards);
 }
 
 .flz-animate-glass-fadeout::after {
-	.flz-mx-animation(flz-animation-glass-fadeout 0.3s ease forwards);
+	.flz-mx-animation(flz-keyframes-glass-fadeout 0.3s ease forwards);
 }
 
 // Animation workaround for IE9
@@ -39,7 +39,7 @@ html[id^=ie-9] {
 }
 
 // Glass animation keyframes
-.flz-mx-keyframes(flz-animation-glass-fadein, {
+.flz-mx-keyframes(flz-keyframes-glass-fadein, {
 	0% {
 		opacity: 0;
 	}
@@ -48,7 +48,7 @@ html[id^=ie-9] {
 	}
 });
 
-.flz-mx-keyframes(flz-animation-glass-fadeout, {
+.flz-mx-keyframes(flz-keyframes-glass-fadeout, {
 	0% {
 		opacity: 0.7;
 	}
