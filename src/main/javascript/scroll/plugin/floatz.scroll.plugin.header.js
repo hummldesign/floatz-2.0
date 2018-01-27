@@ -2,6 +2,7 @@ import DOM from "../../dom/floatz.dom.dom.js";
 import {Direction} from "../floatz.scroll.scroller.js";
 import {ScrollPlugin} from "../floatz.scroll.scroller.js";
 import {SCROLL_EVENT_BEFORENAVGIATE} from "../floatz.scroll.scroller.js";
+import {EVENT_HASHCHANGE} from "../../dom/floatz.dom.events.js";
 
 const SCROLL_SHADOW = "flz-page-header-scrollshadow";
 const HEADER_FIXED_SLIDED = "flz-page-header-fixed-slided";
@@ -28,6 +29,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 		this._header = DOM.queryUnique(this.options().headerSelector);
 		this.options().slideOutOffset = this._header.height();
 		this._visible = true;
+		this._preserved = false;
 	}
 
 	/**
@@ -41,9 +43,19 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 				_scroller.scroller().offset(this._header.height() * -1)
 			}
 
+			// Adjust scroll position on page load
+			DOM.addEvent(window, "load", () => {
+				this._adjustScrollPos(true);
+			});
+
 			// Add custom event handler
 			DOM.addEvent(scroller.container(), SCROLL_EVENT_BEFORENAVGIATE, (navItem) => {
 				this._handleBeforeNavigate(navItem);
+			});
+
+			// Add event handler for location changes
+			DOM.addEvent(window, EVENT_HASHCHANGE, () => {
+				this._handleHashChange();
 			});
 		}
 
@@ -66,9 +78,14 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 	 * Scroll forward handler.
 	 */
 	onScrollForward() {
-		// FIXME Hide only once, not on every scroll change
 		if (this._header.hasClass(HEADER_FIXED_SLIDED)) {
 			if (this._visible) {
+
+				// Don´t hide header when page loads with hash
+				if (!this._preserved && window.location.hash.length > 0) {
+					return;
+				}
+
 				// Don´t hide header when scrolling over top position on mobile devices
 				if (this.scroller().scrollPos() >= this.options().slideOutOffset) {
 					this._header.animate("transition")
@@ -91,7 +108,6 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 	 * Scroll backward handler.
 	 */
 	onScrollBackward() {
-		// FIXME Show only once, not on every scroll change
 		if (this._header.hasClass(HEADER_FIXED_SLIDED)) {
 			if (!this._visible) {
 				// Don´t show header when scrolling below bottom position on mobile device
@@ -147,6 +163,44 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 		if (this._header.hasClass(SCROLL_SHADOW)) {
 			// console.debug(LOG_PREFIX + "Hiding scroll shadow");
 			this._header.removeClass(SCROLL_SHADOW);
+		}
+	}
+
+	_handleHashChange() {
+		this._adjustScrollPos(false);
+	}
+
+	/**
+	 * Adjust scroll position.
+	 *
+	 * @param reset Rest scroll position
+	 * @private
+	 */
+	_adjustScrollPos(reset) {
+		if (window.location.hash.length > 0) {
+			if (reset) {
+				// Prevent hiding the header when initial navigation has been done via hash
+				window.scrollTo(0, 0);
+				this._preserved = true;
+			}
+
+			let offset = this.scroller().offset();
+			let target = DOM.queryUnique(window.location.hash);
+			if (target) {
+				if (this._header.hasClass(HEADER_FIXED_SLIDED)) {
+					if (this.scroller().prevScrollPos() < this.scroller().scrollPos() && this._preserved) {
+						offset = 0;
+					} else {
+						offset = this._header.height() * -1;
+					}
+				}
+
+				if (this.scroller().direction() === Direction.VERTICAL) {
+					window.scrollTo(0, this.scroller().scrollPos() + target.offset().top + offset);
+				} else {
+					window.scrollTo(this.scroller().scrollPos() + target.offset().left + offset, 0);
+				}
+			}
 		}
 	}
 }

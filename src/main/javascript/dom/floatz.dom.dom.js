@@ -248,7 +248,6 @@ export class DOMElement {
 			left: this._origNode.offsetLeft,
 			bottom: this._origNode.offsetTop + this._origNode.offsetHeight,
 			right: this._origNode.offsetLeft + this._origNode.offsetWidth
-
 		}
 	}
 
