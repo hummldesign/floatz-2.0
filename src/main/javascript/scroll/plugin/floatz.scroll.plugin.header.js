@@ -181,10 +181,12 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 			if (reset) {
 				// Prevent hiding the header when initial navigation has been done via hash
 				window.scrollTo(0, 0);
-				this._preserved = true;
+				window.setTimeout(() => {
+					this._preserved = true;
+				}, 1000);
 			}
 
-			let offset = this.scroller().offset();
+			let offset = 0 + this.scroller().offset();
 			let target = DOM.queryUnique(window.location.hash);
 			if (target) {
 				if (this._header.hasClass(HEADER_FIXED_SLIDED)) {

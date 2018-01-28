@@ -102,7 +102,7 @@ export class Scroller {
 	 * Get / set scroll offset correction.
 	 *
 	 * @param {number=} offset Scroll offset correction
-	 * @returns {number|Scroller} Scroller for chaining when used as setter
+	 * @returns Scroller for chaining when used as setter
 	 */
 	offset(offset) {
 		if(offset === undefined) {

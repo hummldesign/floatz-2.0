@@ -240,7 +240,7 @@ export class DOMElement {
 	/**
 	 * Get fixed position relative to scroll container.
 	 *
-	 * @returns {{top: (Number|number), left: (Number|number), bottom: *, right: *}}
+	 * @returns {{top: number, left: number, bottom: number, right: number}}
 	 */
 	position() {
 		return {
@@ -254,7 +254,7 @@ export class DOMElement {
 	/**
 	 * Get scroll position relative to visible viewport.
 	 *
-	 * @returns {{top: Number, left: Number, bottom: Number, right: Number}}
+	 * @returns {{top: number, left: number, bottom: number, right: number}}
 	 */
 	offset() {
 		return {
