@@ -1,32 +1,51 @@
 @import "../core/floatz.core.mixins.less";
 
-@flz-var-border-color: #aaa;
+@flz-var-form-border-color: #aaa;
+@flz-var-form-disabled-bgcolor: #eee;
+@flz-var-form-disabled-color: #aaa;
 
 .flz-form {
-	input[type=text],
-	input[type=password],
+	input,
 	select,
 	textarea {
-		.flz-mx-box-sizing(border-box);
-		border: 1px solid @flz-var-border-color;
+		border: 1px solid @flz-var-form-border-color;
 		display: block;
 		height: @flz-var-base-font-size * 2;
 		width: 100%;
+
+		&[readonly],
+		&[disabled] {
+			background-color: @flz-var-form-disabled-bgcolor;
+			color: @flz-var-form-disabled-color;
+		}
+	}
+	
+	label {
+		display: block;
+		width: 100%;
 	}
 
-	label {
-		.flz-mx-box-sizing(border-box);
-		display: block;
-		padding: 0 0 @flz-var-gutter-text-y / 2 0;
-		width: 100%;
+	input[type=button],
+	input[type=submit],
+	input[type=reset] {
+		display: inline-block;
+		height: auto;
+		width: auto;
 	}
 
 	input[type=radio],
 	input[type=checkbox] {
+		display: inline-block;
+		height: auto;
+		width: auto;
 		&+label {
 			display: inline-block;
-			padding: 0 @flz-var-gutter-text-x / 2 0 0;
+			padding-left: @flz-var-gutter-text-y / 4;
+			padding-right: @flz-var-gutter-text-y;
 			width: auto;
+		}
+		&[disabled]+label {
+			color: @flz-var-form-disabled-color;
 		}
 	}
 
@@ -36,7 +55,7 @@
 }
 
 fieldset {
-	border: 1px solid @flz-var-border-color;
+	border: 1px solid @flz-var-form-border-color;
 }
 
 legend {

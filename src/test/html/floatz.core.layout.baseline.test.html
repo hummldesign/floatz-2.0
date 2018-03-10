@@ -101,6 +101,10 @@ Preformatted text
 		<h2>Standard form</h2>
 		<label>Textinput</label>
 		<input type="text" value="Text" />
+		<label>Email</label>
+		<input type="email" />
+		<label>Number</label>
+		<input type="number" />
 		<label>Textarea</label>
 		<textarea rows="10">Text</textarea>
 		<label>Dropdown</label>
@@ -121,8 +125,10 @@ Preformatted text
 		<label>Checkbox 2</label>
 		<input type="checkbox" />
 		<label>Checkbox 3</label>
-		<button>Submit</button>
-		<button>Cancel</button>
+		<button>Button</button>
+		<input type="button" value="Button" />
+		<input type="submit" value="Submit" />
+		<input type="reset" value="Reset" />
 		<fieldset>
 			<legend>Legend</legend>
 			<label>Textinput</label>
@@ -134,10 +140,24 @@ Preformatted text
 		<div class="flz-box flz-form">
 			<label>Textinput</label>
 			<input type="text" value="Text" />
+			<label>Readonly Textinput</label>
+			<input type="text" value="Text" readonly />
+			<label>Disabled Textinput</label>
+			<input type="text" value="Text" disabled />
 			<label>Textarea</label>
 			<textarea rows="10">Text</textarea>
+			<label>Readonly Textarea</label>
+			<textarea rows="10" readonly>Text</textarea>
+			<label>Disabled Textarea</label>
+			<textarea rows="10" disabled>Text</textarea>
 			<label>Dropdown</label>
 			<select>
+				<option>Option 1</option>
+				<option>Option 2</option>
+				<option>Option 3</option>
+			</select>
+			<label>Disabled Dropdown</label>
+			<select disabled>
 				<option>Option 1</option>
 				<option>Option 2</option>
 				<option>Option 3</option>
@@ -154,8 +174,18 @@ Preformatted text
 			<label>Checkbox 2</label>
 			<input type="checkbox" />
 			<label>Checkbox 3</label>
-			<button>Submit</button>
-			<button>Cancel</button>
+			<input type="radio" disabled />
+			<label>Disabled Radio</label>
+			<input type="checkbox" disabled />
+			<label>Disabled Checkbox</label>
+			<button>Button</button>
+			<button disabled>Disabled Button</button>
+			<input type="button" value="Button" />
+			<input type="button" value="Disabled Button" disabled/>
+			<input type="submit" value="Submit" />
+			<input type="submit" value="Disabled Submit" disabled />
+			<input type="reset" value="Reset" />
+			<input type="reset" value="Disabled Reset" disabled />
 			<fieldset>
 				<legend>Legend</legend>
 				<label>Textinput</label>
@@ -169,6 +199,14 @@ Preformatted text
 			<div class="flz-box">
 				<label>Textinput</label>
 				<input type="text" value="Text" />
+			</div>
+			<div class="flz-box">
+				<label>Email</label>
+				<input type="email" />
+			</div>
+			<div class="flz-box">
+				<label>Number</label>
+				<input type="number" />
 			</div>
 			<div class="flz-box">
 				<label>Textarea</label>
