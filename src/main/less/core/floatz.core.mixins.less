@@ -1,6 +1,9 @@
-@import 'floatz.core.layout.less';
+@import '../config/floatz.config.less';
 
-.flz-mx-baseline-text(@y: @flz-var-gutter-text-y, @x: @flz-var-gutter-text-x) {
+.flz-mx-baseline-text(
+	@y: @flz-var-gutter-text-y * @flz-var-base-line-height,
+	@x: @flz-var-gutter-text-y * @flz-var-base-line-height) {
+
 	address, figure, blockquote, dd, dt, /*figcaption,*/ h1, h2, h3, h4, h5, h6,
 	/*hr, li,*/ ol, p, pre, ul, caption, table, td, th, tbody, tfoot, thead, tr,
 	button, fieldset, form, input, label, select, textarea {
@@ -8,13 +11,20 @@
 	}
 }
 
-.flz-mx-baseline-layout(@y: @flz-var-gutter-layout-y, @x: @flz-var-gutter-layout-x) {
+.flz-mx-baseline-layout(
+	@y: @flz-var-gutter-layout-y * @flz-var-base-line-height,
+	@x: @flz-var-gutter-layout-y * @flz-var-base-line-height) {
+
 	article, aside, /*body,*/ div, footer, header, main, nav, section {
 		.flz-mx-baseline(hidden, @y, @x);
 	}
 }
 
-.flz-mx-baseline(@overflow, @y: @flz-var-gutter-layout-y, @x: @flz-var-gutter-layout-x) {
+.flz-mx-baseline(
+	@overflow,
+	@y: @flz-var-gutter-layout-y * @flz-var-base-line-height,
+	@x: @flz-var-gutter-layout-y * @flz-var-base-line-height) {
+
 	.flz-mx-box-sizing(border-box);
 	// overflow: @overflow; ---FIXME really, why?  // Prevent collapsing
 	padding: @y / 2 @x / 2;

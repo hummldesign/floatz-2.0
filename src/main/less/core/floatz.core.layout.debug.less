@@ -1,0 +1,60 @@
+@import '../config/floatz.config.less';
+
+body {
+	position: relative;
+	&:after {
+		.flz-mx-layout-grid(
+			// @flz-var-gutter-text-x * @flz-var-base-line-height * 6,
+			// @flz-var-gutter-text-x * @flz-var-base-line-height * 6
+			@flz-var-base-font-size * @flz-var-base-line-height * 9,
+			@flz-var-base-font-size * @flz-var-base-line-height * 9
+		)
+	}
+}
+
+.flz-mx-layout-grid(
+	@block-size-x,
+	@block-size-y,
+	// @grid-size-x: @flz-var-gutter-text-x * @flz-var-base-line-height,
+	// @grid-size-y: @flz-var-gutter-text-y * @flz-var-base-line-height,
+	@grid-size-x: @flz-var-base-font-size * @flz-var-base-line-height,
+	@grid-size-y: @flz-var-base-font-size * @flz-var-base-line-height,
+	@block-border-color: rgba(0,0,0,0.5),
+	@grid-border-color: rgba(0,0,0,0.2),
+	@block-border-width-x: 1px,
+	@block-border-width-y: 1px,
+	@grid-border-width-x: 1px,
+	@grid-border-width-y: 1px) {
+
+	background-image:
+		// Horizontal block line
+		linear-gradient(@block-border-color @block-border-width-x, transparent @block-border-width-x),
+		// Vertical block line
+		linear-gradient(90deg, @block-border-color @block-border-width-y, transparent @block-border-width-y),
+		// Horizontal grid line
+		linear-gradient(@grid-border-color @grid-border-width-x, transparent @grid-border-width-x),
+		// Vertical grid line
+		linear-gradient(90deg, @grid-border-color @grid-border-width-y, transparent @grid-border-width-y);
+
+	background-size:
+		// Blocks
+		@block-size-y @block-size-y, @block-size-x @block-size-x,
+		// Grid
+		@grid-size-y @grid-size-y, @grid-size-x @grid-size-x;
+
+	// Move grid edges outside of viewport
+	background-position:
+			-@block-border-width-x -@block-border-width-x,
+			-@block-border-width-y -@block-border-width-y,
+			-@grid-border-width-x -@grid-border-width-x,
+			-@grid-border-width-y -@grid-border-width-y;
+
+	height: 100%;
+	min-height: 100vh;
+	left: 0;
+	position: absolute;
+	top: 0;
+	visibility: visible;
+	width: 100%;
+	z-index: 1;
+}

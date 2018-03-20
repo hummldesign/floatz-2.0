@@ -16,14 +16,15 @@ main /* HTML 5.1 */, menu, nav, section {
 
 
 * { // Address input elements as well
-	font-size: 100%;
+	font-size: @flz-var-base-font-size;
 	font-family: serif;
 }
 
 body {
 	.flz-mx-enwrap(); // Enwrap content
 	font-family: serif;
-	line-height: 1;
+	font-size: @flz-var-base-font-size;
+	line-height: @flz-var-base-line-height;
 }
 
 blockquote, q {
