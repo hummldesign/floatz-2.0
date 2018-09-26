@@ -32,6 +32,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		super(options);
 
 		// Default options
+		this.options().headerSelector = options.headerSelector  || "#header"; // FIXME
 		this.options().menuSelector = options.menuSelector || "#header .flz-nav-list"; // FIXME
 		this.options().menuClass = options.menuClass || "flz-nav-list";
 		this.options().responsiveMenuClass = options.responsiveMenuClass || "flz-nav-vmenu";
@@ -40,8 +41,10 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		this.options().openMenuIcon = options.openMenuIcon || ".flz-icon-menu-open";
 
 		this._body = DOM.queryUnique(TAG_BODY);
+		this._header = DOM.queryUnique(this.options().headerSelector);
 		this._menu = DOM.queryUnique(this.options().menuSelector);
 		this._menuIcon = DOM.queryUnique(this.options().menuIconSelector);
+		this._header_z_index = null;
 
 		// Open/close popup menu
 		this._menuIcon.addEvent(EVENT_CLICK, (e) => {
@@ -114,6 +117,8 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 	 */
 	openMenu() {
 		// console.debug(LOG_PREFIX + "Opening menu");
+		this._header_z_index = this._header.css("z-index");
+		this._header.css("z-index", "2");
 		this.menuIcon().replaceClass(this.options().openMenuIcon, this.options().closeMenuIcon);
 		this.menu()
 			.replaceClass(this.options().menuClass, this.options().responsiveMenuClass)
@@ -132,6 +137,8 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 						.removeClass(ANIMATE_SLIDEOUTLEFT)
 						.replaceClass(this.options().responsiveMenuClass, this.options().menuClass)
 					;
+					this._header.css("z-index", this._header_z_index);
+					this._header_z_index = null;
 				})
 				.trigger(() => {
 					// console.debug(LOG_PREFIX + "Closing menu");

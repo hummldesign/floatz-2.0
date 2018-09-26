@@ -41,7 +41,6 @@ export default class DOM {
 	 * @returns {!Array} Array of DOMElement items
 	 */
 	static query(selectors, context = window) {
-		// TODO: Support class or id as context?
 		let root = DOM.isWindow(context) ? window.document.documentElement : context;
 		if (root instanceof DOMElement) {
 			root = root.origNode();
@@ -71,13 +70,18 @@ export default class DOM {
 	}
 
 	/**
-	 * Query only unique element.
+	 * Query a unique element.
 	 *
 	 * @param selector Selector
+	 * @param {Node|DOMElement|Object=} context Context native element or DOMElement (optional, default is window)
 	 * @returns {DOMElement} DOMElement or null if not found
 	 */
-	static queryUnique(selector) {
-		let element = document.querySelector(selector);
+	static queryUnique(selector, context = window) {
+		let root = DOM.isWindow(context) ? window.document.documentElement : context;
+		if (root instanceof DOMElement) {
+			root = root.origNode();
+		}
+		let element = root.querySelector(selector);
 		return element ? new DOMElement(element) : null;
 	}
 
@@ -165,6 +169,16 @@ export default class DOM {
 		let eventName = event instanceof Event ? event.type : event;
 		// console.debug(LOG_PREFIX + "Dispatching event " + eventName);
 		return element.dispatchEvent(event instanceof Event ? event : DOM.createEvent(event));
+	}
+
+	/**
+	 * Create an element.
+	 *
+	 * @param tag Tag name of the element
+	 * @returns {DOMElement} DOMElement for chaining
+	 */
+	static createElement(tag) {
+		return new DOMElement(document.createElement(tag));
 	}
 }
 
@@ -525,6 +539,100 @@ export class DOMElement {
 	 */
 	animate(type = "animation") {
 		return new Animation(this, type);
+	}
+
+	/**
+	 * Append child element.
+	 * @param  {DOMElement} element Child element
+	 * @returns {DOMElement} DOMElement for chaining
+	 */
+	appendChild(element) {
+		this._origNode.appendChild(element.origNode());
+		return this;
+	}
+
+	/**
+	 * Remove child element.
+	 *
+	 * @param  {DOMElement} element Child element
+	 * return {DOMElement} DOMElement for chaining
+	 */
+	removeChild(element) {
+		this._origNode.removeChild(element.origNode());
+		return this;
+	}
+
+	/**
+	 * Get/set inner HTML.
+	 *
+	 * @param {?string=} data HTML data (optional)
+	 * @returns {*} Inner HTML or DOMElement for chaining when used as setter
+	 */
+	html(data) {
+		if (!data) {
+			return this._origNode.innerHTML;
+		} else {
+			this._origNode.innerHTML = data;
+			return this;
+		}
+	}
+
+	/**
+	 * Get/set inner text.
+	 *
+	 * @param text Text
+	 * @returns {*} Inner text or DOMElement for chaining when used as setter
+	 */
+	text(text) {
+		if (!text) {
+			return this._origNode.innerText;
+		} else {
+			this._origNode.innerText = text;
+			return this;
+		}
+	}
+
+	/**
+	 * Load external HTML into element
+	 *
+	 * @param url Location of HTML file
+	 * @param {Function=} handler Optional handler that is executed after loading is finished
+	 * @returns {DOMElement} DOMElement for chaining
+	 */
+	load(url, handler) {
+		let request = new XMLHttpRequest();
+		request.responseType = "document";
+		request.onload = () => {
+			this.html(request.responseXML.body.innerHTML);
+			if (handler) {
+ 				handler(request);
+			}
+		};
+		request.open("GET", url);
+		request.send();
+		return this;
+	}
+
+	/**
+	 * Query elements in the context of the current element.
+	 *
+	 * Syntax: DOM.query(<selectors>[,<context>]);
+	 *
+	 * @param {string} selectors String with selectors
+	 * @returns {!Array} Array of DOMElement items
+	 */
+	query(selectors) {
+		return DOM.query(selectors, this);
+	}
+
+	/**
+	 * Query a unique element in the context of the current element.
+	 *
+	 * @param selector Selector
+	 * @returns {DOMElement} DOMElement or null if not found
+	 */
+	queryUnique(selector) {
+		return DOM.queryUnique(selector, this);
 	}
 }
 
