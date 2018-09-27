@@ -13,6 +13,34 @@ export default class UserAgent {
 		// FIXME Cache IE
 		return new IE();
 	}
+
+	/**
+	 * Detect if device is mobile.
+	 *
+	 * @returns {boolean} true if mobile, false if not
+	 */
+	static isMobile() {
+		let ua = navigator.userAgent;
+		if (ua.match(/Android/i)) {
+			return true;
+		} else if (ua.match(/webOS/i)) {
+			return true;
+		} else if (ua.match(/iPhone/i)) {
+			return true;
+		} else if (ua.match(/iPod/i)) {
+			return true;
+		} else if (ua.match(/iPad/i)) {
+			return true;
+		} else if (ua.match(/Windows Phone/i)) {
+			return true;
+		} else if (ua.match(/SymbianOS/i)) {
+			return true;
+		} else if (ua.match(/RIM/i) || ua.match(/BB/i)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
 /**
@@ -55,14 +83,14 @@ class IE {
 	 * Detect IE.
 	 * <p>
 	 *     Injects id into html containing ie-<version> which can be used for
-	 *     browser specific CSS styles.
+	 *     browser specific CSS less.
 	 * </p>
 	 *
 	 * @returns {boolean} true if IE, false if other browser
 	 */
 	detect() {
-		let version  = this.version();
-		if(version >0 && version <= 11) {
+		let version = this.version();
+		if (version > 0 && version <= 11) {
 			DOM.queryUnique("html").origNode().id = "ie-" + version;
 		}
 		return version > 0;
