@@ -1,4 +1,5 @@
 import DOM from "../dom/floatz.dom.dom.js";
+import {DOMElement} from "../dom/floatz.dom.dom.js";
 import {EVENT_CLICK, EVENT_TOUCHSTART} from "../dom/floatz.dom.events.js";
 
 // Constants for events

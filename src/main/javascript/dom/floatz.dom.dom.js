@@ -440,13 +440,23 @@ export class DOMElement {
 	}
 
 	/**
+	 * Check if element has a specific attribute.
+	 *
+	 * @param attrName Attribute name
+	 * @returns {boolean} true if available false if not
+	 */
+	hasAttr(attrName) {
+		return this.attr(attrName) != null;
+	}
+
+	/**
 	 * Get / set css style.
 	 *
 	 * If the last style is removed the attribute style is removed as well.
 	 * Style can be removed if value is null.
 	 *
 	 * @param style Style name
-	 * @param {?string=} value Style value (optional)
+	 * @param {?*=} value Style value (optional)
 	 * @returns {*} Style value or DOMElement for chaining when used as setter
 	 */
 	css(style, value) {
@@ -605,7 +615,7 @@ export class DOMElement {
 		request.onload = () => {
 			this.html(request.responseXML.body.innerHTML);
 			if (handler) {
- 				handler(request);
+				handler(request);
 			}
 		};
 		request.open("GET", url);
