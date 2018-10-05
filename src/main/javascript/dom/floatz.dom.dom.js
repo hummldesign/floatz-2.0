@@ -655,6 +655,34 @@ export class DOMElement {
 	queryUnique(selector) {
 		return DOM.queryUnique(selector, this);
 	}
+
+	/**
+	 * Get last child.
+	 *
+	 * @returns {?DOMElement} DOMElement or null if not an element
+	 */
+	lastChild() {
+		let child = this.origNode().lastChild;
+		if (child instanceof Element) {
+			return new DOMElement(child);
+		}
+		// TODO Support DOMText as well
+		return null;
+	}
+
+	/**
+	 * Get first child.
+	 *
+	 * @returns {DOMElement} DOMElement or null if not an element
+	 */
+	firstChild() {
+		let child = this.origNode().firstChild;
+		if (child instanceof Element) {
+			return new DOMElement(child);
+		}
+		// TODO Support DOMText as well
+		return null;
+	}
 }
 
 ///////////////////////////////////////
