@@ -9,7 +9,6 @@ const NO_SCROLL = "flz-noscroll";
 const ANIMATE_GLASS_FADEIN = "flz-animate-glass-fadein"; // TODO make it customizable
 const ANIMATE_GLASS_FADEOUT = "flz-animate-glass-fadeout"; // TODO make it customizable
 const DIALOG_GLASS = "flz-dialog-glass";
-const TAG_BODY = "body";
 const TAG_DIV = "div";
 
 /**
@@ -20,7 +19,7 @@ export class Dialog {
 	 * Constructor.
 	 */
 	constructor() {
-		this._body = DOM.queryUnique(TAG_BODY);
+		this._body = DOM.body();
 		this._dialogContainer = null;
 		this._dialog = null;
 		this._glass = null;
@@ -93,7 +92,7 @@ export class DialogGlass {
 	 * @param {DOMElement=} parent Optional dialog container that handles glass clicks (default is the document body)
 	 */
 	constructor(parent) {
-		this._body = DOM.queryUnique(TAG_BODY);
+		this._body = DOM.body();
 		this._parent = parent ? parent : this._body;
 		this._clickHandler = null;
 	}

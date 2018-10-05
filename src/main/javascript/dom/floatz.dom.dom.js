@@ -150,11 +150,13 @@ export default class DOM {
 	 */
 	static removeEvent(element, event, handler, capture = false) {
 		let eventName = event instanceof Event ? event.type : event;
-		// console.debug(LOG_PREFIX + "Removing event " + eventName);
+		console.debug(LOG_PREFIX + "Removing event " + eventName);
 		if (element.removeEventListener) {
 			element.removeEventListener(eventName, handler, capture);
 		} else if (element.detachEvent) {
 			element.detachEvent(eventName, handler);
+		} else {
+			console.warn(LOG_PREFIX + "Event " + eventName + " can not be removed");
 		}
 	}
 
@@ -179,6 +181,15 @@ export default class DOM {
 	 */
 	static createElement(tag) {
 		return new DOMElement(document.createElement(tag));
+	}
+
+	/**
+	 * Get body.
+	 *
+	 * @returns {DOMElement} DOMElement
+	 */
+	static body() {
+		return new DOMElement(document.body);
 	}
 }
 
