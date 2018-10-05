@@ -1,11 +1,10 @@
 import DOM from "../../dom/floatz.dom.dom.js";
-import UserAgent from "../../util/floatz.util.useragent.js";
 import MediaQuery from "../../util/floatz.util.mediaquery.js";
 import {MEDIA_SIZE_GTE_L} from "../../util/floatz.util.mediaquery.js";
 import {DOMElement} from "../../dom/floatz.dom.dom.js";
 import {ScrollPlugin} from "../floatz.scroll.scroller.js";
 import {SCROLL_EVENT_BEFORENAVGIATE} from "../floatz.scroll.scroller.js";
-import {EVENT_ANIMATIONEND, EVENT_CLICK, EVENT_RESIZE, EVENT_TOUCHSTART} from "../../dom/floatz.dom.events.js";
+import {EVENT_CLICK, EVENT_RESIZE, EVENT_TOUCHSTART} from "../../dom/floatz.dom.events.js";
 
 /**
  * Constants
