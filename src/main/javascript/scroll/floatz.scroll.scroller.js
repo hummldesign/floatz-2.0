@@ -43,13 +43,15 @@ export class Scroller {
 		this._options.offset = options.offset || 0;
 		this._plugins = [];
 		this._handlers = [];
+		this._container = container;
 
 		if (DOM.isWindow(container)) {
-			this._container = container;
 			// Note: document.body does not work since Chrome 61
 			this._options.scrollable = document.scrollingElement || document.documentElement;
+		} else if (container instanceof DOMElement) {
+			this._container = container.origNode();
+			this._options.scrollable = this._container;
 		} else {
-			this._container = DOM.queryUnique(container).origNode();
 			this._options.scrollable = this._container;
 		}
 		this._prevScrollPos = this.scrollPos();
@@ -105,7 +107,7 @@ export class Scroller {
 	 * @returns Scroller for chaining when used as setter
 	 */
 	offset(offset) {
-		if(offset === undefined) {
+		if (offset === undefined) {
 			return this._options.offset;
 		} else {
 			this._options.offset = offset;
@@ -188,20 +190,26 @@ export class Scroller {
 	/**
 	 * Get scroll position.
 	 *
-	 * @returns {number} Scroll position in px
+	 * @param {number=} position Optional scroll position
+	 * @returns {number|Scroller} Scroll position in px or scroller for chaining if used as setter
 	 */
-	scrollPos() {
-		if (this.direction() === Direction.VERTICAL) {
-			return this._options.scrollable.scrollTop;
+	scrollPos(position) {
+		if (position) {
+			if (this.direction() === Direction.VERTICAL) {
+				this._options.scrollable.scrollTop = position;
+			} else {
+				this._options.scrollable.scrollLeft = position;
+			}
+			return this;
 		} else {
-			return this._options.scrollable.scrollLeft;
+			return this.direction() === Direction.VERTICAL ? this._options.scrollable.scrollTop : this._options.scrollable.scrollLeft;
 		}
 	}
 
 	/**
 	 * Get previous scroll position.
 	 *
-	 * @returns {number} Previous scroll position in px
+	 * @returns {*|number} Previous scroll position in px
 	 */
 	prevScrollPos() {
 		return this._prevScrollPos;
@@ -294,7 +302,7 @@ export class ScrollAnimation {
 
 		// Get distance
 		this._distance = this._stop - this._start + this._options.offset;
-		// console.debug(`stop: ${this._stop}, start: ${this._start}, offset: ${this._options.offset}, distance: ${this._distance}`);
+		// console.debug(`target: ${target}, stop: ${this._stop}, start: ${this._start}, offset: ${this._options.offset}, distance: ${this._distance}`);
 
 		// Start scroll animation
 		// Note: the arrow function sets context for usage of this in animate
@@ -324,7 +332,7 @@ export class ScrollAnimation {
 	stopPos(target) {
 		if (typeof target === 'number') {
 			// Just use the px position of the target
-			return this._start + target;
+			return target;
 		} else {
 			// Get scroll stop position depending on scroll direction
 			if (this._options.direction === Direction.VERTICAL) {
