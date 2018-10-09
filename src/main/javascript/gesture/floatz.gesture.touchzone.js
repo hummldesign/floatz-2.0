@@ -55,7 +55,7 @@ export class TouchZone {
 	 * @param {Function} handler Swipe handler
 	 * @returns TouchZone} Touchzone object for chaining
 	 */
-	swipeLeft(handler) {
+	onSwipeLeft(handler) {
 		this._handlers.push(() => {
 			if (this.touchEndX() <= this.touchStartX()) {
 				let moved = this.touchStartX() - this.touchEndX();
@@ -73,7 +73,7 @@ export class TouchZone {
 	 * @param {Function} handler Swipe handler
 	 * @returns {TouchZone} Touchzone object for chaining
 	 */
-	swipeRight(handler) {
+	onSwipeRight(handler) {
 		this._handlers.push(() => {
 			if (this.touchEndX() >= this.touchStartX()) {
 				let moved = this.touchEndX() - this.touchStartX();
