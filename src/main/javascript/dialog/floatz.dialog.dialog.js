@@ -32,48 +32,49 @@ export class Dialog {
 	 * @param loadHandler Optional callback when loading has finished
 	 */
 	open(url, loadHandler) {
-		if (!this._dialogContainer) {
-			this._dialogContainer = DOM.createElement(TAG_DIV).addClass(DIALOG_CONTAINER);
-			this._dialog = DOM.createElement(TAG_DIV);
-			this._dialog.addClass(DIALOG)
-				.load(url, (request) => {
-					if (loadHandler) {
-						loadHandler(request);
-					}
-				})
-			;
-			this._glass = new DialogGlass(this._dialogContainer);
-			this._glass.show(() => {
-				this.close();
-			});
+		// Prevent scrolling in page body while dialog is open
+		this._body.addClass(NO_SCROLL);
 
-			this._dialogContainer.appendChild(this._dialog);
-			this._body.appendChild(this._dialogContainer)
-				.addClass(NO_SCROLL)
-			;
-		}
+		// Create dialog and load URL
+		this._dialogContainer = DOM.createElement(TAG_DIV).addClass(DIALOG_CONTAINER);
+		this._dialog = DOM.createElement(TAG_DIV);
+		this._dialog.addClass(DIALOG)
+			.load(url, (request) => {
+				if (loadHandler) {
+					loadHandler(request);
+				}
+			})
+		;
+
+		// Show dialog glass
+		this._glass = new DialogGlass(this._dialogContainer);
+		this._glass.show(() => {
+			this.close();
+		});
+
+		// Add dialog to DOM
+		this._dialogContainer.appendChild(this._dialog);
+		this._body.appendChild(this._dialogContainer);
 	}
 
 	/**
 	 * Close dialog.
 	 */
 	close() {
-		if (this._dialogContainer) {
-			this._glass.hide(() => {
-				this._body.removeClass(NO_SCROLL);
-				this._body.removeChild(this._dialogContainer);
-				this._dialogContainer = null;
-				this._dialog = null;
-			});
-		}
+		this._glass.hide(() => {
+			this._body.removeClass(NO_SCROLL);
+			this._body.removeChild(this._dialogContainer);
+			this._dialogContainer = null;
+			this._dialog = null;
+		});
 	}
 
 	/**
-	 * Get root element of dialog.
+	 * Get dialog as DOM element
 	 *
 	 * @returns Root element
 	 */
-	root() {
+	element() {
 		return this._dialog;
 	}
 }

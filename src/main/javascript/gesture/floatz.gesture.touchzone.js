@@ -12,19 +12,26 @@ export class TouchZone {
 	 *
 	 * @param {DOMElement} container Touch zone to listen for swipe events
 	 */
-	constructor(container) {
+	constructor(container, options = {}) {
+
+		this._options = options;
+		this._options.thresholdX = 30;
+
 		this._touchStartX = 0;
 		this._touchEndX = 0;
-		this._minSwipePixels = 30; // TODO: Make configurable
+		this._touchStartY = 0;
+		this._touchEndY = 0;
 		this._container = container;
 		this._handlers = [];
 
 		this._container.addEvent(EVENT_TOUCHSTART, (event) => {
 			this._touchStartX = event.changedTouches[0].screenX;
+			this._touchStartY = event.changedTouches[0].screenY;
 		});
 
 		this._container.addEvent(EVENT_TOUCHEND, (event) => {
 			this._touchEndX = event.changedTouches[0].screenX;
+			this._touchEndY = event.changedTouches[0].screenY;
 			this._handlers.forEach((handler) => {
 				handler(this);
 			});
@@ -49,6 +56,14 @@ export class TouchZone {
 		return this._touchEndX;
 	}
 
+	touchStartY() {
+		return this._touchStartY;
+	}
+
+	touchEndY() {
+		return this._touchEndY;
+	}
+
 	/**
 	 * Swipe left handler.
 	 *
@@ -58,8 +73,12 @@ export class TouchZone {
 	onSwipeLeft(handler) {
 		this._handlers.push(() => {
 			if (this.touchEndX() <= this.touchStartX()) {
-				let moved = this.touchStartX() - this.touchEndX();
-				if (moved > this._minSwipePixels) {
+				let movedX = this.touchStartX() - this.touchEndX();
+				let movedY = this.touchStartY() - this.touchEndY();
+				if(movedY < 0) {
+					movedY = movedY * -1;
+				}
+				if (movedX > this._options.thresholdX && movedX > movedY) {
 					handler(this);
 				}
 			}
@@ -76,8 +95,12 @@ export class TouchZone {
 	onSwipeRight(handler) {
 		this._handlers.push(() => {
 			if (this.touchEndX() >= this.touchStartX()) {
-				let moved = this.touchEndX() - this.touchStartX();
-				if (moved > this._minSwipePixels) {
+				let movedX = this.touchEndX() - this.touchStartX();
+				let movedY = this.touchEndY() - this.touchStartY();
+				if(movedY < 0) {
+					movedY = movedY * -1;
+				}
+				if (movedX > this._options.thresholdX && movedX > movedY) {
 					handler(this);
 				}
 			}
