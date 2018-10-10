@@ -19,6 +19,7 @@ export class Dialog {
 	 * Constructor.
 	 */
 	constructor() {
+		this._html = new DOMElement(document.documentElement);
 		this._body = DOM.body();
 		this._dialogContainer = null;
 		this._dialog = null;
@@ -33,6 +34,7 @@ export class Dialog {
 	 */
 	open(url, loadHandler) {
 		// Prevent scrolling in page body while dialog is open
+		this._html.addClass(NO_SCROLL);
 		this._body.addClass(NO_SCROLL);
 
 		// Create dialog and load URL
@@ -62,6 +64,7 @@ export class Dialog {
 	 */
 	close() {
 		this._glass.hide(() => {
+			this._html.removeClass(NO_SCROLL);
 			this._body.removeClass(NO_SCROLL);
 			this._body.removeChild(this._dialogContainer);
 			this._dialogContainer = null;
