@@ -152,8 +152,6 @@ function _adjustItemHeight(container, item) {
  */
 function _handleResize(scroller, container, items, position) {
 
-	console.log("resize");
-
 	// Adjust width of each screen
 	items.forEach((item) => {
 		item.width(container.width());
