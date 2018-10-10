@@ -44,6 +44,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 		this._menu = DOM.queryUnique(this.options().menuSelector);
 		this._menuIcon = DOM.queryUnique(this.options().menuIconSelector);
 		this._header_z_index = null;
+		this._resizeHandler = null;
 
 		// Open/close popup menu
 		this._menuIcon.addEvent(EVENT_CLICK, (e) => {
@@ -54,16 +55,6 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 			} else {
 				this.closeMenu();
 				this.hideGlass();
-			}
-		});
-
-		// Remove menu and glass in case that viewpoint gets larger
-		DOM.addEvent(window, EVENT_RESIZE, () => {
-			if (MediaQuery.match(MEDIA_SIZE_GTE_L)) { // FIXME
-				if (this._menuIcon.hasClass(this.options().closeMenuIcon)) {
-					this.closeMenu();
-					this.hideGlass();
-				}
 			}
 		});
 	}
@@ -115,6 +106,18 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 	 * Open menu.
 	 */
 	openMenu() {
+		this._resizeHandler = () => {
+			console.log("resize");
+			// Remove menu and glass in case that viewpoint gets larger
+			if (MediaQuery.match(MEDIA_SIZE_GTE_L)) { // FIXME
+				if (this._menuIcon.hasClass(this.options().closeMenuIcon)) {
+					this.closeMenu();
+					this.hideGlass();
+				}
+			}
+		};
+		DOM.addEvent(window, EVENT_RESIZE, this._resizeHandler);
+
 		// console.debug(LOG_PREFIX + "Opening menu");
 		this._header_z_index = this._header.css("z-index");
 		this._header.css("z-index", "2");
@@ -172,6 +175,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 			this.body().animate()
 				.end(() => {
 					this.body().removeClass(ANIMATE_GLASS_FADEOUT, DIALOG_GLASS);
+					DOM.removeEvent(window, EVENT_RESIZE, this._resizeHandler);
 				})
 				.trigger(() => {
 					// console.debug(LOG_PREFIX + "Hiding glass");
@@ -179,6 +183,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 						.replaceClass(ANIMATE_GLASS_FADEIN, ANIMATE_GLASS_FADEOUT)
 						.removeEvent(EVENT_CLICK, this._handleGlassClick)
 						.removeEvent(EVENT_TOUCHSTART, this._handleGlassClick)
+
 				})
 			;
 		}
