@@ -6,7 +6,11 @@ import {EVENT_RESIZE} from "../dom/floatz.dom.events.js";
 // Constants for events
 
 /**
- * Slider
+ * Slider.
+ * <p>
+ *     Please consider that you have to execute destruct() when the slider is not needed anymore (e.g. when used
+ *     within a temporary dialog) in order to de-register window resize events used by the slider.
+ * </p>
  */
 export class Slider {
 	/**
@@ -38,11 +42,11 @@ export class Slider {
 			})
 		;
 
-		// FIXME Resize handler is added multiple times <<<<<<<<<<<<<<<<<<<
 		// Initialize resize handler to dynamically adapt the width of the slider items based on the viewport size
-		DOM.addEvent(window, EVENT_RESIZE, () => {
+		this._resizeHandler = () => {
 			_handleResize(this._scroller, this._container, this._items, this._position);
-		});
+		};
+		DOM.addEvent(window, EVENT_RESIZE, this._resizeHandler);
 
 		// Trigger initial resizing
 		_handleResize(this._scroller, this._container, this._items, this._position);
@@ -84,6 +88,17 @@ export class Slider {
 			_changeScrollPos(this._container, this._scroller, this._scroller.scrollPos() + this._container.width(), this._items, this._position, this._position + 1);
 			this._position += 1;
 		}
+	}
+
+	/**
+	 * Deconstructor.
+	 * <p>
+	 *     Please consider that you have to execute destruct() when the slider is not needed anymore (e.g. when used
+	 *     within a temporary dialog) in order to de-register window resize events used by the slider.
+	 * </p>
+	 */
+	destruct() {
+		DOM.removeEvent(window, EVENT_RESIZE, this._resizeHandler);
 	}
 }
 
@@ -136,6 +151,8 @@ function _adjustItemHeight(container, item) {
  * @private
  */
 function _handleResize(scroller, container, items, position) {
+
+	console.log("resize");
 
 	// Adjust width of each screen
 	items.forEach((item) => {
