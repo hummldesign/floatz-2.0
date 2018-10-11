@@ -186,10 +186,19 @@ export default class DOM {
 	/**
 	 * Get body.
 	 *
-	 * @returns {DOMElement} DOMElement
+	 * @returns {DOMElement} Body element
 	 */
 	static body() {
 		return new DOMElement(document.body);
+	}
+
+	/**
+	 * Get html.
+	 *
+	 * @returns {DOMElement} Html element
+	 */
+	static html() {
+		return new DOMElement(window.document.documentElement);
 	}
 }
 
@@ -220,10 +229,16 @@ export class DOMElement {
 	/**
 	 * Get id.
 	 *
-	 * @return Element id or null
+	 * @param {string=} id Optional id
+	 * @return {string|DOMElement} Element id or DOMElement for chaining when used as setter
 	 */
-	id() {
-		return this._origNode.id;
+	id(id) {
+		if(id) {
+			this._origNode.id = id;
+			return this;
+		} else {
+			return this._origNode.id;
+		}
 	}
 
 	/**
@@ -622,14 +637,15 @@ export class DOMElement {
 	 */
 	load(url, handler) {
 		let request = new XMLHttpRequest();
-		request.responseType = "document";
 		request.onload = () => {
 			this.html(request.responseXML.body.innerHTML);
 			if (handler) {
 				handler(request);
 			}
 		};
+
 		request.open("GET", url);
+		request.responseType = "document"; // FIX: must be set AFTER open otherwise InvalidStateError in IE
 		request.send();
 		return this;
 	}

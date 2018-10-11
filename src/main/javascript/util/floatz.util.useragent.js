@@ -91,7 +91,7 @@ class IE {
 	detect() {
 		let version = this.version();
 		if (version > 0 && version <= 11) {
-			DOM.queryUnique("html").origNode().id = "ie-" + version;
+			DOM.html().id("ie-" + version);
 		}
 		return version > 0;
 	}
