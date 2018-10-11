@@ -638,7 +638,7 @@ export class DOMElement {
 	load(url, handler) {
 		let request = new XMLHttpRequest();
 		request.onload = () => {
-			this.html(request.responseXML.body.innerHTML);
+			this.html(request.responseXML.body ? request.responseXML.body.innerHTML : request.responseText /* Fix: IE9 */ );
 			if (handler) {
 				handler(request);
 			}
