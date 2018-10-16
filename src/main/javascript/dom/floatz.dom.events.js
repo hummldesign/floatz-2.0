@@ -12,6 +12,7 @@ export const EVENT_ANIMATIONSTART = "animationstart";
 export const EVENT_TRANSITIONEND = "transitionend";
 export const EVENT_TRANSITIONITERATION = "transitioniteration";
 export const EVENT_TRANSITIONSTART = "transitionstart";
+export const EVENT_CHANGE = "change";
 export const EVENT_CLICK = "click";
 export const EVENT_RESIZE = "resize";
 export const EVENT_SCROLL = "scroll";
