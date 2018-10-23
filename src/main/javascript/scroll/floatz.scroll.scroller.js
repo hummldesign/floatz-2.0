@@ -44,6 +44,7 @@ export class Scroller {
 		this._plugins = [];
 		this._handlers = [];
 		this._container = container;
+		this._scrolling = false;
 
 		if (DOM.isWindow(container)) {
 			// Note: document.body does not work since Chrome 61
@@ -123,13 +124,20 @@ export class Scroller {
 	 */
 	onScroll(handler) {
 		DOM.addEvent(this._container, EVENT_SCROLL, () => {
-			handler(this);
-			this._handlers.forEach((handler) => {
-				handler(this);
-			});
+			// Adjust events to maximum of 60fps
+			if (!this._scrolling) {
+				this._scrolling = true;
+				window.requestAnimationFrame(() => {
+					handler(this);
+					this._handlers.forEach((handler) => {
+						handler(this);
+					});
 
-			// Set new position AFTER firing handlers!
-			this._prevScrollPos = this.scrollPos();
+					// Set new position AFTER firing handlers!
+					this._prevScrollPos = this.scrollPos();
+					this._scrolling = false;
+				});
+			}
 		});
 		return this;
 	}

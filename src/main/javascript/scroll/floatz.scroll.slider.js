@@ -31,6 +31,7 @@ export class Slider {
 		// Retrieve slider items
 		this._items = this._container.query(".flz-scroll-slider-item");
 		this._position = 0;
+		this._resizing = false;
 
 		// Initialize swipe navigation
 		new TouchZone(this._container)
@@ -44,7 +45,14 @@ export class Slider {
 
 		// Initialize resize handler to dynamically adapt the width of the slider items based on the viewport size
 		this._resizeHandler = () => {
-			_handleResize(this._scroller, this._container, this._items, this._position);
+			// Adjust events to maximum of 60fps
+			if(!this._resizing) {
+				this._resizing = true;
+				window.requestAnimationFrame(() => {
+					_handleResize(this._scroller, this._container, this._items, this._position);
+					this._resizing = false;
+				});
+			}
 		};
 		DOM.addEvent(window, EVENT_RESIZE, this._resizeHandler);
 
