@@ -32,6 +32,7 @@ export class Slider {
 		this._items = this._container.query(".flz-scroll-slider-item");
 		this._position = 0;
 		this._resizing = false;
+		this._handlers = [];
 
 		// Initialize swipe navigation
 		new TouchZone(this._container)
@@ -46,7 +47,7 @@ export class Slider {
 		// Initialize resize handler to dynamically adapt the width of the slider items based on the viewport size
 		this._resizeHandler = () => {
 			// Adjust events to maximum of 60fps
-			if(!this._resizing) {
+			if (!this._resizing) {
 				this._resizing = true;
 				window.requestAnimationFrame(() => {
 					_handleResize(this._scroller, this._container, this._items, this._position);
@@ -83,8 +84,16 @@ export class Slider {
 	 */
 	prev() {
 		if (this._position > 0) {
-			_changeScrollPos(this._container, this._scroller, this._scroller.scrollPos() - this._container.width(), this._items, this._position, this._position - 1);
+			_changeScrollPos(this._container, this._scroller, this._scroller.scrollPos() - this._container.width(),
+				this._items, this._position, this._position - 1);
 			this._position -= 1;
+
+			// Execute prev handlers
+			this._handlers.filter(handlerValue => handlerValue[0] === "prev")
+				.forEach(handlerValue => {
+					handlerValue[1](this);
+				})
+			;
 		}
 	}
 
@@ -93,9 +102,39 @@ export class Slider {
 	 */
 	next() {
 		if (this._position < (this._items.length - 1)) {
-			_changeScrollPos(this._container, this._scroller, this._scroller.scrollPos() + this._container.width(), this._items, this._position, this._position + 1);
+			_changeScrollPos(this._container, this._scroller, this._scroller.scrollPos() + this._container.width(),
+				this._items, this._position, this._position + 1);
 			this._position += 1;
+
+			// Execute next handlers
+			this._handlers.filter(handlerValue => handlerValue[0] === "next")
+				.forEach(handlerValue => {
+					handlerValue[1](this);
+				})
+			;
 		}
+	}
+
+	/**
+	 * Handler that is called after paging to next item via next() or swipe.
+	 *
+	 * @param handler Next handler
+	 * @returns {Slider} Slider for chaining
+	 */
+	onNext(handler) {
+		this._handlers.push(["next", handler]);
+		return this;
+	}
+
+	/**
+	 * Handler that is called after paging to prev item via prev() or swipe.
+	 *
+	 * @param handler Prev handler
+	 * @returns {Slider} Slider for chaining
+	 */
+	onPrev(handler) {
+		this._handlers.push(["prev", handler]);
+		return this;
 	}
 
 	/**
