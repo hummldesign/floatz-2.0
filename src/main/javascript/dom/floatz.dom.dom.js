@@ -645,6 +645,7 @@ export class DOMElement {
 		};
 
 		request.open("GET", url);
+		request.setRequestHeader("Content-Type", "text/html;charset=UTF-8");
 		request.responseType = "document"; // FIX: must be set AFTER open otherwise InvalidStateError in IE
 		request.send();
 		return this;
