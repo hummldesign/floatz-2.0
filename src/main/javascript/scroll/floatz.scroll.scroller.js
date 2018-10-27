@@ -43,6 +43,7 @@ export class Scroller {
 		this._options.offset = options.offset || 0;
 		this._plugins = [];
 		this._handlers = [];
+		this._scrollHandler = null;
 		this._container = container;
 		this._scrolling = false;
 
@@ -123,21 +124,27 @@ export class Scroller {
 	 * @returns {Scroller} Scroller for chaining
 	 */
 	onScroll(handler) {
-		DOM.addEvent(this._container, EVENT_SCROLL, () => {
-			// Adjust events to maximum of 60fps
-			if (!this._scrolling) {
-				this._scrolling = true;
-				window.requestAnimationFrame(() => {
-					handler(this);
-					this._handlers.forEach((handler) => {
-						handler(this);
-					});
+		if(! this._scrollHandler) {
+			this._scrollHandler = () => {
+				// Adjust events to maximum of 60fps
+				if (!this._scrolling) {
+					window.requestAnimationFrame(() => {
+						this._handlers.forEach((handler) => {
+							handler(this);
+						});
 
-					// Set new position AFTER firing handlers!
-					this._prevScrollPos = this.scrollPos();
-					this._scrolling = false;
-				});
-			}
+						// Set new position AFTER firing handlers!
+						this._prevScrollPos = this.scrollPos();
+						this._scrolling = false;
+					});
+					this._scrolling = true;
+				}
+			};
+			DOM.addEvent(this._container, EVENT_SCROLL, this._scrollHandler);
+		}
+
+		this._handlers.push(() => {
+			handler(this);
 		});
 		return this;
 	}
