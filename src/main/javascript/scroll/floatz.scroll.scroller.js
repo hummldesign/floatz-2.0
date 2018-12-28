@@ -43,6 +43,8 @@ export class Scroller {
 		this._options.offset = options.offset || 0;
 		this._plugins = [];
 		this._handlers = [];
+		this._scrollStartHandlers = [];
+		this._scrollEndHandlers = [];
 		this._scrollHandler = null;
 		this._container = container;
 		this._scrolling = false;
@@ -124,7 +126,7 @@ export class Scroller {
 	 * @returns {Scroller} Scroller for chaining
 	 */
 	onScroll(handler) {
-		if(! this._scrollHandler) {
+		if (!this._scrollHandler) {
 			this._scrollHandler = () => {
 				// Adjust events to maximum of 60fps
 				if (!this._scrolling) {
@@ -175,6 +177,34 @@ export class Scroller {
 			if (this._prevScrollPos > this.scrollPos()) {
 				handler(this);
 			}
+		});
+		return this;
+	}
+
+	/**
+	 * Scroll start handler.
+	 *
+	 * @param handler Custom handler
+	 * @returns {Scroller} Scroller for chaining
+	 */
+	onScrollStart(handler) {
+		_registerScrollStartEndHandler(this);
+		this._scrollStartHandlers.push(() => {
+			handler(this);
+		});
+		return this;
+	}
+
+	/**
+	 * Scroll end handler.
+	 *
+	 * @param handler Custom handler
+	 * @returns {Scroller} Scroller for chaining
+	 */
+	onScrollEnd(handler) {
+		_registerScrollStartEndHandler(this);
+		this._scrollEndHandlers.push(() => {
+			handler(this);
 		});
 		return this;
 	}
@@ -273,7 +303,6 @@ export class Scroller {
 		// overlap top
 		// overlap bottom
 		// overlap top and bottom
-
 	}
 }
 
@@ -504,5 +533,41 @@ export class ScrollPlugin {
 	 * Scroll forward handler.
 	 */
 	onScrollForward() {
+	}
+}
+
+/**
+ * Register handler that is necessary for scroll start / end events.
+ *
+ * @param scroller Scroller
+ * @see https://gomakethings.com/detecting-when-a-visitor-has-stopped-scrolling-with-vanilla-javascript/
+ * @private
+ */
+function _registerScrollStartEndHandler(scroller) {
+	if (scroller._scrollEndHandlers.length === 0 && scroller._scrollStartHandlers.length === 0) {
+		let isScrolling = null;
+		DOM.addEvent(scroller._container, EVENT_SCROLL, () => {
+
+			// Run scroll start handlers
+			if (isScrolling === null) {
+				scroller._scrollStartHandlers.forEach((handler) => {
+					handler(scroller);
+				});
+			}
+
+			// Clear our timeout throughout the scroll
+			window.clearTimeout(isScrolling);
+
+			// Set a timeout to run after scrolling ends
+			isScrolling = setTimeout(() => {
+
+				// Run scroll end handlers
+				scroller._scrollEndHandlers.forEach((handler) => {
+					handler(scroller);
+				});
+				isScrolling = null;
+
+			}, 66);
+		});
 	}
 }
