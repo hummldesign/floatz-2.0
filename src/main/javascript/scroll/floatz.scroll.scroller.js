@@ -567,7 +567,7 @@ function _registerScrollStartEndHandler(scroller) {
 				});
 				isScrolling = null;
 
-			}, 66);
+			}, 100); // Scrolling on iOS needs more time otherwise flickers!
 		});
 	}
 }
