@@ -3,46 +3,47 @@
 
 // Animation classes
 .flz-animate-fadein {
-	.flz-mx-animation(flz-keyframes-fadein 0.3s ease forwards);
+	.flz-mx-animation(flz-keyframe-fadein 0.3s ease forwards);
 }
 
 .flz-animate-fadeout {
-	.flz-mx-animation(flz-keyframes-fadeout 0.3s ease forwards);
+	.flz-mx-animation(flz-keyframe-fadeout 0.3s ease forwards);
 }
 
 .flz-animate-slideinleft {
-	.flz-mx-animation(flz-keyframes-slideinleft 0.3s ease forwards);
+	.flz-mx-animation(flz-keyframe-slideinleft 0.3s ease forwards);
 }
 
 .flz-animate-slideoutleft {
-	.flz-mx-animation(flz-keyframes-slideoutleft 0.3s ease forwards);
+	.flz-mx-animation(flz-keyframe-slideoutleft 0.3s ease forwards);
 }
 
 .flz-animate-slideinright {
-	.flz-mx-animation(flz-keyframes-slideinright 0.3s ease forwards);
+	.flz-mx-animation(flz-keyframe-slideinright 0.3s ease forwards);
 }
 
 .flz-animate-slideoutright {
-	.flz-mx-animation(flz-keyframes-slideoutright 0.3s ease forwards);
+	.flz-mx-animation(flz-keyframe-slideoutright 0.3s ease forwards);
 }
 
 .flz-animate-slideindown {
-	.flz-mx-animation(flz-keyframes-slideindown 0.3s ease forwards);
+	.flz-mx-animation(flz-keyframe-slideindown 0.3s ease forwards);
 }
 
 .flz-animate-slideoutdown {
-	.flz-mx-animation(flz-keyframes-slideoutdown 0.3s ease forwards);
+	.flz-mx-animation(flz-keyframe-slideoutdown 0.3s ease forwards);
 }
 
 .flz-animate-slideinup {
-	.flz-mx-animation(flz-keyframes-slideinup 0.3s ease forwards);
+	.flz-mx-animation(flz-keyframe-slideinup 0.3s ease forwards);
 }
 
 .flz-animate-slideoutup {
-	.flz-mx-animation(flz-keyframes-slideoutup 0.3s ease forwards);
+	.flz-mx-animation(flz-keyframe-slideoutup 0.3s ease forwards);
 }
 
 // Animation workarounds for IE9
+// FIXME: Test if this still works as all other animations have been changed to translate instead of left, right, top, bottom
 html[id^=ie-9] {
 	.flz-animate-fadein {
 		opacity: 1;
@@ -77,7 +78,7 @@ html[id^=ie-9] {
 }
 
 // Keyframes
-.flz-mx-keyframes(flz-keyframes-fadein, {
+.flz-mx-keyframes(flz-keyframe-fadein, {
 	0% {
 		opacity: 0;
 	}
@@ -86,7 +87,7 @@ html[id^=ie-9] {
 	}
 });
 
-.flz-mx-keyframes(flz-keyframes-fadeout, {
+.flz-mx-keyframes(flz-keyframe-fadeout, {
 	0% {
 		opacity: 1;
 	}
@@ -95,74 +96,74 @@ html[id^=ie-9] {
 	}
 });
 
-.flz-mx-keyframes(flz-keyframes-slideinleft, {
+.flz-mx-keyframes(flz-keyframe-slideinleft, {
 	0% {
-		left: -100vw;
+		transform: translateX(-100%);
 	}
 	100% {
-		left: 0;
+		transform: translateX(0);
 	}
 });
 
-.flz-mx-keyframes(flz-keyframes-slideoutleft, {
+.flz-mx-keyframes(flz-keyframe-slideoutleft, {
 	0% {
-		left: 0;
+		transform: translateX(0);
 	}
 	100% {
-		left: -100vw;
+		transform: translateX(-100%);
 	}
 });
 
-.flz-mx-keyframes(flz-keyframes-slideinright, {
+.flz-mx-keyframes(flz-keyframe-slideinright, {
 	0% {
-		right: -100vw;
+		transform: translateX(100%);
 	}
 	100% {
-		right: 0;
+		transform: translateX(0);
 	}
 });
 
-.flz-mx-keyframes(flz-keyframes-slideoutright, {
+.flz-mx-keyframes(flz-keyframe-slideoutright, {
 	0% {
-		right: 0;
+		transform: translateX(0);
 	}
 	100% {
-		right: -100vw;
+		transform: translateX(100%);
 	}
 });
 
-.flz-mx-keyframes(flz-keyframes-slideindown, {
+.flz-mx-keyframes(flz-keyframe-slideindown, {
 	0% {
-		top: -100vh;
+		transform: translateY(-100%);
 	}
 	100% {
-		top: 0;
+		transform: translateY(0);
 	}
 });
 
-.flz-mx-keyframes(flz-keyframes-slideoutdown, {
+.flz-mx-keyframes(flz-keyframe-slideoutdown, {
 	0% {
-		top: 0;
+		transform: translateY(0);
 	}
 	100% {
-		top: -100vh;
+		transform: translateY(100%);
 	}
 });
 
-.flz-mx-keyframes(flz-keyframes-slideinup, {
+.flz-mx-keyframes(flz-keyframe-slideinup, {
 	0% {
-		bottom: -100vh;
+		transform: translateY(100%);
 	}
 	100% {
-		bottom: 0;
+		transform: translateY(0);
 	}
 });
 
-.flz-mx-keyframes(flz-keyframes-slideoutup, {
+.flz-mx-keyframes(flz-keyframe-slideoutup, {
 	0% {
-		bottom: 0;
+		transform: translateY(0);
 	}
 	100% {
-		bottom: -100vh;
+		transform: translateY(-100%);
 	}
 });
