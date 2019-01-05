@@ -17,6 +17,18 @@ export class ScrollAnchorPlugin extends ScrollPlugin {
 		// Default options
 		this.options().anchorsSelector = options.anchorsSelector || ".flz-scroll-anchor";
 		this._anchors = this._prepareAnchors();
+		this._clickHandlers = [];
+	}
+
+	/**
+	 * Click anchor handler.
+	 *
+	 * @param handler Custom handler
+	 * @returns {ScrollAnchorPlugin} ScrollAnchorPlugin for chaining
+	 */
+	onClick(handler) {
+		this._clickHandlers.push(handler);
+		return this;
 	}
 
 	/**
@@ -52,6 +64,13 @@ export class ScrollAnchorPlugin extends ScrollPlugin {
 			if (DOM.dispatchEvent(this.scroller().container(), beforeEvent)) {
 				event.preventDefault();
 				event.stopPropagation();
+
+				// Execute click handlers
+				this._clickHandlers
+					.forEach(handler => {
+						handler(anchor, event);
+					})
+				;
 
 				// Scroll to section the menu navigation item points to
 				this.scroller().scrollTo(anchor.attr("href"), {
