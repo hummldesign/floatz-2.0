@@ -147,6 +147,27 @@ export class Slider {
 	destruct() {
 		DOM.removeEvent(window, EVENT_RESIZE, this._resizeHandler);
 	}
+
+	/**
+	 * Get selected item.
+	 *
+	 * @returns {DOMElement} Selected item or null
+	 */
+	selected() {
+		if(this._items.length > 0) {
+			return this._items[/** @type {number} */ (this.pos())];
+		}
+		return null;
+	}
+
+	/**
+	 * Get slider items.
+	 *
+	 * @returns {!Array} Slider items
+	 */
+	items() {
+		return this._items;
+	}
 }
 
 /**
