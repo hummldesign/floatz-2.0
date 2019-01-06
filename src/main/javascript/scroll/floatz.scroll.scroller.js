@@ -42,6 +42,8 @@ export class Scroller {
 		this._options = options;
 		this._options.direction = options.direction || Direction.VERTICAL;
 		this._options.offset = options.offset || 0;
+		this._options.intersection = options.intersection || {};
+		this._options.intersection.threshold = options.intersection.threshold || 0.2; // FIXME for higher numbers events are not fired!
 		this._plugins = [];
 		this._handlers = [];
 		this._scrollStartHandlers = [];
@@ -52,7 +54,6 @@ export class Scroller {
 		this._container = container;
 		this._scrolling = false;
 		this._observer = null;
-		this._observeHandlers = [];
 
 		if (DOM.isWindow(container)) {
 			// Note: document.body does not work since Chrome 61
@@ -227,7 +228,7 @@ export class Scroller {
 	 *     TODO: Node as target
 	 * </p>
 	 *
-	 * @param {DOMElement} target Observed target element
+	 * @param {DOMElement|Array} target Observed target element(s)
 	 * @param {Function} handler Custom handler
 	 * @returns {Scroller} Scroller for chaining
 	 */
@@ -250,7 +251,7 @@ export class Scroller {
 	 *     TODO: Node as target
 	 * </p>
 	 *
-	 * @param {DOMElement} target Observed target element
+	 * @param {DOMElement|Array} target Observed target element(s)
 	 * @param {Function} handler Custom handler
 	 * @returns {Scroller} Scroller for chaining
 	 */
@@ -621,10 +622,17 @@ function _registerScrollStartEndHandler(scroller) {
  * </p>
  *
  * @param {Scroller} scroller Scroller
- * @param {DOMElement} target Observed target element
+ * @param {DOMElement|Array} target Observed target element(s)
  * @private
  */
 function _initIntersectionObserver(scroller, target) {
+
+	if(!window.IntersectionObserver) {
+		// FIXME: Provide polyfill
+		console.warn("IntersectionObserver is not supported");
+		return;
+	}
+
 	if (scroller._observer === null) {
 		// FIXME Customize observer options from outside
 		// FIXME Consider fixed header offsets
@@ -647,10 +655,13 @@ function _initIntersectionObserver(scroller, target) {
 				}
 			});
 		}, {
-			threshold: 0.025 // Especially needed for 100vh items
+			threshold: scroller.options().intersection.threshold
 		});
 	}
 
 	// TODO: Check what happens if same target is observed multiple times
-	scroller._observer.observe(target.origNode());
+	let targets = Array.isArray(target) ? target : new Array(target);
+	targets.forEach((target) => {
+		scroller._observer.observe(target.origNode());
+	});
 }
