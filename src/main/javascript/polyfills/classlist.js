@@ -73,7 +73,7 @@
 	// IE8/9, Safari
 	// Remove this if statements to override native classList.
 	if (!('classList' in Element.prototype)) {
-		// console.info("floatz | polyfill for classList injected");
+		console.debug("floatz | polyfill for classList injected");
 		// Use this if statement to override native classList that does not have for example replace() method.
 		// See browser compatibility: https://developer.mozilla.org/en-US/docs/Web/API/Element/classList#Browser_compatibility.
 		// if (!('classList' in Element.prototype) ||
