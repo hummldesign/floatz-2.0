@@ -6,6 +6,7 @@
 * Observe scroll items
 * Background parallax
 * Lazy load images
+* Scroll snapping
 * Page transitions
 * Fetch API
 
