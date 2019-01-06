@@ -164,7 +164,7 @@ task compileScrollObserveTest(type: JavaExec) {
   // closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
   closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
   closureArgs << "--js_output_file=build/floatz.scroll.observe.min.js"
-  closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
+  // closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
   // Must be in correct order otherwise modules are not found
   // closureArgs << "lib/polyfills/**.js"

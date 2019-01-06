@@ -139,7 +139,10 @@
 	 * the thresholds values.
 	 * @param {Element} target The DOM element to observe.
 	 */
-	IntersectionObserver.prototype.observe = function(target) {
+
+	// FIX: To avoid renaming of methods by closure compiler
+	IntersectionObserver.prototype['observe'] = function(target) {
+	// IntersectionObserver.prototype.observe = function(target) {
 		var isTargetAlreadyObserved = this._observationTargets.some(function(item) {
 			return item.element == target;
 		});
@@ -163,7 +166,9 @@
 	 * Stops observing a target element for intersection changes.
 	 * @param {Element} target The DOM element to observe.
 	 */
-	IntersectionObserver.prototype.unobserve = function(target) {
+	// FIX: To avoid renaming of methods by closure compiler
+	IntersectionObserver.prototype['unobserve'] = function(target) {
+	// IntersectionObserver.prototype.unobserve = function(target) {
 		this._observationTargets =
 			this._observationTargets.filter(function(item) {
 
@@ -179,7 +184,9 @@
 	/**
 	 * Stops observing all target elements for intersection changes.
 	 */
-	IntersectionObserver.prototype.disconnect = function() {
+	// FIX: To avoid renaming of methods by closure compiler
+	IntersectionObserver.prototype['disconnect'] = function() {
+//	IntersectionObserver.prototype.disconnect = function() {
 		this._observationTargets = [];
 		this._unmonitorIntersections();
 		this._unregisterInstance();
@@ -192,7 +199,7 @@
 	 * callback to obtain the absolute most up-to-date intersection information.
 	 * @return {Array} The currently queued entries.
 	 */
-	IntersectionObserver.prototype.takeRecords = function() {
+	IntersectionObserver.prototype['takeRecords'] = function() {
 		var records = this._queuedEntries.slice();
 		this._queuedEntries = [];
 		return records;

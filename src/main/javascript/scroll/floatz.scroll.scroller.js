@@ -237,9 +237,12 @@ export class Scroller {
 	 */
 	onScrollIn(target, handler) {
 		_initIntersectionObserver(this, target);
-		this._scrollInHandlers.push({
-			target: target,
-			handler: handler
+		let targets = Array.isArray(target) ? target : new Array(target);
+		targets.forEach((target) => {
+			this._scrollInHandlers.push({
+				target: target,
+				handler: handler
+			});
 		});
 		return this;
 	}
@@ -260,9 +263,12 @@ export class Scroller {
 	 */
 	onScrollOut(target, handler) {
 		_initIntersectionObserver(this, target);
-		this._scrollOutHandlers.push({
-			target: target,
-			handler: handler
+		let targets = Array.isArray(target) ? target : new Array(target);
+		targets.forEach((target) => {
+			this._scrollOutHandlers.push({
+				target: target,
+				handler: handler
+			});
 		});
 		return this;
 	}
@@ -641,17 +647,17 @@ function _initIntersectionObserver(scroller, target) {
 		// FIXME Consider fixed header offsets
 		scroller._observer = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
-				console.debug(LOG_PREFIX_SCROLLER + `${entry.target.id} intersected (ratio: ${entry.intersectionRatio}, isIntersecting: ${entry.isIntersecting})`);
+				console.info(LOG_PREFIX_SCROLLER + `${entry.target.id} intersected (ratio: ${entry.intersectionRatio}, isIntersecting: ${entry.isIntersecting})`);
 				if (entry.isIntersecting) {
 					// Run scroll-in handlers
-					scroller._scrollInHandlers.filter(handler => handler.target.origNode() === target.origNode())
+					scroller._scrollInHandlers.filter(handler => handler.target.origNode() === entry.target)
 						.forEach((handler) => {
 							handler.handler(entry);
 						})
 					;
 				} else {
 					// Run scroll-out handlers
-					scroller._scrollOutHandlers.filter(handler => handler.target.origNode() === target.origNode())
+					scroller._scrollOutHandlers.filter(handler => handler.target.origNode() === entry.target)
 						.forEach((handler) => {
 							handler.handler(entry);
 						})
