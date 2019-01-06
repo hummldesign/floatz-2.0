@@ -645,6 +645,7 @@ function _initIntersectionObserver(scroller, target) {
 	if (scroller._observer === null) {
 		// FIXME Customize observer options from outside
 		// FIXME Consider fixed header offsets
+		// FIXME Consider different root container
 		scroller._observer = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
 				console.info(LOG_PREFIX_SCROLLER + `${entry.target.id} intersected (ratio: ${entry.intersectionRatio}, isIntersecting: ${entry.isIntersecting})`);
