@@ -1,5 +1,11 @@
+/**
+ * Please note:
+ * ------------------------------------------------------------------------------------------------------
+ * In order to make this test run successfully the screen size has to be 1440 x 900 px (Laptop with HDPI)
+ * ------------------------------------------------------------------------------------------------------
+ */
+
 import DOM from "../../../main/javascript/dom/floatz.dom.dom.js";
-import Easing from "../../../main/javascript/animation/floatz.animation.easing.js";
 import {Scroller} from "../../../main/javascript/scroll/floatz.scroll.scroller.js";
 import {Direction} from "../../../main/javascript/scroll/floatz.scroll.scroller.js";
 

@@ -1,3 +1,10 @@
+/**
+ * Please note:
+ * ------------------------------------------------------------------------------------------------------
+ * In order to make this test run successfully the screen size has to be 1440 x 900 px (Laptop with HDPI)
+ * ------------------------------------------------------------------------------------------------------
+ */
+
 import DOM from "../../../main/javascript/dom/floatz.dom.dom.js";
 import {Scroller} from "../../../main/javascript/scroll/floatz.scroll.scroller.js";
 
@@ -9,13 +16,13 @@ describe("> Test Suite for floatz.scroll.scroller.js", () => {
 	beforeAll((done) => {
 		setTimeout(() => {
 			scroller1 = new Scroller("#col-1");
-			scroller2 = new Scroller("#col-2");
-			window.scrollTo(0,0);
+			scroller2 = new Scroller(DOM.queryUnique("#col-2"));
+			window.scrollTo(0, 0);
 			done();
 		}, 200);
 	});
 	afterAll(() => {
-		window.scrollTo(0,0);
+		window.scrollTo(0, 0);
 	});
 	describe("Given a nested scroll container with 4 scroll sections each with a height of 500px", () => {
 		describe("When the page is loaded", () => {

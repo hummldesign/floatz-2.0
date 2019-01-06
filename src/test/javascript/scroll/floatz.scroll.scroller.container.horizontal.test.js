@@ -1,3 +1,10 @@
+/**
+ * Please note:
+ * ------------------------------------------------------------------------------------------------------
+ * In order to make this test run successfully the screen size has to be 1440 x 900 px (Laptop with HDPI)
+ * ------------------------------------------------------------------------------------------------------
+ */
+
 import DOM from "../../../main/javascript/dom/floatz.dom.dom.js";
 import {Scroller} from "../../../main/javascript/scroll/floatz.scroll.scroller.js";
 import {Direction} from "../../../main/javascript/scroll/floatz.scroll.scroller.js";
@@ -12,15 +19,15 @@ describe("> Test Suite for floatz.scroll.scroller.js", () => {
 			scroller1 = new Scroller("#row-1", {
 				direction: Direction.HORIZONTAL
 			});
-			scroller2 = new Scroller("#row-2", {
+			scroller2 = new Scroller(DOM.queryUnique("#row-2"), {
 				direction: Direction.HORIZONTAL
 			});
-			window.scrollTo(0,0);
+			window.scrollTo(0, 0);
 			done();
 		}, 200);
 	});
 	afterAll(() => {
-		window.scrollTo(0,0);
+		window.scrollTo(0, 0);
 	});
 	describe("Given a horizontal scroll container with 4 scroll sections each with a width of 750px", () => {
 		describe("When the page is loaded", () => {

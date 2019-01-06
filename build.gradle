@@ -46,7 +46,8 @@ task compileScrollTest(type: JavaExec) {
   closureArgs << "--language_in=ES6"
   closureArgs << "--language_out=ES5"
   closureArgs << "--formatting=pretty_print"
-  closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
+  closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
+  // closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
   closureArgs << "--js_output_file=build/floatz.scroll.test.min.js"
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
@@ -63,7 +64,9 @@ task compileScrollHorizontalTest(type: JavaExec) {
   def closureArgs = []
   closureArgs << "--language_in=ES6"
   closureArgs << "--language_out=ES5"
-  closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
+  closureArgs << "--formatting=pretty_print"
+  closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
+  // closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
   closureArgs << "--js_output_file=build/floatz.scroll.horizontal.test.min.js"
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
@@ -80,7 +83,9 @@ task compileScrollContainerTest(type: JavaExec) {
   def closureArgs = []
   closureArgs << "--language_in=ES6"
   closureArgs << "--language_out=ES5"
-  closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
+  closureArgs << "--formatting=pretty_print"
+  closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
+  // closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
   closureArgs << "--js_output_file=build/floatz.scroll.container.test.min.js"
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
