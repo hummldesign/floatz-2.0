@@ -46,9 +46,13 @@ export class Scroller {
 		this._handlers = [];
 		this._scrollStartHandlers = [];
 		this._scrollEndHandlers = [];
+		this._scrollInHandlers = [];
+		this._scrollOutHandlers = [];
 		this._scrollHandler = null;
 		this._container = container;
 		this._scrolling = false;
+		this._observer = null;
+		this._observeHandlers = [];
 
 		if (DOM.isWindow(container)) {
 			// Note: document.body does not work since Chrome 61
@@ -126,7 +130,7 @@ export class Scroller {
 	/**
 	 * Scroll handler.
 	 *
-	 * @param handler Custom handler
+	 * @param {Function} handler Custom handler
 	 * @returns {Scroller} Scroller for chaining
 	 */
 	onScroll(handler) {
@@ -158,7 +162,7 @@ export class Scroller {
 	/**
 	 * Scroll forward handler.
 	 *
-	 * @param handler Custom handler
+	 * @param {Function} handler Custom handler
 	 * @returns {Scroller} Scroller for chaining
 	 */
 	onScrollForward(handler) {
@@ -173,7 +177,7 @@ export class Scroller {
 	/**
 	 * Scroll backward handler.
 	 *
-	 * @param handler Custom handler
+	 * @param {Function} handler Custom handler
 	 * @returns {Scroller} Scroller for chaining
 	 */
 	onScrollBackward(handler) {
@@ -188,7 +192,7 @@ export class Scroller {
 	/**
 	 * Scroll start handler.
 	 *
-	 * @param handler Custom handler
+	 * @param {Function} handler Custom handler
 	 * @returns {Scroller} Scroller for chaining
 	 */
 	onScrollStart(handler) {
@@ -202,13 +206,59 @@ export class Scroller {
 	/**
 	 * Scroll end handler.
 	 *
-	 * @param handler Custom handler
+	 * @param {Function} handler Custom handler
 	 * @returns {Scroller} Scroller for chaining
 	 */
 	onScrollEnd(handler) {
 		_registerScrollStartEndHandler(this);
 		this._scrollEndHandlers.push(() => {
 			handler(this);
+		});
+		return this;
+	}
+
+	/**
+	 * Scroll into viewport handler.
+	 * <p>
+	 *     The registered handler is executed as soon as the target element scrolls into the viewport.
+	 *     TODO: Consider custom thresholds
+	 *     TODO: Multiple targets (Array)
+	 *     TODO: String selector as target
+	 *     TODO: Node as target
+	 * </p>
+	 *
+	 * @param {DOMElement} target Observed target element
+	 * @param {Function} handler Custom handler
+	 * @returns {Scroller} Scroller for chaining
+	 */
+	onScrollIn(target, handler) {
+		_initIntersectionObserver(this, target);
+		this._scrollInHandlers.push({
+			target: target,
+			handler: handler
+		});
+		return this;
+	}
+
+	/**
+	 * Scroll out of viewport handler.
+	 * <p>
+	 *     The registered handler is executed as soon as the target element scrolls out of the viewport.
+	 *     TODO: Consider custom thresholds
+	 *     TODO: Multiple targets (Array)
+	 *     TODO: String selector as target
+	 *     TODO: Node as target
+	 * </p>
+	 *
+	 * @param {DOMElement} target Observed target element
+	 * @param {Function} handler Custom handler
+	 * @returns {Scroller} Scroller for chaining
+	 */
+	onScrollOut(target, handler) {
+		_initIntersectionObserver(this, target);
+		this._scrollOutHandlers.push({
+			target: target,
+			handler: handler
 		});
 		return this;
 	}
@@ -295,18 +345,6 @@ export class Scroller {
 				return this._container.getBoundingClientRect().width;
 			}
 		}
-	}
-
-	/**
-	 * Determine if target is visible within the viewport of the scroll container.
-	 *
-	 * @param target
-	 */
-	visible(target) {
-		// TODO
-		// overlap top
-		// overlap bottom
-		// overlap top and bottom
 	}
 }
 
@@ -543,7 +581,7 @@ export class ScrollPlugin {
 /**
  * Register handler that is necessary for scroll start / end events.
  *
- * @param scroller Scroller
+ * @param {Scroller} scroller Scroller
  * @see https://gomakethings.com/detecting-when-a-visitor-has-stopped-scrolling-with-vanilla-javascript/
  * @private
  */
@@ -574,4 +612,45 @@ function _registerScrollStartEndHandler(scroller) {
 			}, 100); // Scrolling on iOS needs more time otherwise flickers!
 		});
 	}
+}
+
+/**
+ * Initialize intersection observer.
+ * <p>
+ *     Ensures that only one intersection observer is created and the observed target handler is registered.
+ * </p>
+ *
+ * @param {Scroller} scroller Scroller
+ * @param {DOMElement} target Observed target element
+ * @private
+ */
+function _initIntersectionObserver(scroller, target) {
+	if (scroller._observer === null) {
+		// FIXME Customize observer options from outside
+		// FIXME Consider fixed header offsets
+		scroller._observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					// Run scroll-in handlers
+					scroller._scrollInHandlers.filter(handler => handler.target.origNode() === target.origNode())
+						.forEach((handler) => {
+							handler.handler(entry);
+						})
+					;
+				} else {
+					// Run scroll-out handlers
+					scroller._scrollOutHandlers.filter(handler => handler.target.origNode() === target.origNode())
+						.forEach((handler) => {
+							handler.handler(entry);
+						})
+					;
+				}
+			});
+		}, {
+			threshold: 0.025 // Especially needed for 100vh items
+		});
+	}
+
+	// TODO: Check what happens if same target is observed multiple times
+	scroller._observer.observe(target.origNode());
 }
