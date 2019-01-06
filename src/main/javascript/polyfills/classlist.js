@@ -26,7 +26,7 @@
 
 	ClassList.prototype = {
 		/**
-		 * @param {...String} names
+		 * @param {...string} names
 		 */
 		add: function(...names) {
 			forEach(names, function(name) {
@@ -36,7 +36,7 @@
 			}, this);
 		},
 		/**
-		 * @param {...String} names
+		 * @param {...string} names
 		 */
 		remove: function(...names) {
 			forEach(names, function(name) {
@@ -44,13 +44,13 @@
 			}, this);
 		},
 		/**
-		 * @param {String} name
+		 * @param {string} name
 		 */
 		toggle: function(name) {
 			return this.contains(name) ? (this.remove(name), false) : (this.add(name), true);
 		},
 		/**
-		 * @param {String} name
+		 * @param {string} name
 		 */
 		contains: function(name) {
 			return regExp(name).test(this.element.className);
@@ -62,8 +62,8 @@
 			return this.element.className.split(/\s+/)[index] || null;
 		},
 		/**
-		 * @param {String} oldName
-		 * @param {String} newName
+		 * @param {string} oldName
+		 * @param {string} newName
 		 */
 		replace: function(oldName, newName) {
 			this.remove(oldName), this.add(newName);
@@ -87,6 +87,6 @@
 
 	// For others replace() support.
 	if (window.DOMTokenList && !DOMTokenList.prototype.replace) {
-		DOMTokenList.prototype.replace = ClassList.prototype.replace;
+		DOMTokenList.prototype.replace = /** @type function(this:DOMTokenList, string, string) */ (ClassList.prototype.replace);
 	}
 })();
