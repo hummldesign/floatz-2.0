@@ -17,17 +17,17 @@ DOM.addEvent(window, EVENT_DOMCONTENTLOADED, () => {
 
 	let scroller = new Scroller();
 	scroller
-		.onScrollIn(DOM.queryUnique("#first"), (entry) => {
-			console.log(`>>> ${entry.target.id} scrolled in`);
+		.onScrollIn(DOM.query("#first, #second, #third, #fourth"), (entry) => {
+			// console.log(`>>> ${entry.target.id} scrolled in (ratio: ${entry.intersectionRatio}, isIntersecting: ${entry.isIntersecting})`);
 		})
-		.onScrollIn(DOM.queryUnique("#third"), (entry) => {
+/*		.onScrollIn(DOM.queryUnique("#third"), (entry) => {
 			console.log(`>>> ${entry.target.id} scrolled in`);
 		})
 		.onScrollOut(DOM.queryUnique("#first"), (entry) => {
 			console.log(`<<< ${entry.target.id} scrolled out`);
-		})
-		.onScrollOut(DOM.queryUnique("#third"), (entry) => {
-			console.log(`<<< ${entry.target.id} scrolled out`);
+		})*/
+		.onScrollOut(DOM.query("#first, #second, #third, #fourth"), (entry) => {
+			// console.log(`<<< ${entry.target.id} scrolled out (ratio: ${entry.intersectionRatio}, isIntersecting: ${entry.isIntersecting})`);
 		})
 	;
 });

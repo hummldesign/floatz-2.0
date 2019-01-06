@@ -15,6 +15,9 @@ import Strings from "../util/floatz.util.strings.js";
 
 // Constants for events
 // Note: Symbols can´t be used because closure compiler will change names
+const LOG_PREFIX_SCROLLER = "floatz | Scroller | ";
+const LOG_PREFIX_SCROLLANIMATION = "floatz | ScrollAnimation | ";
+const LOG_PREFIX_SCROLLPLUGIN = "floatz | ScrollPlugin | ";
 export const SCROLL_EVENT_BEFORENAVGIATE = "flz-event-before-navigate";
 export const SCROLL_EVENT_AFTERNAVGIATE = "flz-event-after-navigate";
 
@@ -43,7 +46,7 @@ export class Scroller {
 		this._options.direction = options.direction || Direction.VERTICAL;
 		this._options.offset = options.offset || 0;
 		this._options.intersection = options.intersection || {};
-		this._options.intersection.threshold = options.intersection.threshold || 0.2; // FIXME for higher numbers events are not fired!
+		this._options.intersection.threshold = options.intersection.threshold || [0.1]; // Ensure firing at 0 and 100% visibility
 		this._plugins = [];
 		this._handlers = [];
 		this._scrollStartHandlers = [];
@@ -627,9 +630,9 @@ function _registerScrollStartEndHandler(scroller) {
  */
 function _initIntersectionObserver(scroller, target) {
 
-	if(!window.IntersectionObserver) {
+	if (!window.IntersectionObserver) {
 		// FIXME: Provide polyfill
-		console.warn("IntersectionObserver is not supported");
+		console.warn(LOG_PREFIX_SCROLLER + "IntersectionObserver is not supported");
 		return;
 	}
 
@@ -638,6 +641,7 @@ function _initIntersectionObserver(scroller, target) {
 		// FIXME Consider fixed header offsets
 		scroller._observer = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
+				console.debug(LOG_PREFIX_SCROLLER + `${entry.target.id} intersected (ratio: ${entry.intersectionRatio}, isIntersecting: ${entry.isIntersecting})`);
 				if (entry.isIntersecting) {
 					// Run scroll-in handlers
 					scroller._scrollInHandlers.filter(handler => handler.target.origNode() === target.origNode())
