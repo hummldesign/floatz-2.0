@@ -4,8 +4,9 @@
 
 ## Hot Topics
 * Observe scroll items
-* Background parallax
-* Lazy load images
+  * Background parallax
+  * Lazy load images
+  * Infinite scroll
 * Scroll snapping
 * Page transitions
 * Fetch API
