@@ -2,6 +2,7 @@ import DOM from "../dom/floatz.dom.dom.js";
 import Easing from "../animation/floatz.animation.easing.js"
 import {DOMElement} from "../dom/floatz.dom.dom.js";
 import {EVENT_SCROLL} from "../dom/floatz.dom.events.js";
+import Strings from "../util/floatz.util.strings.js";
 
 /**
  * Notes:
@@ -54,6 +55,9 @@ export class Scroller {
 			this._options.scrollable = document.scrollingElement || document.documentElement;
 		} else if (container instanceof DOMElement) {
 			this._container = container.origNode();
+			this._options.scrollable = this._container;
+		} else if (Strings.isString(container)) {
+			this._container = DOM.queryUnique(container).origNode();
 			this._options.scrollable = this._container;
 		} else {
 			this._options.scrollable = this._container;

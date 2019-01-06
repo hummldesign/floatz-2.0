@@ -22,4 +22,14 @@ export default class Strings {
 	static fromSymbol(symbol) {
 		return String(symbol).slice(7, -1);
 	}
+
+	/**
+	 * Check if object is a string
+	 *
+	 * @param obj Object
+	 * @returns {boolean} true if string, false if not
+	 */
+	static isString(obj) {
+		return obj instanceof String || typeof obj === "string";
+	}
 }
