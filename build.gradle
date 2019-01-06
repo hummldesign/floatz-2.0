@@ -16,6 +16,7 @@ task compileTest {
 	dependsOn 'compileScrollContainerHorizontalTest'
 	dependsOn 'compileScrollLayoutHeaderTest'
 	dependsOn 'compileScrollLayoutHeaderSlidedTest'
+	dependsOn 'compileScrollObserveTest'
 }
 
 task compileDomTest(type: JavaExec) {
@@ -33,7 +34,7 @@ task compileDomTest(type: JavaExec) {
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
   // Must be in correct order otherwise modules are not found
-  closureArgs << "lib/polyfills/**.js"
+  // closureArgs << "lib/polyfills/**.js"
   closureArgs << "src/main/javascript/**.js"
   closureArgs << "src/test/javascript/dom/floatz.dom.dom.test.js"
   args closureArgs
@@ -45,14 +46,14 @@ task compileScrollTest(type: JavaExec) {
   def closureArgs = []
   closureArgs << "--language_in=ES6"
   closureArgs << "--language_out=ES5"
-  closureArgs << "--formatting=pretty_print"
-  closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
-  // closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
+  // closureArgs << "--formatting=pretty_print"
+  // closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
+  closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
   closureArgs << "--js_output_file=build/floatz.scroll.test.min.js"
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
   // Must be in correct order otherwise modules are not found
-  closureArgs << "lib/polyfills/**.js"
+  // closureArgs << "lib/polyfills/**.js"
   closureArgs << "src/main/javascript/**.js"
   closureArgs << "src/test/javascript/scroll/floatz.scroll.scroller.test.js"
   args closureArgs
@@ -64,14 +65,14 @@ task compileScrollHorizontalTest(type: JavaExec) {
   def closureArgs = []
   closureArgs << "--language_in=ES6"
   closureArgs << "--language_out=ES5"
-  closureArgs << "--formatting=pretty_print"
-  closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
-  // closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
+  // closureArgs << "--formatting=pretty_print"
+  // closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
+  closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
   closureArgs << "--js_output_file=build/floatz.scroll.horizontal.test.min.js"
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
   // Must be in correct order otherwise modules are not found
-  closureArgs << "lib/polyfills/**.js"
+  // closureArgs << "lib/polyfills/**.js"
   closureArgs << "src/main/javascript/**.js"
   closureArgs << "src/test/javascript/scroll/floatz.scroll.scroller.horizontal.test.js"
   args closureArgs
@@ -83,14 +84,14 @@ task compileScrollContainerTest(type: JavaExec) {
   def closureArgs = []
   closureArgs << "--language_in=ES6"
   closureArgs << "--language_out=ES5"
-  closureArgs << "--formatting=pretty_print"
-  closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
-  // closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
+  // closureArgs << "--formatting=pretty_print"
+  // closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
+  closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
   closureArgs << "--js_output_file=build/floatz.scroll.container.test.min.js"
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
   // Must be in correct order otherwise modules are not found
-  closureArgs << "lib/polyfills/**.js"
+  // closureArgs << "lib/polyfills/**.js"
   closureArgs << "src/main/javascript/**.js"
   closureArgs << "src/test/javascript/scroll/floatz.scroll.scroller.container.test.js"
   args closureArgs
@@ -107,7 +108,7 @@ task compileScrollContainerHorizontalTest(type: JavaExec) {
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
   // Must be in correct order otherwise modules are not found
-  closureArgs << "lib/polyfills/**.js"
+  // closureArgs << "lib/polyfills/**.js"
   closureArgs << "src/main/javascript/**.js"
   closureArgs << "src/test/javascript/scroll/floatz.scroll.scroller.container.horizontal.test.js"
   args closureArgs
@@ -127,7 +128,7 @@ task compileScrollLayoutHeaderTest(type: JavaExec) {
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
   // Must be in correct order otherwise modules are not found
-  closureArgs << "lib/polyfills/**.js"
+  // closureArgs << "lib/polyfills/**.js"
   closureArgs << "src/main/javascript/**.js"
   closureArgs << "src/test/javascript/scroll/floatz.scroll.layout.header.test.js"
   args closureArgs
@@ -147,8 +148,27 @@ task compileScrollLayoutHeaderSlidedTest(type: JavaExec) {
   closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
 
   // Must be in correct order otherwise modules are not found
-  closureArgs << "lib/polyfills/**.js"
+  // closureArgs << "lib/polyfills/**.js"
   closureArgs << "src/main/javascript/**.js"
   closureArgs << "src/test/javascript/scroll/floatz.scroll.layout.header.slided.test.js"
+  args closureArgs
+}
+
+task compileScrollObserveTest(type: JavaExec) {
+  classpath configurations.closureCompiler
+  main = 'com.google.javascript.jscomp.CommandLineRunner'
+  def closureArgs = []
+  closureArgs << "--language_in=ES6"
+  closureArgs << "--language_out=ES5"
+  // closureArgs << "--formatting=pretty_print"
+  // closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
+  closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
+  closureArgs << "--js_output_file=build/floatz.scroll.observe.min.js"
+  closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
+
+  // Must be in correct order otherwise modules are not found
+  // closureArgs << "lib/polyfills/**.js"
+  closureArgs << "src/main/javascript/**.js"
+  closureArgs << "src/test/javascript/scroll/floatz.scroll.observe.test.js"
   args closureArgs
 }
