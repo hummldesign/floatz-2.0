@@ -358,7 +358,7 @@
 		}, this);
 
 		if (this._queuedEntries.length) {
-			this._callback(this.takeRecords(), this);
+			this._callback(this["takeRecords"](), this);
 		}
 	};
 
