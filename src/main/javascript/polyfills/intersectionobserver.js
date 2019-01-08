@@ -358,7 +358,9 @@
 		}, this);
 
 		if (this._queuedEntries.length) {
+			// FIX: To avoid renaming of methods by closure compiler
 			this._callback(this["takeRecords"](), this);
+			// this._callback(this.takeRecords(), this);
 		}
 	};
 
