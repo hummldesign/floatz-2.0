@@ -11,22 +11,10 @@ DOM.addEvent(window, EVENT_DOMCONTENTLOADED, () => {
 	let scroller = new Scroller();
 	scroller
 		.onScrollIn(DOM.query("#first, #second, #third, #fourth"), (entry, entries) => {
-			console.log(`>>> ${entry.target.id} scrolled in (ratio: ${entry.intersectionRatio}, isIntersecting: ${entry.isIntersecting}, entries: ${_logEntries(entries)})`);
+			console.log(`>>> ${entry.target.id} scrolled in (ratio: ${entry.intersectionRatio}, isIntersecting: ${entry.isIntersecting})`);
 		})
 		.onScrollOut(DOM.query("#first, #second, #third, #fourth"), (entry, entries) => {
-			console.log(`<<< ${entry.target.id} scrolled out (ratio: ${entry.intersectionRatio}, isIntersecting: ${entry.isIntersecting}, entries: ${_logEntries(entries)})`);
+			console.log(`<<< ${entry.target.id} scrolled out (ratio: ${entry.intersectionRatio}, isIntersecting: ${entry.isIntersecting})`);
 		})
 	;
 });
-
-function _logEntries(entries) {
-	let output = "{";
-	entries.forEach((entry, index)=> {
-		output += `${entry.target.id} | ${entry.isIntersecting}`;
-		if(index !== (entries.length - 1)) {
-			output +=", ";
-		}
-	});
-	output += "}";
-	return output;
-}

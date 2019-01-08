@@ -46,7 +46,6 @@ export class Scroller {
 		this._options.direction = options.direction || Direction.VERTICAL;
 		this._options.offset = options.offset || 0;
 		this._options.intersection = options.intersection || {};
-		this._options.intersection.threshold = options.intersection.threshold || [0.1]; // Ensure firing at 0 and 100% visibility
 		this._plugins = [];
 		this._handlers = [];
 		this._scrollStartHandlers = [];
@@ -57,6 +56,7 @@ export class Scroller {
 		this._container = container;
 		this._scrolling = false;
 		this._observer = null;
+		this._firstIntersection = true;
 
 		if (DOM.isWindow(container)) {
 			// Note: document.body does not work since Chrome 61
@@ -70,6 +70,15 @@ export class Scroller {
 		} else {
 			this._options.scrollable = this._container;
 		}
+
+		this._options.intersection.threshold = options.intersection.threshold || [0.1]; // Ensure firing at 0 and 100% visibility
+		this._options.intersection.rootMargin = options.intersection.rootMargin;
+		if (options.intersection.root) {
+			this._options.intersection.root = options.intersection.root;
+		} else if (!DOM.isWindow(this._container)) {
+			this._options.intersection.root = this._container;
+		}
+
 		this._prevScrollPos = this.scrollPos();
 	}
 
@@ -101,7 +110,7 @@ export class Scroller {
 	/**
 	 * Get scroll container.
 	 *
-	 * @returns {Object} Scroll container
+	 * @returns {!Element} Scroll container
 	 */
 	container() {
 		return this._container;
@@ -635,20 +644,10 @@ function _registerScrollStartEndHandler(scroller) {
  * @private
  */
 function _initIntersectionObserver(scroller, target) {
-
-	if (!window.IntersectionObserver) {
-		// FIXME: Provide polyfill
-		console.warn(LOG_PREFIX_SCROLLER + "IntersectionObserver is not supported");
-		return;
-	}
-
 	if (scroller._observer === null) {
-		// FIXME Customize observer options from outside
 		// FIXME Consider fixed header offsets
-		// FIXME Consider different root container
 		scroller._observer = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
-				console.info(LOG_PREFIX_SCROLLER + `${entry.target.id} intersected (ratio: ${entry.intersectionRatio}, isIntersecting: ${entry.isIntersecting})`);
 				if (entry.isIntersecting) {
 					// Run scroll-in handlers
 					scroller._scrollInHandlers.filter(handler => handler.target.origNode() === entry.target)
@@ -656,7 +655,8 @@ function _initIntersectionObserver(scroller, target) {
 							handler.handler(entry);
 						})
 					;
-				} else {
+
+				} else if (!scroller._firstIntersection) { // Don´t fire scroll-out on first run when they were never visible
 					// Run scroll-out handlers
 					scroller._scrollOutHandlers.filter(handler => handler.target.origNode() === entry.target)
 						.forEach((handler) => {
@@ -665,7 +665,10 @@ function _initIntersectionObserver(scroller, target) {
 					;
 				}
 			});
+			scroller._firstIntersection = false;
 		}, {
+			root: scroller.options().intersection.root,
+			rootMargin : scroller.options().intersection.rootMargin,
 			threshold: scroller.options().intersection.threshold
 		});
 	}
