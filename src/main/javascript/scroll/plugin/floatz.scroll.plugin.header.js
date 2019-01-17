@@ -49,8 +49,8 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 			});
 
 			// Add custom event handler
-			DOM.addEvent(scroller.container(), SCROLL_EVENT_BEFORENAVGIATE, (navItem) => {
-				this._handleBeforeNavigate(navItem);
+			DOM.addEvent(scroller.container(), SCROLL_EVENT_BEFORENAVGIATE, (e) => {
+				this._handleBeforeNavigate(e);
 			});
 
 			// Add event handler for location changes
@@ -132,7 +132,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 	_handleBeforeNavigate(event) {
 		// Define header offset for slideout header on navigation depending on scroll direction
 		if (this._header.hasClass(HEADER_FIXED_SLIDED)) {
-			let target = DOM.queryUnique(event.detail.attr("href"));
+			let target = DOM.queryUnique(event.detail.target);
 			let targetPos = this.scroller().direction() === Direction.VERTICAL ?
 				target.position().top : target.position().left;
 

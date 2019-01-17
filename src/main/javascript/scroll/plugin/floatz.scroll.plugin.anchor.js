@@ -2,6 +2,10 @@ import DOM from "../../dom/floatz.dom.dom.js";
 import {ScrollPlugin} from "../floatz.scroll.scroller.js";
 import {EVENT_CLICK} from "../../dom/floatz.dom.events.js";
 import {SCROLL_EVENT_AFTERNAVGIATE, SCROLL_EVENT_BEFORENAVGIATE} from "../floatz.scroll.scroller.js";
+import {EVENT_POPSTATE} from "../../dom/floatz.dom.events.js";
+
+// Constants
+const LOG_PREFIX_SCROLLANCHORPLUGIN = "floatz | ScrollAnchorPlugin | ";
 
 /**
  * Scroll anchor plugin.
@@ -16,8 +20,13 @@ export class ScrollAnchorPlugin extends ScrollPlugin {
 
 		// Default options
 		this.options().anchorsSelector = options.anchorsSelector || ".flz-scroll-anchor";
-		this._anchors = this._prepareAnchors();
+		this._prepareAnchors();
 		this._clickHandlers = [];
+
+		// Scroll on state changes in browser history
+		window.addEventListener(EVENT_POPSTATE, (e) => {
+			_navigate(this.scroller(), e.state !== null ? e.state.target : "#home", null, false);
+		});
 	}
 
 	/**
@@ -57,29 +66,75 @@ export class ScrollAnchorPlugin extends ScrollPlugin {
 	_handleClick(anchor, event) {
 		// Use scroll navigation only when href contains an id
 		if (anchor.attr("href").startsWith("#")) {
-			let beforeEvent = DOM.createEvent(SCROLL_EVENT_BEFORENAVGIATE, true, true, anchor);
-			let afterEvent = DOM.createEvent(SCROLL_EVENT_AFTERNAVGIATE, true, false, anchor);
-
-			// Fire before navigation event
-			if (DOM.dispatchEvent(this.scroller().container(), beforeEvent)) {
-				event.preventDefault();
-				event.stopPropagation();
-
+			_navigate(this.scroller(), anchor.attr("href"), () => {
 				// Execute click handlers
 				this._clickHandlers
 					.forEach(handler => {
 						handler(anchor, event);
 					})
 				;
-
-				// Scroll to section the menu navigation item points to
-				this.scroller().scrollTo(anchor.attr("href"), {
-					complete: () => {
-						// Fire after navigation event
-						DOM.dispatchEvent(this.scroller().container(), afterEvent);
-					},
-				});
-			}
+			});
 		}
 	}
+}
+
+/**
+ * Navigate to target
+ *
+ * @param scroller Scroller
+ * @param target Target anchor
+ * @param action Optional action handler
+ * @param updateHistory Optional update history setting (default is true)
+ * @private
+ */
+function _navigate(scroller, target, action, updateHistory = true) {
+	let beforeEvent = DOM.createEvent(SCROLL_EVENT_BEFORENAVGIATE, true, true, {
+		target : target
+	});
+	let afterEvent = DOM.createEvent(SCROLL_EVENT_AFTERNAVGIATE, true, false, {
+		target : target
+	});
+
+	// Fire before navigation event
+	if (DOM.dispatchEvent(scroller.container(), beforeEvent)) {
+		event.preventDefault();
+		event.stopPropagation();
+
+		// Execute action callback
+		if(action !== null) {
+			action();
+		}
+
+		// Scroll to section the menu navigation item points to
+		scroller.scrollTo(target, {
+			complete: () => {
+				if (updateHistory) {
+					_updateHistory(target);
+				}
+
+				// Fire after navigation event
+				DOM.dispatchEvent(scroller.container(), afterEvent);
+			},
+		});
+	}
+}
+
+/**
+ * Update history.
+ *
+ * @param target Target anchor
+ * @private
+ */
+function _updateHistory(target) {
+	// TODO: Replace url if it contains index.html to avoid having index.html/<target> ...
+	// TODO: Support data-url to customize url name (instead of using the technical anchor)
+	let data = {
+		target: target
+	};
+	window.history.pushState(data, document.title, target);
+	if (target.toLowerCase() === "#home") {
+		window.history.replaceState(data, document.title, window.location.pathname);
+	}
+
+	console.debug(`${LOG_PREFIX_SCROLLANCHORPLUGIN} | Updating history to ${target}`);
 }
