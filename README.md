@@ -3,6 +3,8 @@
 > Under construction. In the meantime please refer to https://github.com/floatzcss/floatz
 
 ## Hot Topics
+* Scroller
+  * History / back-button support
 * Observe scroll items
   * Background parallax
   * Lazy load images
