@@ -514,6 +514,15 @@ export class DOMElement {
     }
 
     /**
+     * Return nearest parent which is not static.
+     *
+     * @returns {DOMElement} Offset parent element
+     */
+    offsetParent() {
+        return new DOMElement(this._origNode.offsetParent);
+    }
+
+    /**
      * Show element.
      *
      * Is able to save/restore the initial display value even if its an inline style.
@@ -600,6 +609,15 @@ export class DOMElement {
     removeChild(element) {
         this._origNode.removeChild(element.origNode());
         return this;
+    }
+
+    /**
+     * Get a specific child item.
+     *
+     * @param index Index of the child item
+     */
+    child(index) {
+        return new DOMElement(this._origNode.children[index]);
     }
 
     /**
