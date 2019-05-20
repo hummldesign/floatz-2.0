@@ -592,6 +592,7 @@ export class DOMElement {
 
     /**
      * Append child element.
+     *
      * @param  {DOMElement} element Child element
      * @returns {DOMElement} DOMElement for chaining
      */
@@ -618,6 +619,17 @@ export class DOMElement {
      */
     child(index) {
         return new DOMElement(this._origNode.children[index]);
+    }
+
+    /**
+     * Insert element before other element.
+     *
+     * @param element Inserted (moved) element
+     * @param reference Reference element
+     * @returns {DOMElement} Inserted element
+     */
+    insertBefore(element, reference) {
+        return new DOMElement(this._origNode.insertBefore(element._origNode, reference._origNode));
     }
 
     /**
@@ -698,10 +710,11 @@ export class DOMElement {
     /**
      * Get last child.
      *
+     * @param {boolean} elementsOnly Consider all nodes (false) or only elements true). Default is false.
      * @returns {?DOMElement} DOMElement or null if not an element
      */
-    lastChild() {
-        let child = this.origNode().lastChild;
+    lastChild(elementsOnly = false) {
+        let child = elementsOnly ? this.origNode().lastElementChild : this.origNode().lastChild;
         if (child instanceof Element) {
             return new DOMElement(child);
         }
@@ -712,12 +725,43 @@ export class DOMElement {
     /**
      * Get first child.
      *
+     * @param {boolean} elementsOnly Consider all nodes (false) or only elements true). Default is false.
      * @returns {DOMElement} DOMElement or null if not an element
      */
-    firstChild() {
-        let child = this.origNode().firstChild;
+    firstChild(elementsOnly = false) {
+        let child = elementsOnly ? this.origNode().firstElementChild : this.origNode().firstChild;
         if (child instanceof Element) {
             return new DOMElement(child);
+        }
+        // TODO Support DOMText as well
+        return null;
+    }
+
+    /**
+     * Get next sibling element.
+     *
+     * @param {boolean} elementsOnly Consider all nodes (false) or only elements true). Default is false.
+     * @returns {DOMElement} DOMElement or null if not an element
+     */
+    nextSibling(elementsOnly = false) {
+        let sibling = elementsOnly ? this.origNode().nextElementSibling : this.origNode().nextSibling;
+        if(sibling instanceof Element) {
+            return new DOMElement(sibling);
+        }
+        // TODO Support DOMText as well
+        return null;
+    }
+
+    /**
+     * Get previous sibling element.
+     *
+     * @param {boolean} elementsOnly Consider all nodes (false) or only elements true). Default is false.
+     * @returns {DOMElement} DOMElement or null if not an element
+     */
+    previousSibling(elementsOnly = false) {
+        let sibling = elementsOnly ? this.origNode().previousElementSibling : this.origNode().previousSibling;
+        if(sibling instanceof Element) {
+            return new DOMElement(sibling);
         }
         // TODO Support DOMText as well
         return null;
