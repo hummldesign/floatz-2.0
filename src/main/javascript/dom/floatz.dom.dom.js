@@ -447,7 +447,7 @@ export class DOMElement {
      *
      * @param name Attribute name
      * @param {string=} value Attribute value (optional)
-     * @returns {*} Attribute value or DOMElement for chaining when used as setter
+     * @returns Attribute value or DOMElement for chaining when used as setter
      */
     attr(name, value) {
         if (value === undefined) {
