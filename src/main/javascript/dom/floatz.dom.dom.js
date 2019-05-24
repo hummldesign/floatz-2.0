@@ -516,10 +516,11 @@ export class DOMElement {
     /**
      * Return nearest parent which is not static.
      *
-     * @returns {DOMElement} Offset parent element
+     * @returns {DOMElement} Offset parent element or null
      */
     offsetParent() {
-        return new DOMElement(this._origNode.offsetParent);
+        let parent =  this._origNode.offsetParent;
+        return parent != null ? new DOMElement(this._origNode.offsetParent) : null;
     }
 
     /**
