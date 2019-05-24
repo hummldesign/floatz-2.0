@@ -21,6 +21,7 @@ export const EVENT_SCROLL = "scroll";
 export const EVENT_TOUCHSTART = "touchstart";
 export const EVENT_TOUCHEND = "touchend";
 export const EVENT_MOUSEOVER = "mouseover";
+export const EVENT_MOUSEOUT = "mouseout";
 export const EVENT_MOUSEENTER = "mouseenter";
 export const EVENT_MOUSELEAVE = "mouseleave";
 
