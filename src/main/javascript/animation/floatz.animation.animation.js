@@ -32,6 +32,7 @@ export class Animation {
 	 * Trigger the CSS animation.
 	 *
 	 * @param handler Trigger handler
+	 * @returns {Animation} Animation
 	 */
 	trigger(handler) {
 		console.debug(LOG_PREFIX + this._type + " triggered");
@@ -51,6 +52,7 @@ export class Animation {
 				this._endHandler();
 			}
 		}
+		return this;
 	}
 
 	/**

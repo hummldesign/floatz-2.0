@@ -89,19 +89,17 @@ export class ScrollAnchorPlugin extends ScrollPlugin {
  */
 function _navigate(scroller, target, action, updateHistory = true) {
 	let beforeEvent = DOM.createEvent(SCROLL_EVENT_BEFORENAVGIATE, true, true, {
-		target : target
+		target: target
 	});
 	let afterEvent = DOM.createEvent(SCROLL_EVENT_AFTERNAVGIATE, true, false, {
-		target : target
+		target: target
 	});
 
 	// Fire before navigation event
 	if (DOM.dispatchEvent(scroller.container(), beforeEvent)) {
-		event.preventDefault();
-		event.stopPropagation();
 
 		// Execute action callback
-		if(action !== null) {
+		if (action !== null) {
 			action();
 		}
 

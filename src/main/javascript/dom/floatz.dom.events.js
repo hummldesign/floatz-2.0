@@ -14,12 +14,14 @@ export const EVENT_TRANSITIONITERATION = "transitioniteration";
 export const EVENT_TRANSITIONSTART = "transitionstart";
 export const EVENT_CHANGE = "change";
 export const EVENT_CLICK = "click";
+export const EVENT_HOVER = "hover";
 export const EVENT_DOUBLECLICK = "dblclick";
 export const EVENT_RESIZE = "resize";
 export const EVENT_SCROLL = "scroll";
 export const EVENT_TOUCHSTART = "touchstart";
 export const EVENT_TOUCHEND = "touchend";
 export const EVENT_MOUSEOVER = "mouseover";
+export const EVENT_MOUSEOUT = "mouseout";
 export const EVENT_MOUSEENTER = "mouseenter";
 export const EVENT_MOUSELEAVE = "mouseleave";
 

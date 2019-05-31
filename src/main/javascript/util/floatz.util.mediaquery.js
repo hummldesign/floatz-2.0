@@ -23,6 +23,8 @@ export const MEDIA_SIZE_GTE_S = "(min-width: 481px)";
 export const MEDIA_SIZE_GTE_M = "(min-width: 768px)";
 export const MEDIA_SIZE_GTE_L = "(min-width: 980px)";
 export const MEDIA_SIZE_GTE_XL = "(min-width: 1200px)";
+export const MEDIA_PORTRAIT = "(orientation: portrait)";
+export const MEDIA_LANDSCAPE = "(orientation: landscape)";
 
 /**
  * Media query utilities.
