@@ -784,9 +784,9 @@ export class DOMElement {
             }
         } else {
             if (!value) {
-                return this.origNode().getAttribute("data-" + _fromCamelCase(property));
+                return this.origNode().getAttribute("data-" + StringUtils.fromCamelCase(property));
             } else {
-                let label = _fromCamelCase(property).replace("data", "");
+                let label = StringUtils.fromCamelCase((property).replace("data", ""));
                 this.origNode().setAttribute(`data-${label.substr(0, 1).toLowerCase()+ label.substring(1)}`, value);
             }
         }
@@ -866,21 +866,4 @@ function _rememberDisplayValue(domElement) {
 function _restoreDisplayValue(domElement, prevValueAttr, preValue) {
     domElement.css(DISPLAY, preValue);
     domElement.removeAttr(prevValueAttr);
-}
-
-/**
- * Convert string from camel case to kebap case.
- *
- * @param string String in camel case (e.g. alternateLabel)
- * @returns {string} String in kebap case (e.g. alternate-label)
- * @private
- */
-function _fromCamelCase(string) {
-    return string.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
-}
-
-function _toCamelCase(string) {
-    string.replace(/-([a-z])/g, function (m, w) {
-        return w.toUpperCase();
-    });
 }
