@@ -519,7 +519,7 @@ export class DOMElement {
      * @returns {DOMElement} Offset parent element or null
      */
     offsetParent() {
-        let parent =  this._origNode.offsetParent;
+        let parent = this._origNode.offsetParent;
         return parent != null ? new DOMElement(this._origNode.offsetParent) : null;
     }
 
@@ -746,7 +746,7 @@ export class DOMElement {
      */
     nextSibling(elementsOnly = false) {
         let sibling = elementsOnly ? this.origNode().nextElementSibling : this.origNode().nextSibling;
-        if(sibling instanceof Element) {
+        if (sibling instanceof Element) {
             return new DOMElement(sibling);
         }
         // TODO Support DOMText as well
@@ -761,7 +761,7 @@ export class DOMElement {
      */
     previousSibling(elementsOnly = false) {
         let sibling = elementsOnly ? this.origNode().previousElementSibling : this.origNode().previousSibling;
-        if(sibling instanceof Element) {
+        if (sibling instanceof Element) {
             return new DOMElement(sibling);
         }
         // TODO Support DOMText as well
@@ -775,11 +775,20 @@ export class DOMElement {
      * @returns {string | undefined | DOMElement}
      */
     data(property, value) {
-        if (!value) {
-            return this.origNode().dataset[property];
+        if (this.origNode().dataset) {
+            if (!value) {
+                return this.origNode().dataset[property];
+            } else {
+                this.origNode().dataset[property] = value;
+                return this;
+            }
         } else {
-            this.origNode().dataset[property] = value;
-            return this;
+            if (!value) {
+                return this.origNode().getAttribute("data-" + _fromCamelCase(property));
+            } else {
+                let label = _fromCamelCase(property).replace("data", "");
+                this.origNode().setAttribute(`data-${label.substr(0, 1).toLowerCase()+ label.substring(1)}`, value);
+            }
         }
     }
 }
@@ -857,4 +866,21 @@ function _rememberDisplayValue(domElement) {
 function _restoreDisplayValue(domElement, prevValueAttr, preValue) {
     domElement.css(DISPLAY, preValue);
     domElement.removeAttr(prevValueAttr);
+}
+
+/**
+ * Convert string from camel case to kebap case.
+ *
+ * @param string String in camel case (e.g. alternateLabel)
+ * @returns {string} String in kebap case (e.g. alternate-label)
+ * @private
+ */
+function _fromCamelCase(string) {
+    return string.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
+function _toCamelCase(string) {
+    string.replace(/-([a-z])/g, function (m, w) {
+        return w.toUpperCase();
+    });
 }
