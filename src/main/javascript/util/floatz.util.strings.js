@@ -47,9 +47,10 @@ export default class Strings {
      * Convert string from kebap case to camel case.
      *
      * @param string String in kebap case
+     * @return {string} String in camel case
      */
     static toCamelCase(string) {
-        string.replace(/-([a-z])/g, function (m, w) {
+        return string.replace(/-([a-z])/g, function (m, w) {
             return w.toUpperCase();
         });
     }
