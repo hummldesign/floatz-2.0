@@ -126,13 +126,14 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 
 	/**
 	 * Handle before navigation.
-	 * @param navItem Navigation item
+	 *
+	 * @param event Custom scroll event
 	 * @private
 	 */
-	_handleBeforeNavigate(navItem) {
+	_handleBeforeNavigate(event) {
 		// Define header offset for slideout header on navigation depending on scroll direction
 		if (this._header.hasClass(HEADER_FIXED_SLIDED)) {
-			let target = DOM.queryUnique(navItem.attr("href"));
+			let target = DOM.queryUnique(event.detail.target);
 			let targetPos = this.scroller().direction() === Direction.VERTICAL ?
 				target.position().top : target.position().left;
 
