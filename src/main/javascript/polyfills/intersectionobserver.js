@@ -558,7 +558,7 @@
 	/**
 	 * Returns the result of the performance.now() method or null in browsers
 	 * that don't support the API.
-	 * @return {number} The elapsed time since the page was requested.
+	 * @return {number|null} The elapsed time since the page was requested.
 	 */
 	function now() {
 		return window.performance && performance.now && performance.now();
