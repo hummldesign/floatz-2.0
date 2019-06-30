@@ -41,6 +41,26 @@ export default class UserAgent {
 			return false;
 		}
 	}
+
+	/**
+	 * Detect if device is Android based.
+	 *
+	 * @returns {boolean} true if Android, false if not
+	 */
+	static isAndroid() {
+		let ua = navigator.userAgent;
+		return !!ua.match(/Android/i);
+	}
+
+	/**
+	 * Detect if device is iOS based.
+	 *
+	 * @returns {boolean} true if iOS, false if not
+	 */
+	static isIPhone() {
+		let ua = navigator.userAgent;
+		return !!ua.match(/iPhone/i);
+	}
 }
 
 /**
