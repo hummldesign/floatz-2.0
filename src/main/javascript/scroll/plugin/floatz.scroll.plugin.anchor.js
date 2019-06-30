@@ -67,6 +67,9 @@ export class ScrollAnchorPlugin extends ScrollPlugin {
 		// Use scroll navigation only when href contains an id
 		if (anchor.attr("href").startsWith("#")) {
 			_navigate(this.scroller(), anchor.attr("href"), () => {
+				event.preventDefault();
+				event.stopPropagation();
+
 				// Execute click handlers
 				this._clickHandlers
 					.forEach(handler => {

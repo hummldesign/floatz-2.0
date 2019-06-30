@@ -49,8 +49,8 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 			});
 
 			// Add custom event handler
-			DOM.addEvent(scroller.container(), SCROLL_EVENT_BEFORENAVGIATE, (e) => {
-				this._handleBeforeNavigate(e);
+			DOM.addEvent(scroller.container(), SCROLL_EVENT_BEFORENAVGIATE, (navItem) => {
+				this._handleBeforeNavigate(navItem);
 			});
 
 			// Add event handler for location changes
@@ -112,7 +112,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 			if (!this._visible) {
 				// Don´t show header when scrolling below bottom position on mobile device
 				if ((this.scroller().prevScrollPos() +
-						this.scroller().viewportSize()) <= this.scroller().scrollSize()) {
+					this.scroller().viewportSize()) <= this.scroller().scrollSize()) {
 
 					//console.debug(LOG_PREFIX + "Showing header");
 					this._header.css("top", null);
@@ -126,13 +126,13 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 
 	/**
 	 * Handle before navigation.
-	 * @param event Event data
+	 * @param navItem Navigation item
 	 * @private
 	 */
-	_handleBeforeNavigate(event) {
+	_handleBeforeNavigate(navItem) {
 		// Define header offset for slideout header on navigation depending on scroll direction
 		if (this._header.hasClass(HEADER_FIXED_SLIDED)) {
-			let target = DOM.queryUnique(event.detail.target);
+			let target = DOM.queryUnique(navItem.attr("href"));
 			let targetPos = this.scroller().direction() === Direction.VERTICAL ?
 				target.position().top : target.position().left;
 
