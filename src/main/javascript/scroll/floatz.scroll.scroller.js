@@ -284,7 +284,7 @@ export class Scroller {
 
 	/**
 	 * Scroll to
-	 * @param {(number|Object|string)} target Target element or position
+	 * @param {(Object|string)} target Target element or position
 	 * @param {Object=} options Scroll options
 	 * @returns {Scroller} Scroller for chaining
 	 */
@@ -313,6 +313,7 @@ export class Scroller {
 	 */
 	scrollPos(position) {
 		if (position) {
+			console.log(position);
 			if (this.direction() === Direction.VERTICAL) {
 				this._options.scrollable.scrollTop = position;
 			} else {
@@ -379,7 +380,7 @@ export class ScrollAnimation {
 	 * Constructor.
 	 *
 	 * @param {Object} container Scroll container
-	 * @param {(number|string|Object)} target Target element or position
+	 * @param {(string|Object)} target Target element or position
 	 * @param {Object} options Scroll options
 	 */
 	constructor(container, target, options) {
@@ -452,25 +453,20 @@ export class ScrollAnimation {
 	/**
 	 * Convert target to DOMElement.
 	 *
-	 * @param {(DOMElement|Object|string|number)} target Target element or position
+	 * @param {(DOMElement|Object|string)} target Target element or position
 	 * @returns {*} DOMElement
 	 */
 	element(target) {
 		let element = null;
 		switch (typeof target) {
-			case 'DOMElement':
-				// Just use the DOMElement
-				element = target;
-				break;
-			case 'number':
-				// Target position is directly used later on
-				break;
 			case 'object':
-				// Convert _element into DOMElement
-				element = new DOMElement(target);
+				if(target instanceof DOMElement) {
+					element = target;
+				} else {
+					element = new DOMElement(target);
+				}
 				break;
 			case 'string':
-				// Query DOMElement by id or class
 				element = DOM.queryUnique(target);
 				break;
 		}

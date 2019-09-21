@@ -26,10 +26,11 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 
 		// Default options
 		this.options().headerSelector = options.headerSelector || "header";
+		this.options().scrollOnload = true;
 		this._header = DOM.queryUnique(this.options().headerSelector);
-		this.options().slideOutOffset = this._header.height();
+		this._slidedOffset = this._header.height();
 		this._visible = true;
-		this._preserved = false;
+		this._canHide = window.location.hash.length === 0;
 	}
 
 	/**
@@ -45,7 +46,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 
 			// Adjust scroll position on page load
 			DOM.addEvent(window, "load", () => {
-				this._adjustScrollPos(true);
+				this._adjustScrollPosOnHashNavigation(true);
 			});
 
 			// Add custom event handler
@@ -79,22 +80,17 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 	 */
 	onScrollForward() {
 		if (this._header.hasClass(HEADER_FIXED_SLIDED)) {
-			if (this._visible) {
-
-				// Don´t hide header when page loads with hash
-				if (!this._preserved && window.location.hash.length > 0) {
-					return;
-				}
+			if (this._visible && this._canHide) {
 
 				// Don´t hide header when scrolling over top position on mobile devices
-				if (this.scroller().scrollPos() >= this.options().slideOutOffset) {
+				if (this.scroller().scrollPos() >= this._slidedOffset) {
 					this._header.animate("transition")
 						.end(() => {
 							this._hideScrollShadow();
 							this.scroller().offset(0);
 						})
 						.trigger(() => {
-							//console.debug(LOG_PREFIX + "Hiding header");
+							// console.debug(LOG_PREFIX + "Hiding header");
 							this._header.css("top", -this._header.height() + "px");
 							this._visible = false;
 						})
@@ -114,7 +110,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 				if ((this.scroller().prevScrollPos() +
 					this.scroller().viewportSize()) <= this.scroller().scrollSize()) {
 
-					//console.debug(LOG_PREFIX + "Showing header");
+					// console.debug(LOG_PREFIX + "Showing header");
 					this._header.css("top", null);
 					this.scroller().offset(this._header.height() * -1);
 					this._showScrollShadow();
@@ -168,41 +164,42 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 	}
 
 	_handleHashChange() {
-		this._adjustScrollPos(false);
+		this._adjustScrollPosOnHashNavigation(false);
 	}
 
 	/**
-	 * Adjust scroll position.
-	 *
-	 * @param reset Rest scroll position
+	 * Adjust scroll position on hash navigation.
+	 * @param {boolean} onload True on page load, otherwise false
 	 * @private
 	 */
-	_adjustScrollPos(reset) {
+	_adjustScrollPosOnHashNavigation(onload) {
 		if (window.location.hash.length > 0) {
-			if (reset) {
-				// Prevent hiding the header when initial navigation has been done via hash
-				window.scrollTo(0, 0);
-				window.setTimeout(() => {
-					this._preserved = true;
-				}, 1000);
+			let hash = window.location.hash.substring(1); // Remove #
+
+			// Try to find target in page sections (using its non-technical id)
+			let target = DOM.query(".flz-page-section")
+				.find(section => section.data("id") === hash);
+
+			// Try to find target via its technical id
+			if (!target) {
+				target = DOM.queryById(hash);
 			}
-
-			let offset = 0 + this.scroller().offset();
-			let target = DOM.queryUnique(window.location.hash);
 			if (target) {
-				if (this._header.hasClass(HEADER_FIXED_SLIDED)) {
-					if (this.scroller().prevScrollPos() < this.scroller().scrollPos() && this._preserved) {
-						offset = 0;
-					} else {
-						offset = this._header.height() * -1;
-					}
-				}
 
-				if (this.scroller().direction() === Direction.VERTICAL) {
-					window.scrollTo(0, this.scroller().scrollPos() + target.offset().top + offset);
-				} else {
-					window.scrollTo(this.scroller().scrollPos() + target.offset().left + offset, 0);
-				}
+				// FIXME - Prevent hiding header when scrolling with hashes (initial load works)
+
+				this.scroller().scrollTo(target, {
+					complete: () => {
+						if(onload) {
+							if (!this._canHide) {
+								// Prevent hiding the header to early
+								window.setTimeout(() => {
+									this._canHide = true;
+								}, 1000);
+							}
+						}
+					}
+				});
 			}
 		}
 	}

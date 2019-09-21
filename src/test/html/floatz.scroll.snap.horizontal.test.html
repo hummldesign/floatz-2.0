@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>floatz 2.0 | floatz.scroll.scroller.js | Test Suite</title>
+	<link rel="shortcut icon" type="image/png" href="../../../lib/jasmine-2.7.0/jasmine_favicon.png">
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			scroll-snap-type: x mandatory;
+			width: 400vw;
+		}
+
+		/* Scroll snap only works with container, not on body (Chrome bug) */
+		#container {
+			box-sizing: border-box;
+			overflow-x: scroll;
+			max-height: 100vh;
+			width: 400vw;
+		}
+
+		#first, #second, #third, #fourth {
+			box-sizing: border-box;
+			/* display: inline-block; */
+			float: left;
+			min-height: 100vh;
+			padding: 1em;
+			width: 100vw;
+			scroll-snap-align: start;
+		}
+
+		#first {
+			background-color: lightcoral;
+		}
+
+		#second {
+			background-color: lightyellow;
+		}
+
+		#third {
+			background-color: lightgreen;
+		}
+
+		#fourth {
+			background-color: lightblue;
+		}
+	</style>
+</head>
+<body>
+	<!-- Test data -->
+	<div id="first">
+		<h2>Chapter 1</h2>
+		<p>
+			Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+		</p>
+	</div>
+	<div id="second">
+		<h2>Chapter 2</h2>
+		<p>
+			Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+		</p>
+	</div>
+	<div id="third">
+		<h2>Chapter 3</h2>
+		<p>
+			Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+		</p>
+	</div>
+	<div id="fourth">
+		<h2>Chapter 4</h2>
+		<p>
+			Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+		</p>
+	</div>
+</body>
+</html>

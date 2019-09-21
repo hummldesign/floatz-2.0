@@ -67,8 +67,8 @@ export class ScrollAnchorPlugin extends ScrollPlugin {
 		// Use scroll navigation only when href contains an id
 		if (anchor.attr("href").startsWith("#")) {
 			_navigate(this.scroller(), anchor.attr("href"), () => {
-				event.preventDefault();
-				event.stopPropagation();
+				event.preventDefault(); // Stop default click behaviour
+				event.stopPropagation(); // Stop bubbling the event up the DOM
 
 				// Execute click handlers
 				this._clickHandlers
@@ -128,11 +128,17 @@ function _navigate(scroller, target, action, updateHistory = true) {
  */
 function _updateHistory(target) {
 	// TODO: Replace url if it contains index.html to avoid having index.html/<target> ...
-	// TODO: Support data-url to customize url name (instead of using the technical anchor)
 	let data = {
 		target: target
 	};
-	window.history.pushState(data, document.title, target);
+
+	let element = DOM.queryUnique(target);
+	if(element.data("id") !== null) {
+		window.history.pushState(data, document.title, "#" + element.data("id"));
+	} else {
+		window.history.pushState(data, document.title, target);
+	}
+
 	if (target.toLowerCase() === "#home") {
 		window.history.replaceState(data, document.title, window.location.pathname);
 	}
