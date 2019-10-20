@@ -2,7 +2,7 @@ import DOM from "../../dom/floatz.dom.dom.js";
 import {ScrollPlugin} from "../floatz.scroll.scroller.js";
 import {EVENT_CLICK} from "../../dom/floatz.dom.events.js";
 import {SCROLL_EVENT_AFTERNAVGIATE, SCROLL_EVENT_BEFORENAVGIATE} from "../floatz.scroll.scroller.js";
-import {EVENT_POPSTATE} from "../../dom/floatz.dom.events.js";
+import {EVENT_POPSTATE, EVENT_LOAD} from "../../dom/floatz.dom.events.js";
 
 // Constants
 const LOG_PREFIX_SCROLLANCHORPLUGIN = "floatz | ScrollAnchorPlugin | ";
@@ -85,12 +85,19 @@ export class ScrollAnchorPlugin extends ScrollPlugin {
  * Navigate to target
  *
  * @param scroller Scroller
- * @param target Target anchor
+ * @param target Target anchor as href
  * @param action Optional action handler
  * @param updateHistory Optional update history setting (default is true)
  * @private
  */
 function _navigate(scroller, target, action, updateHistory = true) {
+
+	// Consider data-id to be used to find scroll target
+	let dataIdTarget = _findTargetByDataId(target);
+	if(dataIdTarget) {
+		target = "#" + dataIdTarget.id();
+	}
+
 	let beforeEvent = DOM.createEvent(SCROLL_EVENT_BEFORENAVGIATE, true, true, {
 		target: target
 	});
@@ -144,4 +151,17 @@ function _updateHistory(target) {
 	}
 
 	console.debug(`${LOG_PREFIX_SCROLLANCHORPLUGIN} | Updating history to ${target}`);
+}
+/**
+ * Find target by data-id
+ *
+ * @param dataId Data id (href)
+ * @returns {*} Scroll target or undefined
+ * @private
+ */
+function _findTargetByDataId(dataId) {
+	let targets = DOM.query("[data-id]");
+	return targets.find((target) => {
+		return ("#"+target.data("id")) === dataId;
+	});
 }
