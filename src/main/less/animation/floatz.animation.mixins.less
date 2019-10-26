@@ -35,6 +35,23 @@
 }
 
 /**
+ * Transform mixin.
+ *
+ * Parameter:
+ *
+ *      @arguments <function> | none;
+ *
+ * Examples:
+ *
+ *      .flz-mx-transform(rotate(-90deg));
+ */
+.flz-mx-transform(@arguments) {
+	-webkit-transform: @arguments; /* Ch <36, Saf 5.1+, iOS < 9.2, An =<4.4.4 */
+	-ms-transform: @arguments; /* IE 9 */
+	transform: @arguments; /* IE 10, Fx 16+, Op 12.1+ */
+}
+
+/**
  * Keyframes mixin.
  *
  * Parameter:
