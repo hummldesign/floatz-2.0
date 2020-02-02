@@ -140,7 +140,7 @@ function _updateHistory(target) {
 	};
 
 	let element = DOM.queryUnique(target);
-	if(element.data("id") !== null) {
+	if(element.data("id")) {
 		window.history.pushState(data, document.title, "#" + element.data("id"));
 	} else {
 		window.history.pushState(data, document.title, target);
