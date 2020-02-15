@@ -67,3 +67,28 @@
 		}
 	}
 }
+
+.flz-ribbon, .flz-vribbon {
+	background-color: #000;
+	margin-right: -0.5em;
+	position: fixed;
+	right: 0;
+	z-index: 99;
+	a {
+		display: block;
+		color: #fff;
+		&:link {
+			text-decoration: none;
+		}
+	}
+}
+.flz-ribbon {
+	padding: 0.5em 1.5em 0.5em 1em;
+}
+.flz-vribbon {
+	padding: 0 0.5em 0 0;
+	a {
+		transform: rotate(-90deg);
+		margin-top: 2.25em;
+	}
+}
