@@ -61,6 +61,14 @@ export default class UserAgent {
 		let ua = navigator.userAgent;
 		return !!ua.match(/iPhone/i);
 	}
+
+	/**
+	 * Detect if device is a touch device.
+	 * @returns {boolean} true if touch device, false if not
+	 */
+	static isTouchDevice() {
+		return "ontouchstart" in document.documentElement;
+	}
 }
 
 /**
