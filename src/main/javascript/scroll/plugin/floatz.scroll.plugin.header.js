@@ -25,7 +25,7 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 		super(options);
 
 		// Default options
-		this.options().headerSelector = options.headerSelector || "header";
+		this.options().headerSelector = options.headerSelector || "#header";
 		this.options().scrollOnload = true;
 		this._header = DOM.queryUnique(this.options().headerSelector);
 		this._slidedOffset = this._header.height();
