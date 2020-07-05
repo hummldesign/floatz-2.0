@@ -1,5 +1,5 @@
 import DOM from "../../dom/floatz.dom.dom.js";
-import {Direction} from "../floatz.scroll.scroller.js";
+import {Orientation} from "../floatz.scroll.scroller.js";
 import {ScrollPlugin} from "../floatz.scroll.scroller.js";
 import {SCROLL_EVENT_BEFORENAVGIATE} from "../floatz.scroll.scroller.js";
 import {EVENT_HASHCHANGE} from "../../dom/floatz.dom.events.js";
@@ -127,10 +127,10 @@ export class ScrollHeaderPlugin extends ScrollPlugin {
 	 * @private
 	 */
 	_handleBeforeNavigate(event) {
-		// Define header offset for slideout header on navigation depending on scroll direction
+		// Define header offset for slideout header on navigation depending on scroll orientation
 		if (this._header.hasClass(HEADER_FIXED_SLIDED)) {
 			let target = DOM.queryUnique(event.detail.target);
-			let targetPos = this.scroller().direction() === Direction.VERTICAL ?
+			let targetPos = this.scroller().orientation() === Orientation.VERTICAL ?
 				target.position().top : target.position().left;
 
 			if (targetPos > this.scroller().scrollPos()) {

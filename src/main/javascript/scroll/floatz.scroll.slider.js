@@ -1,7 +1,8 @@
 import DOM, {DOMElement} from "../dom/floatz.dom.dom.js";
-import {Scroller, Direction} from "./floatz.scroll.scroller.js";
+import {Scroller} from "./floatz.scroll.scroller.js";
 import {TouchZone} from "../gesture/floatz.gesture.touchzone.js";
 import {EVENT_RESIZE} from "../dom/floatz.dom.events.js";
+import {Orientation} from "./floatz.scroll.scroller.js";
 
 // Constants for events
 
@@ -25,7 +26,7 @@ export class Slider {
 
 		// Initialize scroll container for slider
 		this._scroller = new Scroller(this._container, {
-			direction: Direction.HORIZONTAL
+			orientation: Orientation.HORIZONTAL
 		});
 
 		// Retrieve slider items

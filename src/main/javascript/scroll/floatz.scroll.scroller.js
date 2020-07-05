@@ -22,11 +22,11 @@ export const SCROLL_EVENT_BEFORENAVGIATE = "flz-event-before-navigate";
 export const SCROLL_EVENT_AFTERNAVGIATE = "flz-event-after-navigate";
 
 /**
- * Scroll direction enum.
+ * Scroll orientation enum.
  *
  * @type {Object}
  */
-export const Direction = Object.freeze({
+export const Orientation = Object.freeze({
 	HORIZONTAL: Symbol("horizontal"),
 	VERTICAL: Symbol("vertical")
 });
@@ -43,7 +43,7 @@ export class Scroller {
 	 */
 	constructor(container = window, options = {}) {
 		this._options = options;
-		this._options.direction = options.direction || Direction.VERTICAL;
+		this._options.orientation = options.orientation || Orientation.VERTICAL;
 		this._options.offset = options.offset || 0;
 		this._options.intersection = options.intersection || {};
 		this._plugins = [];
@@ -52,6 +52,7 @@ export class Scroller {
 		this._scrollEndHandlers = [];
 		this._scrollInHandlers = [];
 		this._scrollOutHandlers = [];
+		this._observeHandlers = [];
 		this._scrollHandler = null;
 		this._container = container;
 		this._scrolling = false;
@@ -71,7 +72,7 @@ export class Scroller {
 			this._options.scrollable = this._container;
 		}
 
-		this._options.intersection.threshold = options.intersection.threshold || [0.1]; // Ensure firing at 0 and 100% visibility
+		this._options.intersection.threshold = options.intersection.threshold || [0.1, 0.2, 0.4, 0.6, 0.8, 0.9, 1.0]; // Ensure firing at 0 and 100% visibility
 		this._options.intersection.rootMargin = options.intersection.rootMargin;
 		if (options.intersection.root) {
 			this._options.intersection.root = options.intersection.root;
@@ -282,6 +283,18 @@ export class Scroller {
 		return this;
 	}
 
+	onObserve(target, handler) {
+		_initIntersectionObserver(this, target);
+		let targets = Array.isArray(target) ? target : new Array(target);
+		targets.forEach((target) => {
+			this._observeHandlers.push({
+				target: target,
+				handler: handler
+			});
+		});
+		return this;
+	}
+
 	/**
 	 * Scroll to
 	 * @param {(Object|string)} target Target element or position
@@ -297,12 +310,12 @@ export class Scroller {
 	}
 
 	/**
-	 * Get scroll direction configure via the constructor.
+	 * Get scroll orientation configure via the constructor.
 	 *
-	 * @return {Object} direction Scroll Direction
+	 * @return {Object} Scroll Orientation
 	 */
-	direction() {
-		return this._options.direction;
+	orientation() {
+		return this._options.orientation;
 	}
 
 	/**
@@ -314,14 +327,14 @@ export class Scroller {
 	scrollPos(position) {
 		if (position) {
 			console.log(position);
-			if (this.direction() === Direction.VERTICAL) {
+			if (this.orientation() === Orientation.VERTICAL) {
 				this._options.scrollable.scrollTop = position;
 			} else {
 				this._options.scrollable.scrollLeft = position;
 			}
 			return this;
 		} else {
-			return this.direction() === Direction.VERTICAL ? this._options.scrollable.scrollTop : this._options.scrollable.scrollLeft;
+			return this.orientation() === Orientation.VERTICAL ? this._options.scrollable.scrollTop : this._options.scrollable.scrollLeft;
 		}
 	}
 
@@ -340,7 +353,7 @@ export class Scroller {
 	 * @returns {number} Scroll container size in px
 	 */
 	scrollSize() {
-		if (this.direction() === Direction.VERTICAL) {
+		if (this.orientation() === Orientation.VERTICAL) {
 			return this._options.scrollable.scrollHeight;
 		} else {
 			return this._options.scrollable.scrollWidth;
@@ -352,7 +365,7 @@ export class Scroller {
 	 * @returns {number} Scroll container viewport size in px
 	 */
 	viewportSize() {
-		if (this.direction() === Direction.VERTICAL) {
+		if (this.orientation() === Orientation.VERTICAL) {
 			if (DOM.isWindow(this._container)) {
 				return this._container.innerHeight;
 			} else {
@@ -366,6 +379,9 @@ export class Scroller {
 			}
 		}
 	}
+
+
+
 }
 
 /**
@@ -421,8 +437,8 @@ export class ScrollAnimation {
 	 * @returns {(number)} Start position
 	 */
 	startPos() {
-		// Get scroll _start position depending on scroll direction
-		if (this._options.direction === Direction.VERTICAL) {
+		// Get scroll _start position depending on scroll orientation
+		if (this._options.orientation === Orientation.VERTICAL) {
 			return this._options.scrollable.scrollTop;
 		} else {
 			return this._options.scrollable.scrollLeft;
@@ -440,8 +456,8 @@ export class ScrollAnimation {
 			// Just use the px position of the target
 			return target;
 		} else {
-			// Get scroll stop position depending on scroll direction
-			if (this._options.direction === Direction.VERTICAL) {
+			// Get scroll stop position depending on scroll orientation
+			if (this._options.orientation === Orientation.VERTICAL) {
 				return this._element.origNode().getBoundingClientRect().top + this._start;
 			} else {
 				return this._element.origNode().getBoundingClientRect().left + this._start;
@@ -512,7 +528,7 @@ export class ScrollAnimation {
 	 * @param {number} position Scroll position
 	 */
 	scroll(position) {
-		if (this._options.direction === Direction.VERTICAL) {
+		if (this._options.orientation === Orientation.VERTICAL) {
 			this._options.scrollable.scrollTop = position;
 		} else {
 			this._options.scrollable.scrollLeft = position;
@@ -644,6 +660,14 @@ function _initIntersectionObserver(scroller, target) {
 		// FIXME Consider fixed header offsets
 		scroller._observer = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
+
+				// Run handlers for observed elements
+				scroller._observeHandlers.filter(handler => handler.target.origNode() === entry.target)
+					.forEach((handler) => {
+						handler.handler(entry);
+					})
+				;
+
 				if (entry.isIntersecting) {
 					// Run scroll-in handlers
 					scroller._scrollInHandlers.filter(handler => handler.target.origNode() === entry.target)
