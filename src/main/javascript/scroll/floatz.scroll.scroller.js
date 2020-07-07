@@ -72,7 +72,7 @@ export class Scroller {
 			this._options.scrollable = this._container;
 		}
 
-		this._options.intersection.threshold = options.intersection.threshold || [0.1, 0.2, 0.4, 0.6, 0.8, 0.9, 1.0]; // Ensure firing at 0 and 100% visibility
+		this._options.intersection.threshold = options.intersection.threshold || [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]; // Ensure firing at 0 and 100% visibility
 		this._options.intersection.rootMargin = options.intersection.rootMargin;
 		if (options.intersection.root) {
 			this._options.intersection.root = options.intersection.root;
@@ -233,6 +233,7 @@ export class Scroller {
 
 	/**
 	 * Scroll into viewport handler.
+	 * Observe elements when they scroll into the viewport.
 	 * <p>
 	 *     The registered handler is executed as soon as the target element scrolls into the viewport.
 	 *     TODO: Consider custom thresholds
@@ -246,6 +247,7 @@ export class Scroller {
 	 * @returns {Scroller} Scroller for chaining
 	 */
 	onScrollIn(target, handler) {
+		// Remove redundant code - see onScrollOut, onScrollIntersected
 		_initIntersectionObserver(this, target);
 		let targets = Array.isArray(target) ? target : new Array(target);
 		targets.forEach((target) => {
@@ -259,6 +261,7 @@ export class Scroller {
 
 	/**
 	 * Scroll out of viewport handler.
+	 * Oberserv elements when they scroll out of the viewport.
 	 * <p>
 	 *     The registered handler is executed as soon as the target element scrolls out of the viewport.
 	 *     TODO: Consider custom thresholds
@@ -283,7 +286,15 @@ export class Scroller {
 		return this;
 	}
 
-	onObserve(target, handler) {
+	/**
+	 * Scroll intersected elements in viewport handler.
+	 * Observe elements while they are visible in the viewport.
+	 *
+	 * @param {DOMElement|Array} target Observed target element(s)
+	 * @param {Function} handler Custom handler
+	 * @returns {Scroller} Scroller for chaining
+	 */
+	onScrollIntersected(target, handler) {
 		_initIntersectionObserver(this, target);
 		let targets = Array.isArray(target) ? target : new Array(target);
 		targets.forEach((target) => {
@@ -296,7 +307,8 @@ export class Scroller {
 	}
 
 	/**
-	 * Scroll to
+	 * Scroll to to element.
+	 *
 	 * @param {(Object|string)} target Target element or position
 	 * @param {Object=} options Scroll options
 	 * @returns {Scroller} Scroller for chaining
