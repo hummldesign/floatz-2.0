@@ -20,12 +20,13 @@ export class ScrollAnchorPlugin extends ScrollPlugin {
 
 		// Default options
 		this.options().anchorsSelector = options.anchorsSelector || ".flz-scroll-anchor";
+		this.options().updateHistory = options.updateHistory !== undefined ? options.updateHistory : true;
 		this._prepareAnchors();
 		this._clickHandlers = [];
 
 		// Scroll on state changes in browser history
 		window.addEventListener(EVENT_POPSTATE, (e) => {
-			_navigate(this.scroller(), e.state !== null ? e.state.target : "#home", null, false);
+			_navigate(this.scroller(), e.state !== null ? e.state.target : "#home", null, this.options().updateHistory);
 		});
 	}
 
@@ -76,7 +77,7 @@ export class ScrollAnchorPlugin extends ScrollPlugin {
 						handler(anchor, event);
 					})
 				;
-			});
+			}, this.options().updateHistory);
 		}
 	}
 }
@@ -94,10 +95,9 @@ function _navigate(scroller, target, action, updateHistory = true) {
 
 	// Consider data-id to be used to find scroll target
 	let dataIdTarget = _findTargetByDataId(target);
-	if(dataIdTarget) {
+	if (dataIdTarget) {
 		target = "#" + dataIdTarget.id();
 	}
-
 	let beforeEvent = DOM.createEvent(SCROLL_EVENT_BEFORENAVGIATE, true, true, {
 		target: target
 	});
@@ -140,7 +140,7 @@ function _updateHistory(target) {
 	};
 
 	let element = DOM.queryUnique(target);
-	if(element.data("id")) {
+	if (element.data("id")) {
 		window.history.pushState(data, document.title, "#" + element.data("id"));
 	} else {
 		window.history.pushState(data, document.title, target);
@@ -152,6 +152,7 @@ function _updateHistory(target) {
 
 	console.debug(`${LOG_PREFIX_SCROLLANCHORPLUGIN} | Updating history to ${target}`);
 }
+
 /**
  * Find target by data-id
  *
@@ -162,6 +163,6 @@ function _updateHistory(target) {
 function _findTargetByDataId(dataId) {
 	let targets = DOM.query("[data-id]");
 	return targets.find((target) => {
-		return ("#"+target.data("id")) === dataId;
+		return ("#" + target.data("id")) === dataId;
 	});
 }
