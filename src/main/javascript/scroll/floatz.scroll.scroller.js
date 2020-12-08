@@ -688,7 +688,9 @@ function _initIntersectionObserver(scroller, target) {
 						})
 					;
 
-				} else if (!scroller._firstIntersection) { // Don´t fire scroll-out on first run when they were never visible
+				/////// Changed back again - want to know if the section is not intersected, e.g. when reloading the page at other position than the initial
+				// } else if (!scroller._firstIntersection) { // Don´t fire scroll-out on first run when they were never visible
+				} else {
 					// Run scroll-out handlers
 					scroller._scrollOutHandlers.filter(handler => handler.target.origNode() === entry.target)
 						.forEach((handler) => {
