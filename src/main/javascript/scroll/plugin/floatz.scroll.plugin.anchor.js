@@ -23,6 +23,7 @@ export class ScrollAnchorPlugin extends ScrollPlugin {
 		this.options().updateHistory = options.updateHistory !== undefined ? options.updateHistory : true;
 		this._prepareAnchors();
 		this._clickHandlers = [];
+		this._beforeClickHandlers = [];
 
 		// Scroll on state changes in browser history
 		window.addEventListener(EVENT_POPSTATE, (e) => {
@@ -38,6 +39,17 @@ export class ScrollAnchorPlugin extends ScrollPlugin {
 	 */
 	onClick(handler) {
 		this._clickHandlers.push(handler);
+		return this;
+	}
+
+	/**
+	 * Before-Click anchor handler.
+	 *
+	 * @param handler Custom handler
+	 * @returns {ScrollAnchorPlugin} ScrollAnchorPlugin for chaining
+	 */
+	onBeforeClick(handler) {
+		this._beforeClickHandlers.push(handler);
 		return this;
 	}
 
@@ -67,6 +79,13 @@ export class ScrollAnchorPlugin extends ScrollPlugin {
 	_handleClick(anchor, event) {
 		// Use scroll navigation only when href contains an id
 		if (anchor.attr("href").startsWith("#")) {
+
+			// Execute before-click handlers
+			this._beforeClickHandlers
+				.forEach(handler => {
+					handler(anchor, event);
+				})
+			;
 			_navigate(this.scroller(), anchor.attr("href"), () => {
 				event.preventDefault(); // Stop default click behaviour
 				event.stopPropagation(); // Stop bubbling the event up the DOM
@@ -98,6 +117,7 @@ function _navigate(scroller, target, action, updateHistory = true) {
 	if (dataIdTarget) {
 		target = "#" + dataIdTarget.id();
 	}
+
 	let beforeEvent = DOM.createEvent(SCROLL_EVENT_BEFORENAVGIATE, true, true, {
 		target: target
 	});
