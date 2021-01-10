@@ -57,7 +57,8 @@ export class Scroller {
 		this._container = container;
 		this._scrolling = false;
 		this._observer = null;
-		this._firstIntersection = true;
+		// this._firstIntersection = true;
+		this._isScrollToAction = false;
 
 		if (DOM.isWindow(container)) {
 			// Note: document.body does not work since Chrome 61
@@ -307,7 +308,7 @@ export class Scroller {
 	}
 
 	/**
-	 * Scroll to to element.
+	 * Scroll to element.
 	 *
 	 * @param {(Object|string)} target Target element or position
 	 * @param {Object=} options Scroll options
@@ -316,7 +317,17 @@ export class Scroller {
 	scrollTo(target, options = {}) {
 		this._options.duration = options.duration || 600;
 		this._options.easing = options.easing || Easing.easeInOutQuad;
-		this._options.complete = options.complete || null;
+		this._options.complete = () => {
+			_runScrollEndHandlers(this);
+			if(options.complete) {
+				options.complete();
+				setTimeout(() => {
+					this._isScrollToAction = false;
+				}, 100) // Give browser some time to fire last scroll event (prevents firing start/end handlers again)
+			}
+		}
+		this._isScrollToAction = true;
+		_runScrollStartHandlers(this);
 		new ScrollAnimation(this._container, target, this._options);
 		return this;
 	}
@@ -331,14 +342,14 @@ export class Scroller {
 	}
 
 	/**
-	 * Get scroll position.
+	 * Get / set scroll position.
 	 *
 	 * @param {number=} position Optional scroll position
 	 * @returns {number|Scroller} Scroll position in px or scroller for chaining if used as setter
 	 */
 	scrollPos(position) {
 		if (position) {
-			console.log(position);
+			// console.log(position);
 			if (this.orientation() === Orientation.VERTICAL) {
 				this._options.scrollable.scrollTop = position;
 			} else {
@@ -392,8 +403,14 @@ export class Scroller {
 		}
 	}
 
-
-
+	/**
+	 * Get status who triggered the scrolling.
+	 *
+	 * @returns {boolean} true if triggered by scrollTo function, false if user is scrolling manually
+	 */
+	isScrollToAction() {
+		return this._isScrollToAction;
+	}
 }
 
 /**
@@ -557,10 +574,8 @@ export class ScrollAnimation {
 		// Reset time for _next animation
 		this._timeStart = false;
 
-		// Run custom complete function if available
-		if (this._options.complete !== null) {
-			this._options.complete();
-		}
+		// Run custom complete function
+		this._options.complete();
 	}
 }
 
@@ -630,31 +645,45 @@ export class ScrollPlugin {
  */
 function _registerScrollStartEndHandler(scroller) {
 	if (scroller._scrollEndHandlers.length === 0 && scroller._scrollStartHandlers.length === 0) {
-		let isScrolling = null;
+		let endScrollTimeout = null;
+
 		DOM.addEvent(scroller._container, EVENT_SCROLL, () => {
+			// console.log("EVENT_SCROLL");
 
-			// Run scroll start handlers
-			if (isScrolling === null) {
-				scroller._scrollStartHandlers.forEach((handler) => {
-					handler(scroller);
-				});
+			// Handle start/end handlers for manual scrolling only
+			if(! scroller.isScrollToAction()) {
+
+				// Run scroll start handlers
+				if (endScrollTimeout === null) {
+					_runScrollStartHandlers(scroller);
+				}
+
+				// Extend timeout for scroll end handlers throughout the scroll
+				window.clearTimeout(endScrollTimeout);
+				endScrollTimeout = setTimeout(() => {
+
+					// Run scroll end handlers
+					_runScrollEndHandlers(scroller);
+					endScrollTimeout = null;
+
+				}, 100); // Scrolling on iOS needs more time otherwise flickers!
 			}
-
-			// Clear our timeout throughout the scroll
-			window.clearTimeout(isScrolling);
-
-			// Set a timeout to run after scrolling ends
-			isScrolling = setTimeout(() => {
-
-				// Run scroll end handlers
-				scroller._scrollEndHandlers.forEach((handler) => {
-					handler(scroller);
-				});
-				isScrolling = null;
-
-			}, 100); // Scrolling on iOS needs more time otherwise flickers!
 		});
 	}
+}
+
+function _runScrollStartHandlers(scroller) {
+	// console.log(">>> scroll start handlers")
+	scroller._scrollStartHandlers.forEach((handler) => {
+		handler(scroller);
+	});
+}
+
+function _runScrollEndHandlers(scroller) {
+	// console.log(">>> scroll end handlers")
+	scroller._scrollEndHandlers.forEach((handler) => {
+		handler(scroller);
+	});
 }
 
 /**
@@ -673,6 +702,8 @@ function _initIntersectionObserver(scroller, target) {
 		scroller._observer = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
 
+				// console.log(entry);
+
 				// Run handlers for observed elements
 				scroller._observeHandlers.filter(handler => handler.target.origNode() === entry.target)
 					.forEach((handler) => {
@@ -687,7 +718,6 @@ function _initIntersectionObserver(scroller, target) {
 							handler.handler(entry);
 						})
 					;
-
 				/////// Changed back again - want to know if the section is not intersected, e.g. when reloading the page at other position than the initial
 				// } else if (!scroller._firstIntersection) { // Don´t fire scroll-out on first run when they were never visible
 				} else {
@@ -699,7 +729,7 @@ function _initIntersectionObserver(scroller, target) {
 					;
 				}
 			});
-			scroller._firstIntersection = false;
+			// scroller._firstIntersection = false;
 		}, {
 			root: scroller.options().intersection.root,
 			rootMargin : scroller.options().intersection.rootMargin,
