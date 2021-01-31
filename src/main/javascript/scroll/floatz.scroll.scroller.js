@@ -451,13 +451,13 @@ export class ScrollAnimation {
 		// Get stop position
 		this._stop = this.stopPos(target);
 
-		// Get distance
-		this._distance = this._stop - this._start + this._options.offset;
+		// Get distance (Fix: will be calculated on the fly in animate() to get most resent offset value)
+		// this._distance = this._stop - this._start + this._options.offset;
 		// console.debug(`target: ${target}, stop: ${this._stop}, start: ${this._start}, offset: ${this._options.offset}, distance: ${this._distance}`);
 
 		// Start scroll animation
 		// Note: the arrow function sets context for usage of this in animate
-		window.requestAnimationFrame((t) => this.animate(t));
+		window.requestAnimationFrame((t) => this.animate(t, options));
 	}
 
 	/**
@@ -522,8 +522,9 @@ export class ScrollAnimation {
 	 * Run scroll animation.
 	 *
 	 * @param {number} timeCurrent Current time from in µs
+	 * @param {Object} options Original scroll options
 	 */
-	animate(timeCurrent) {
+	animate(timeCurrent, options) {
 
 		// Remember time when scrolling started
 		if (!this._timeStart) {
@@ -532,6 +533,9 @@ export class ScrollAnimation {
 
 		// Determine time spent for scrolling so far
 		this._timeElapsed = timeCurrent - this._timeStart;
+
+		// Calculate distance on the fly to ensure we always use the most recent value of offset
+		this._distance = this._stop - this._start + options.offset;
 
 		// Calculate _next scroll position
 		this._next = this._options.easing(this._timeElapsed, this._start, this._distance,
@@ -544,7 +548,7 @@ export class ScrollAnimation {
 		if (this._timeElapsed < this._options.duration) {
 			// Continue scroll animation
 			// Note: the arrow function sets context for usage of this in animate
-			window.requestAnimationFrame((t) => this.animate(t));
+			window.requestAnimationFrame((t) => this.animate(t, options));
 		} else {
 			// Finish scroll animation
 			this.done();
