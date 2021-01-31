@@ -748,8 +748,8 @@
 	}
 
 
-// Exposes the constructors globally.
-	window.IntersectionObserver = IntersectionObserver;
+	// Exposes the constructors globally.
+	/** @suppress {checkTypes} */ window.IntersectionObserver = IntersectionObserver;
 	window.IntersectionObserverEntry = IntersectionObserverEntry;
 
 }(window, document));
