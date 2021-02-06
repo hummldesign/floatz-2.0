@@ -715,7 +715,7 @@ function _initIntersectionObserver(scroller, target) {
 					})
 				;
 
-				if (entry.isIntersecting) {
+				if (entry.isIntersecting && entry.intersectionRatio > 0.1 /* Fix: Avoid firing to early - see issue #27 */ ) {
 					// Run scroll-in handlers
 					scroller._scrollInHandlers.filter(handler => handler.target.origNode() === entry.target)
 						.forEach((handler) => {
