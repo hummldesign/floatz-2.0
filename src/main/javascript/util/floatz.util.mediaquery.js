@@ -7,7 +7,7 @@
 export const MEDIA_SIZE_XXS = "(min-width: 0) and (max-width: 320px)";
 export const MEDIA_SIZE_XS = "(min-width: 321px) and (max-width: 480px)";
 export const MEDIA_SIZE_S = "(min-width: 481px) and (max-width: 767px)";
-export const MEDIA_SIZE_M = "min-width: 768px) and (max-width: 979px)";
+export const MEDIA_SIZE_M = "(min-width: 768px) and (max-width: 979px)";
 export const MEDIA_SIZE_L = "(min-width: 980px) and (max-width: 1199px)";
 export const MEDIA_SIZE_XL = "(min-width: 1200px) and (max-width: 1599px)";
 export const MEDIA_SIZE_XXL = "(min-width: 1600px)";
@@ -56,5 +56,23 @@ export default class MediaQuery {
 			console.error("matchMedia not available");
 		}
 		return false;
+	}
+
+	/**
+	 * Concatenate queries to AND media query.
+	 *
+	 * @param queries One or more media queries (symbols or strings)
+	 * @returns {string} Media query with "and(s)"
+	 */
+	static and(...queries) {
+		let query = "";
+		let i=0;
+		queries.forEach((q) => {
+			query += q;
+			if(++i < queries.length) {
+				query += " and ";
+			}
+		});
+		return query;
 	}
 }
