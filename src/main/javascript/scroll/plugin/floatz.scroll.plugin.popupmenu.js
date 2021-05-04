@@ -84,7 +84,7 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
     /**
      * Get body.
      *
-     * @returns {DOMElement|*}
+     * @returns {DOMElement}
      */
     body() {
         return this._body;
@@ -224,11 +224,14 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
      * @private
      */
     _show() {
+        this.body().animate()
+            .end(() => {
+                this.openMenu();
+                this._showHandlers.forEach((handler) => {
+                    handler(this);
+                });
+            });
         this.showGlass();
-        this.openMenu();
-        this._showHandlers.forEach((handler) => {
-            handler(this);
-        });
     }
 
     /**
