@@ -136,8 +136,10 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
 
     /**
      * Open menu.
+     *
+     * @param finishHandler Handler called when menu animation is finished
      */
-    openMenu() {
+    openMenu(finishHandler) {
         this._resizeHandler = () => {
             // Remove menu and glass in case that viewpoint gets larger
             if (MediaQuery.match(MEDIA_SIZE_GTE_L)) { // FIXME
@@ -149,13 +151,15 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
         DOM.addEvent(window, EVENT_RESIZE, this._resizeHandler);
 
         // console.debug(LOG_PREFIX + "Opening menu");
-        this._header_z_index = this._header.css("z-index");
-        this._header.css("z-index", "2");
         this.menuIcon().replaceClass(this.options().openMenuIcon, this.options().closeMenuIcon);
         this.menu()
             .replaceClass(this.options().menuClass, this.options().responsiveMenuClass)
-            .addClass(this.options().slideInAnimation)
+            .animate()
+            .end(() => {
+                finishHandler();
+            })
         ;
+        this.menu().addClass(this.options().slideInAnimation);
     }
 
     /**
@@ -226,12 +230,20 @@ export class ScrollPopupMenuPlugin extends ScrollPlugin {
     _show() {
         this.body().animate()
             .end(() => {
-                this.openMenu();
-                this._showHandlers.forEach((handler) => {
-                    handler(this);
+                this.openMenu(() => {
+                    this._showHandlers.forEach((handler) => {
+                        handler(this);
+                    });
                 });
-            });
-        this.showGlass();
+            })
+        ;
+
+        // Switch z-index of header before glass fades in (to avoid flipping logo in case header is fixed)
+        this._header_z_index = this._header.css("z-index");
+        this._header.css("z-index", "2");
+
+        // Show glass
+        this.showGlass(); // Trigger animation
     }
 
     /**
