@@ -69,6 +69,13 @@ export default class UserAgent {
 	static isTouchDevice() {
 		return "ontouchstart" in document.documentElement;
 	}
+
+	/**
+	 * Detect if browser is Safari
+	 */
+	static isSafari() {
+		return navigator.userAgent.match(/Safari/) && (! navigator.userAgent.match(/Chrome/));
+	}
 }
 
 /**
