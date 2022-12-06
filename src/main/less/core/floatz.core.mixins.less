@@ -54,7 +54,8 @@
 	}
 
 	.flz-hide@{size} {
-		display: none;
+		// Ensure that hide has always the highest priority
+		display: none !important;
 	}
 
 	.flz-5@{size} {
