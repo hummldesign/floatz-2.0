@@ -147,7 +147,8 @@
 	}
 	
 	.flz-nospacer@{size} {
-		.flz-mx-enwrap(); // Enwrap content
+		// Fix: 2023-07-03, influences flex space-between negatively
+		// .flz-mx-enwrap(); // Enwrap content
 		padding: 0;
 	}
 }
