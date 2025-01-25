@@ -1,6 +1,5 @@
-![](https://github.com/floatzcss/floatz/blob/master/wiki/logo.png) floatz 2.0 (alpha)
+![](https://github.com/floatzcss/floatz/blob/master/wiki/logo.png)floatz 2.0
 ======
-> Under construction. In the meantime please refer to https://github.com/floatzcss/floatz
 
 ## Known Issues & Quick Fixes
 [Issue 29](https://github.com/hummldesign/floatz-2.0/issues/29) - Less math operations are not compiled in latest version of Less CSS
