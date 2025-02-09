@@ -1,12 +1,21 @@
 @import "../../main/less/config/floatz.config.less";
 @import "../../main/less/core/floatz.core.less";
-// @import "../../../main/less/core/floatz.core.debug.less";
-// @import "../../../main/less/scroll/floatz.scroll.layout.less";
-// @import "../../../main/less/scroll/floatz.scroll.slider.less";
-// @import "../../../main/less/navigation/floatz.navigation.less";
+@import "../../main/less/core/floatz.core.debug.less";
+@import "../../main/less/scroll/floatz.scroll.layout.less";
+@import "../../main/less/scroll/floatz.scroll.slider.less";
+@import "../../main/less/navigation/floatz.navigation.less";
 @import "../../main/less/dialog/floatz.dialog.less";
 @import "../../main/less/animation/floatz.animation.less";
 @import "../../main/less/animation/floatz.animation.mixins.less";
+
+// Settings
+@base-font-size-unitless: 16;
+@flz-var-base-font-size: 1rem;
+@flz-var-gutter-text-y: 2rem; // Vertical
+@flz-var-gutter-text-x: 2rem; // Horizontal
+@flz-var-gutter-layout-y: 2rem; // Vertical
+@flz-var-gutter-layout-x: 2rem; // Horizontal
+@flz-var-base-line-height: 1;
 
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -14,4 +23,14 @@ body {
 
 h1 {
   font-size: 3rem;
+}
+
+.flz-dialog {
+  background-color: #eee;
+}
+
+#dialogButtonClose {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
 }
