@@ -10,7 +10,7 @@ import {Orientation} from "./floatz.scroll.scroller.js";
  * Slider.
  * <p>
  *     Please consider that you have to execute destruct() when the slider is not needed anymore (e.g. when used
- *     within a temporary dialog) in order to de-register window resize events used by the slider.
+ *     within a temporary screenorientation) in order to de-register window resize events used by the slider.
  * </p>
  */
 export class Slider {
@@ -142,7 +142,7 @@ export class Slider {
 	 * Deconstructor.
 	 * <p>
 	 *     Please consider that you have to execute destruct() when the slider is not needed anymore (e.g. when used
-	 *     within a temporary dialog) in order to de-register window resize events used by the slider.
+	 *     within a temporary screenorientation) in order to de-register window resize events used by the slider.
 	 * </p>
 	 */
 	destruct() {

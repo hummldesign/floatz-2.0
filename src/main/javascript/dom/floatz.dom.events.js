@@ -32,3 +32,7 @@ export const EVENT_LOAD = "load";
 export const EVENT_BEFOREUNLOAD = "beforeunload";
 export const EVENT_UNLOAD = "unload";
 export const EVENT_POPSTATE = "popstate";
+/**
+ * @deprecated Use ScreenOrientation.change() instead
+ */
+export const EVENT_ORIENTATIONCHANGE = "orientationchange";
