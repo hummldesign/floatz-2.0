@@ -22,6 +22,7 @@ task compileTest {
 }
 
 task compileDemo {
+    dependsOn 'compileScreenOrientationDemo'
     dependsOn 'compileDialogDemo'
 }
 
@@ -207,7 +208,7 @@ task compileScrollObserveContainerTest(type: JavaExec) {
   args closureArgs
 }
 
-task compileDialogDemo(type: JavaExec) {
+task compileScreenOrientationDemo(type: JavaExec) {
   classpath configurations.closureCompiler
   main = 'com.google.javascript.jscomp.CommandLineRunner'
   def closureArgs = []
@@ -222,5 +223,23 @@ task compileDialogDemo(type: JavaExec) {
   // Must be in correct order otherwise modules are not found
   closureArgs << "src/main/javascript/**.js"
   closureArgs << "src/demo/screenorientation/floatz.demo.screenorientation.js"
+  args closureArgs
+}
+
+task compileDialogDemo(type: JavaExec) {
+  classpath configurations.closureCompiler
+  main = 'com.google.javascript.jscomp.CommandLineRunner'
+  def closureArgs = []
+  closureArgs << "--language_in=ES6"
+  closureArgs << "--language_out=ES5"
+  // closureArgs << "--formatting=pretty_print"
+  // closureArgs << "--compilation_level=SIMPLE_OPTIMIZATIONS"
+  closureArgs << "--compilation_level=ADVANCED_OPTIMIZATIONS"
+  closureArgs << "--js_output_file=src/demo/dialog/floatz.demo.dialog.min.js"
+  // closureArgs << "--externs=lib/closure-externs/jasmine-2.0.js"
+
+  // Must be in correct order otherwise modules are not found
+  closureArgs << "src/main/javascript/**.js"
+  closureArgs << "src/demo/dialog/floatz.demo.dialog.js"
   args closureArgs
 }

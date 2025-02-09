@@ -13,7 +13,7 @@ const ANIMATE_GLASS_FADEIN = "flz-animate-glass-fadein";
 const ANIMATE_GLASS_FADEOUT = "flz-animate-glass-fadeout";
 const ANIMATE_SLIDEINLEFT = "flz-animate-slideinleft";
 const ANIMATE_SLIDEOUTLEFT = "flz-animate-slideoutleft";
-const DIALOG_GLASS = "flz-screenorientation-glass";
+const DIALOG_GLASS = "flz-dialog-glass";
 const TAG_BODY = "BODY";
 const LOG_PREFIX = "floatz | ScrollPopupMenuPlugin | ";
 

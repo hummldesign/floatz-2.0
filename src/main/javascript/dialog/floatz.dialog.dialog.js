@@ -3,12 +3,12 @@ import {DOMElement} from "../dom/floatz.dom.dom.js";
 import {EVENT_CLICK, EVENT_TOUCHSTART} from "../dom/floatz.dom.events.js";
 
 // Constants for events
-const DIALOG_CONTAINER = "flz-screenorientation-container"
-const DIALOG = "flz-screenorientation";
+const DIALOG_CONTAINER = "flz-dialog-container"
+const DIALOG = "flz-dialog";
 const NO_SCROLL = "flz-noscroll";
 const ANIMATE_GLASS_FADEIN = "flz-animate-glass-fadein"; // TODO make it customizable
 const ANIMATE_GLASS_FADEOUT = "flz-animate-glass-fadeout"; // TODO make it customizable
-const DIALOG_GLASS = "flz-screenorientation-glass";
+const DIALOG_GLASS = "flz-dialog-glass";
 const TAG_DIV = "div";
 
 /**
@@ -27,17 +27,17 @@ export class Dialog {
 	}
 
 	/**
-	 * Open screenorientation.
+	 * Open dialog.
 	 *
 	 * @param {string} url URL of HTML file to load.
 	 * @param loadHandler Optional callback when loading has finished
 	 */
 	open(url, loadHandler) {
-		// Prevent scrolling in page body while screenorientation is open
+		// Prevent scrolling in page body while dialog is open
 		this._html.addClass(NO_SCROLL);
 		this._body.addClass(NO_SCROLL);
 
-		// Create screenorientation and load URL
+		// Create dialog and load URL
 		this._dialogContainer = DOM.createElement(TAG_DIV).addClass(DIALOG_CONTAINER);
 		this._dialog = DOM.createElement(TAG_DIV);
 		this._dialog.addClass(DIALOG)
@@ -48,19 +48,19 @@ export class Dialog {
 			})
 		;
 
-		// Show screenorientation glass
+		// Show dialog glass
 		this._glass = new DialogGlass(this._dialogContainer);
 		this._glass.show(() => {
 			this.close();
 		});
 
-		// Add screenorientation to DOM
+		// Add dialog to DOM
 		this._dialogContainer.appendChild(this._dialog);
 		this._body.appendChild(this._dialogContainer);
 	}
 
 	/**
-	 * Close screenorientation.
+	 * Close dialog.
 	 */
 	close() {
 		this._glass.hide(() => {
@@ -73,7 +73,7 @@ export class Dialog {
 	}
 
 	/**
-	 * Get screenorientation as DOM element
+	 * Get dialog as DOM element
 	 *
 	 * @returns Root element
 	 */
@@ -85,7 +85,7 @@ export class Dialog {
 /**
  * Dialog glass.
  * <p>
- *     Adds a glass effect for screenorientation backgrounds.
+ *     Adds a glass effect for dialog backgrounds.
  * </p>
  */
 export class DialogGlass {
@@ -93,7 +93,7 @@ export class DialogGlass {
 	/**
 	 * Constructor.
 	 *
-	 * @param {DOMElement=} parent Optional screenorientation container that handles glass clicks (default is the document body)
+	 * @param {DOMElement=} parent Optional dialog container that handles glass clicks (default is the document body)
 	 */
 	constructor(parent) {
 		this._body = DOM.body();
