@@ -35,7 +35,7 @@ export default class MediaQuery {
 	 * Match media query.
 	 * <p>
 	 *     Provides support for multiple queries combined via OR operator like in CSS.
-	 *     In case of AND operator use CSS syntax "(<query>) and (<query>)".
+	 *     In case of AND operator use MediaQuery.and(<query>,<query>, ...)".
 	 * </p>
 	 *
 	 * @param queries One or more media queries (symbols or strings)
